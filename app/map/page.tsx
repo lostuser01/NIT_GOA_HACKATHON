@@ -32,6 +32,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { InteractiveMap } from "@/components/interactive-map";
+import { NeonGradientCard } from "@/components/magicui/neon-gradient-card";
 import { Issue } from "@/lib/types";
 import toast from "react-hot-toast";
 
