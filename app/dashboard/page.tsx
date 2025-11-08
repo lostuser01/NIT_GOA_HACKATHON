@@ -19,6 +19,7 @@ import { useEffect, useState } from "react";
 import { NeonGradientCard } from "@/components/magicui/neon-gradient-card";
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import { RotatingText } from "@/components/magicui/rotating-text";
 import { useDashboard } from "@/contexts/dashboard-context";
 import { Button } from "@/components/ui/button";
@@ -66,6 +67,23 @@ interface DashboardStats {
 
 export default function Page() {
 >>>>>>> Stashed changes
+=======
+import { Skeleton } from "@/components/ui/skeleton";
+
+interface RecentActivity {
+  id: string;
+  type: string;
+  message: string;
+  location?: string;
+  timestamp: string;
+}
+
+interface DashboardStats {
+  recentActivity: RecentActivity[];
+}
+
+export default function Page() {
+>>>>>>> Stashed changes
   const [recentActivity, setRecentActivity] = useState<RecentActivity[]>([]);
   const [isLoadingActivity, setIsLoadingActivity] = useState(true);
 
@@ -94,6 +112,9 @@ export default function Page() {
     return () => clearInterval(interval);
   }, []);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -119,6 +140,20 @@ export default function Page() {
       return () => clearTimeout(timer);
     }
   }, [slaAlerts, stats.criticalIssuesPending]);
+
+  const getActivityIcon = (type: string) => {
+    switch (type.toLowerCase()) {
+      case "resolved":
+        return "🟢";
+      case "critical":
+        return "🔴";
+      case "in-progress":
+        return "🟡";
+      case "new":
+      default:
+        return "🔵";
+    }
+  };
 
   const getActivityIcon = (type: string) => {
     switch (type.toLowerCase()) {
@@ -243,6 +278,7 @@ export default function Page() {
                     <div className="space-y-3 text-black dark:text-white">
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                       {recentActivity.slice(0, 5).map((activity) => {
                         const severityColors = {
                           success: "bg-green-500",
@@ -260,6 +296,8 @@ export default function Page() {
 =======
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
                       {isLoadingActivity ? (
                         <>
                           {[1, 2, 3, 4, 5].map((i) => (
@@ -275,6 +313,9 @@ export default function Page() {
                       ) : recentActivity.length > 0 ? (
                         recentActivity.map((activity) => (
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -282,6 +323,7 @@ export default function Page() {
                             key={activity.id}
                             className="flex items-start gap-3"
                           >
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
                             <div
@@ -306,6 +348,8 @@ export default function Page() {
 =======
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
                             <div className="text-lg mt-0.5">
                               {getActivityIcon(activity.type)}
                             </div>
@@ -324,6 +368,9 @@ export default function Page() {
                         </div>
                       )}
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes

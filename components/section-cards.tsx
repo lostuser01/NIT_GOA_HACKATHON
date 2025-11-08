@@ -2,6 +2,10 @@
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+import { useEffect, useState } from "react";
+>>>>>>> Stashed changes
 =======
 import { useEffect, useState } from "react";
 >>>>>>> Stashed changes
@@ -17,6 +21,7 @@ import {
 
 import { Badge } from "@/components/ui/badge";
 import { NeonGradientCard } from "@/components/magicui/neon-gradient-card";
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 import { useDashboard } from "@/contexts/dashboard-context";
@@ -186,6 +191,86 @@ export function SectionCards() {
   return (
     <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
 >>>>>>> Stashed changes
+=======
+import { Skeleton } from "@/components/ui/skeleton";
+
+interface DashboardStats {
+  totalActiveIssues: number;
+  criticalIssues: number;
+  issuesTrend: number;
+  slaComplianceRate: number;
+  slaBreaches: number;
+  slaComplianceTrend: number;
+  averageResolutionTime: number;
+  resolutionTimeTrend: number;
+  citizenSatisfaction: number;
+  satisfactionTrend: number;
+  resolvedThisMonth: number;
+}
+
+export function SectionCards() {
+  const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch("/api/analytics/stats");
+        const data = await response.json();
+
+        if (data.success) {
+          setStats(data.data);
+          setError(null);
+        } else {
+          setError(data.error || "Failed to fetch statistics");
+        }
+      } catch (err) {
+        console.error("Error fetching dashboard stats:", err);
+        setError("Failed to load dashboard statistics");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchStats();
+
+    // Refresh stats every 30 seconds
+    const interval = setInterval(fetchStats, 30000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
+        {[1, 2, 3, 4].map((i) => (
+          <div key={i} className="p-6 border rounded-lg">
+            <Skeleton className="h-4 w-32 mb-4" />
+            <Skeleton className="h-8 w-24 mb-6" />
+            <Skeleton className="h-4 w-full" />
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  if (error || !stats) {
+    return (
+      <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
+        <div className="col-span-full p-6 border border-red-200 rounded-lg bg-red-50 dark:bg-red-950/20">
+          <p className="text-red-600 dark:text-red-400">
+            {error || "Failed to load statistics"}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
+>>>>>>> Stashed changes
       {/* Total Active Issues Card */}
       <NeonGradientCard
         className="@container/card transition-all duration-300 ease-in-out hover:scale-[1.03] cursor-pointer"
@@ -203,7 +288,11 @@ export function SectionCards() {
             <div className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl text-black dark:text-white">
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
               {isLoading ? "..." : stats.totalActiveIssues}
+=======
+              {stats.totalActiveIssues}
+>>>>>>> Stashed changes
 =======
               {stats.totalActiveIssues}
 >>>>>>> Stashed changes
@@ -217,7 +306,11 @@ export function SectionCards() {
                 className={
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                   stats.trendPercentages.activeIssues >= 0
+=======
+                  stats.issuesTrend > 0
+>>>>>>> Stashed changes
 =======
                   stats.issuesTrend > 0
 >>>>>>> Stashed changes
@@ -230,7 +323,11 @@ export function SectionCards() {
               >
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 {stats.trendPercentages.activeIssues >= 0 ? (
+=======
+                {stats.issuesTrend > 0 ? (
+>>>>>>> Stashed changes
 =======
                 {stats.issuesTrend > 0 ? (
 >>>>>>> Stashed changes
@@ -243,8 +340,13 @@ export function SectionCards() {
                 )}
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 {stats.trendPercentages.activeIssues >= 0 ? "+" : ""}
                 {stats.trendPercentages.activeIssues}%
+=======
+                {stats.issuesTrend > 0 ? "+" : ""}
+                {stats.issuesTrend}%
+>>>>>>> Stashed changes
 =======
                 {stats.issuesTrend > 0 ? "+" : ""}
                 {stats.issuesTrend}%
@@ -260,7 +362,11 @@ export function SectionCards() {
             <div className="line-clamp-1 flex gap-2 font-medium text-black dark:text-white">
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
               {stats.criticalIssuesPending} Critical Issues Pending{" "}
+=======
+              {stats.criticalIssues} Critical Issues Pending{" "}
+>>>>>>> Stashed changes
 =======
               {stats.criticalIssues} Critical Issues Pending{" "}
 >>>>>>> Stashed changes
@@ -280,8 +386,11 @@ export function SectionCards() {
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       <NeonGradientCard className="@container/card transition-all duration-300 ease-in-out hover:scale-[1.03] cursor-pointer">
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
       {/* SLA Compliance Card */}
@@ -301,7 +410,11 @@ export function SectionCards() {
             <div className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl text-black dark:text-white">
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
               {isLoading ? "..." : `${stats.slaComplianceRate}%`}
+=======
+              {stats.slaComplianceRate}%
+>>>>>>> Stashed changes
 =======
               {stats.slaComplianceRate}%
 >>>>>>> Stashed changes
@@ -313,6 +426,7 @@ export function SectionCards() {
               <Badge
                 variant="outline"
                 className={
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
                   stats.trendPercentages.slaCompliance >= 0
@@ -344,6 +458,15 @@ export function SectionCards() {
                 }
               >
 >>>>>>> Stashed changes
+=======
+                  stats.slaComplianceTrend < 0
+                    ? "bg-red-950 border-red-900 text-red-300"
+                    : stats.slaComplianceTrend > 0
+                      ? "bg-green-950 border-green-900 text-green-300"
+                      : "bg-yellow-950 border-yellow-900 text-yellow-300"
+                }
+              >
+>>>>>>> Stashed changes
                 {stats.slaComplianceTrend > 0 ? (
                   <IconTrendingUp />
                 ) : stats.slaComplianceTrend < 0 ? (
@@ -352,6 +475,9 @@ export function SectionCards() {
                 {stats.slaComplianceTrend > 0 ? "+" : ""}
                 {stats.slaComplianceTrend}%
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -362,9 +488,12 @@ export function SectionCards() {
             <div className="line-clamp-1 flex gap-2 font-medium text-black dark:text-white">
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
               {stats.slaBreeches} SLA breaches this week{" "}
               <IconAlertTriangle className="size-4 text-yellow-500" />
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
               {stats.slaBreaches} SLA breaches this month{" "}
@@ -374,6 +503,9 @@ export function SectionCards() {
                 <IconCircleCheck className="size-4 text-green-500" />
               )}
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -389,8 +521,11 @@ export function SectionCards() {
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       <NeonGradientCard className="@container/card transition-all duration-300 ease-in-out hover:scale-[1.03] cursor-pointer">
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
       {/* Average Resolution Time Card */}
@@ -410,7 +545,13 @@ export function SectionCards() {
             <div className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl text-black dark:text-white">
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
               {isLoading ? "..." : `${stats.averageResolutionTime} days`}
+=======
+              {stats.averageResolutionTime > 0
+                ? `${stats.averageResolutionTime} days`
+                : "N/A"}
+>>>>>>> Stashed changes
 =======
               {stats.averageResolutionTime > 0
                 ? `${stats.averageResolutionTime} days`
@@ -426,6 +567,7 @@ export function SectionCards() {
               <Badge
                 variant="outline"
                 className={
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
                   stats.trendPercentages.resolutionTime <= 0
@@ -457,6 +599,15 @@ export function SectionCards() {
                 }
               >
 >>>>>>> Stashed changes
+=======
+                  stats.resolutionTimeTrend < 0
+                    ? "bg-green-950 border-green-900 text-green-300"
+                    : stats.resolutionTimeTrend > 0
+                      ? "bg-red-950 border-red-900 text-red-300"
+                      : "bg-yellow-950 border-yellow-900 text-yellow-300"
+                }
+              >
+>>>>>>> Stashed changes
                 {stats.resolutionTimeTrend < 0 ? (
                   <IconTrendingDown />
                 ) : stats.resolutionTimeTrend > 0 ? (
@@ -465,6 +616,9 @@ export function SectionCards() {
                 {stats.resolutionTimeTrend}
                 {stats.resolutionTimeTrend !== 0 ? "d" : ""}
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -487,9 +641,12 @@ export function SectionCards() {
             <div className="text-gray-600 dark:text-gray-400">
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
               Efficiency improved by{" "}
               {Math.abs(stats.trendPercentages.resolutionTime * 20).toFixed(0)}%
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
               {stats.resolutionTimeTrend < 0
@@ -498,6 +655,9 @@ export function SectionCards() {
                   ? "Focus on faster resolution"
                   : "Maintaining steady pace"}
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -508,8 +668,11 @@ export function SectionCards() {
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       <NeonGradientCard className="@container/card transition-all duration-300 ease-in-out hover:scale-[1.03] cursor-pointer">
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
       {/* Citizen Satisfaction Card */}
@@ -529,7 +692,11 @@ export function SectionCards() {
             <div className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl text-black dark:text-white">
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
               {isLoading ? "..." : `${stats.citizenSatisfaction}/5.0`}
+=======
+              {stats.citizenSatisfaction}/5.0
+>>>>>>> Stashed changes
 =======
               {stats.citizenSatisfaction}/5.0
 >>>>>>> Stashed changes
@@ -541,6 +708,7 @@ export function SectionCards() {
               <Badge
                 variant="outline"
                 className={
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
                   stats.trendPercentages.satisfaction >= 0
@@ -572,6 +740,15 @@ export function SectionCards() {
                 }
               >
 >>>>>>> Stashed changes
+=======
+                  stats.satisfactionTrend > 0
+                    ? "bg-green-950 border-green-900 text-green-300"
+                    : stats.satisfactionTrend < 0
+                      ? "bg-red-950 border-red-900 text-red-300"
+                      : "bg-yellow-950 border-yellow-900 text-yellow-300"
+                }
+              >
+>>>>>>> Stashed changes
                 {stats.satisfactionTrend > 0 ? (
                   <IconTrendingUp />
                 ) : stats.satisfactionTrend < 0 ? (
@@ -580,6 +757,9 @@ export function SectionCards() {
                 {stats.satisfactionTrend > 0 ? "+" : ""}
                 {stats.satisfactionTrend}
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -590,7 +770,11 @@ export function SectionCards() {
             <div className="line-clamp-1 flex gap-2 font-medium text-black dark:text-white">
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
               {stats.resolvedIssuesThisMonth} resolved issues this month{" "}
+=======
+              {stats.resolvedThisMonth} resolved issues this month{" "}
+>>>>>>> Stashed changes
 =======
               {stats.resolvedThisMonth} resolved issues this month{" "}
 >>>>>>> Stashed changes
