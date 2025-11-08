@@ -52,7 +52,7 @@ export function NeonGradientCard({
     <div
       ref={containerRef}
       className={cn(
-        "relative overflow-hidden rounded-(--border-radius) p-(--border-size) transition-all duration-300 ease-out hover:scale-[1.02] hover:-translate-y-1 hover:shadow-2xl cursor-pointer",
+        "relative overflow-hidden rounded-(--border-radius) p-(--border-size) transition-all duration-300 ease-out cursor-pointer",
         className,
       )}
       style={
@@ -111,7 +111,7 @@ export function NeonGradientCard({
 
       {/* Card content with white background in light mode, black in dark mode */}
       <div
-        className="relative z-2 flex h-full w-full flex-col rounded-[calc(var(--border-radius)-var(--border-size))] bg-white dark:bg-black text-black dark:text-white p-6"
+        className="relative z-2 flex h-full w-full flex-col rounded-[calc(var(--border-radius)-var(--border-size))] bg-black text-white p-6"
         style={{
           borderRadius: `calc(${borderRadius}px - ${borderSize}px)`,
         }}

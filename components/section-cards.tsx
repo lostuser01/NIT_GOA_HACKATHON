@@ -11,7 +11,13 @@ import { NeonGradientCard } from "@/components/magicui/neon-gradient-card";
 export function SectionCards() {
   return (
     <div className="grid grid-cols-1 gap-4 px-4 lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
-      <NeonGradientCard className="@container/card">
+      <NeonGradientCard
+        className="@container/card"
+        neonColors={{
+          firstColor: "#404040",
+          secondColor: "#606060",
+        }}
+      >
         <div className="flex flex-col gap-6">
           <div className="grid auto-rows-min grid-rows-[auto_auto] items-start gap-2 has-data-[slot=card-action]:grid-cols-[1fr_auto]">
             <div className="text-gray-400 text-sm">Total Active Issues</div>
@@ -38,7 +44,13 @@ export function SectionCards() {
         </div>
       </NeonGradientCard>
 
-      <NeonGradientCard className="@container/card">
+      <NeonGradientCard
+        className="@container/card"
+        neonColors={{
+          firstColor: "#404040",
+          secondColor: "#606060",
+        }}
+      >
         <div className="flex flex-col gap-6">
           <div className="grid auto-rows-min grid-rows-[auto_auto] items-start gap-2 has-data-[slot=card-action]:grid-cols-[1fr_auto]">
             <div className="text-gray-400 text-sm">SLA Compliance Rate</div>
@@ -65,7 +77,13 @@ export function SectionCards() {
         </div>
       </NeonGradientCard>
 
-      <NeonGradientCard className="@container/card">
+      <NeonGradientCard
+        className="@container/card"
+        neonColors={{
+          firstColor: "#404040",
+          secondColor: "#606060",
+        }}
+      >
         <div className="flex flex-col gap-6">
           <div className="grid auto-rows-min grid-rows-[auto_auto] items-start gap-2 has-data-[slot=card-action]:grid-cols-[1fr_auto]">
             <div className="text-gray-400 text-sm">Average Resolution Time</div>
@@ -92,7 +110,13 @@ export function SectionCards() {
         </div>
       </NeonGradientCard>
 
-      <NeonGradientCard className="@container/card">
+      <NeonGradientCard
+        className="@container/card"
+        neonColors={{
+          firstColor: "#404040",
+          secondColor: "#606060",
+        }}
+      >
         <div className="flex flex-col gap-6">
           <div className="grid auto-rows-min grid-rows-[auto_auto] items-start gap-2 has-data-[slot=card-action]:grid-cols-[1fr_auto]">
             <div className="text-gray-400 text-sm">Citizen Satisfaction</div>

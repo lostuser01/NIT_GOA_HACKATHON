@@ -327,58 +327,58 @@ export default function MapPage() {
 
           {/* Stats */}
           <div className="grid gap-4 md:grid-cols-4 mb-8">
-            <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 relative overflow-hidden transition-all duration-300 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:shadow-xl hover:!bg-black dark:hover:!bg-black cursor-pointer group">
+            <Card className="bg-black border-gray-200 dark:border-gray-800 relative overflow-hidden transition-all duration-300 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:shadow-xl cursor-pointer group">
               <BorderBeam duration={6} delay={0} />
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400 group-hover:text-white">
+                <CardTitle className="text-sm font-medium text-gray-400">
                   Total Issues
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold text-black dark:text-white group-hover:text-white">
+                <div className="text-3xl font-bold text-white">
                   {isLoading ? "..." : issues.length}
                 </div>
               </CardContent>
             </Card>
-            <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 relative overflow-hidden transition-all duration-300 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:shadow-xl hover:!bg-black dark:hover:!bg-black cursor-pointer group">
+            <Card className="bg-black border-gray-200 dark:border-gray-800 relative overflow-hidden transition-all duration-300 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:shadow-xl cursor-pointer group">
               <BorderBeam duration={6} delay={1} />
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400 group-hover:text-white">
+                <CardTitle className="text-sm font-medium text-gray-400">
                   Open Issues
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold text-black dark:text-white group-hover:text-white">
+                <div className="text-3xl font-bold text-white">
                   {isLoading
                     ? "..."
                     : issues.filter((i) => i.status === "open").length}
                 </div>
               </CardContent>
             </Card>
-            <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 relative overflow-hidden transition-all duration-300 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:shadow-xl hover:!bg-black dark:hover:!bg-black cursor-pointer group">
+            <Card className="bg-black border-gray-200 dark:border-gray-800 relative overflow-hidden transition-all duration-300 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:shadow-xl cursor-pointer group">
               <BorderBeam duration={6} delay={2} />
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400 group-hover:text-white">
+                <CardTitle className="text-sm font-medium text-gray-400">
                   In Progress
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold text-black dark:text-white group-hover:text-white">
+                <div className="text-3xl font-bold text-white">
                   {isLoading
                     ? "..."
                     : issues.filter((i) => i.status === "in-progress").length}
                 </div>
               </CardContent>
             </Card>
-            <Card className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 relative overflow-hidden transition-all duration-300 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:shadow-xl hover:!bg-black dark:hover:!bg-black cursor-pointer group">
+            <Card className="bg-black border-gray-200 dark:border-gray-800 relative overflow-hidden transition-all duration-300 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:shadow-xl cursor-pointer group">
               <BorderBeam duration={6} delay={3} />
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-gray-600 dark:text-gray-400 group-hover:text-white">
+                <CardTitle className="text-sm font-medium text-gray-400">
                   Resolved
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold text-black dark:text-white group-hover:text-white">
+                <div className="text-3xl font-bold text-white">
                   {isLoading
                     ? "..."
                     : issues.filter((i) => i.status === "resolved").length}
