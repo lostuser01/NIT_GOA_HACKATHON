@@ -6,12 +6,11 @@ import { MapPin, Map, Users, LayoutDashboard } from "lucide-react";
 import {
   NavigationMenu,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
 
 export function Navigation() {
   const pathname = usePathname();
@@ -49,18 +48,17 @@ export function Navigation() {
                 const isActive = pathname === item.href;
                 return (
                   <NavigationMenuItem key={item.href}>
-                    <Link href={item.href} legacyBehavior passHref>
-                      <NavigationMenuLink
-                        className={cn(
-                          navigationMenuTriggerStyle(),
-                          "font-medium",
-                          isActive &&
-                            "bg-gray-100 dark:bg-gray-900 text-black dark:text-white",
-                        )}
-                      >
-                        {Icon && <Icon className="mr-1.5 size-4" />}
-                        {item.label}
-                      </NavigationMenuLink>
+                    <Link
+                      href={item.href}
+                      className={cn(
+                        buttonVariants({ variant: "ghost", size: "sm" }),
+                        "font-medium",
+                        isActive &&
+                          "bg-gray-100 dark:bg-gray-900 text-black dark:text-white",
+                      )}
+                    >
+                      {Icon && <Icon className="mr-1.5 size-4" />}
+                      {item.label}
                     </Link>
                   </NavigationMenuItem>
                 );
@@ -77,19 +75,18 @@ export function Navigation() {
                 const isActive = pathname === item.href;
                 return (
                   <NavigationMenuItem key={item.href}>
-                    <Link href={item.href} legacyBehavior passHref>
-                      <NavigationMenuLink
-                        className={cn(
-                          navigationMenuTriggerStyle(),
-                          "font-medium",
-                          isActive &&
-                            "bg-gray-100 dark:bg-gray-900 text-black dark:text-white",
-                          item.label === "Sign Up" &&
-                            "bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200",
-                        )}
-                      >
-                        {item.label}
-                      </NavigationMenuLink>
+                    <Link
+                      href={item.href}
+                      className={cn(
+                        buttonVariants({ variant: "ghost", size: "sm" }),
+                        "font-medium",
+                        isActive &&
+                          "bg-gray-100 dark:bg-gray-900 text-black dark:text-white",
+                        item.label === "Sign Up" &&
+                          "bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200",
+                      )}
+                    >
+                      {item.label}
                     </Link>
                   </NavigationMenuItem>
                 );
