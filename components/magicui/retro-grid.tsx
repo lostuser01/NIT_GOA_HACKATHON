@@ -36,15 +36,16 @@ export function RetroGrid({ className, angle = 65 }: RetroGridProps) {
       <style jsx>{`
         @keyframes grid {
           0% {
-            transform: translateY(0);
+            transform: translateY(0) translateZ(0); /* ADDED translateZ(0) */
           }
           100% {
-            transform: translateY(calc(-50% + 70px));
+            transform: translateY(calc(-50% + 70px)) translateZ(0); /* ADDED translateZ(0) */
           }
         }
 
         .animate-grid {
-          animation: grid 100s ease-in-out infinite;
+          /* CHANGED ease-in-out to linear */
+          animation: grid 100s linear infinite;
           will-change: transform;
         }
       `}</style>
