@@ -83,7 +83,6 @@ export default function ReportIssuePage() {
           const errorMessage =
             error.message || "Unable to get location. Please enable GPS.";
           toast.error(errorMessage);
-          console.error(error);
         },
       );
     } else {
@@ -105,7 +104,6 @@ export default function ReportIssuePage() {
           const errorMessage =
             error.message || "Unable to get location. Please enable GPS.";
           toast.error(errorMessage);
-          console.error(error);
         },
       );
     } else {
@@ -185,7 +183,6 @@ export default function ReportIssuePage() {
 
       return data.urls;
     } catch (error) {
-      console.error("Upload error:", error);
       throw error;
     } finally {
       setIsUploading(false);
@@ -255,7 +252,6 @@ export default function ReportIssuePage() {
         );
       }
     } catch (error) {
-      console.error("AI categorization error:", error);
       toast.error(
         error instanceof Error
           ? error.message
@@ -358,7 +354,6 @@ export default function ReportIssuePage() {
         router.push("/map");
       }
     } catch (error) {
-      console.error("Submit error:", error);
       toast.error(
         error instanceof Error
           ? error.message
