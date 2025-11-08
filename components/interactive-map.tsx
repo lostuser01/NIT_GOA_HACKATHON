@@ -36,6 +36,9 @@ export function InteractiveMap({
   const [currentUserLocation, setCurrentUserLocation] = useState<
     [number, number] | null
   >(userLocation);
+  const [locationPermissionState, setLocationPermissionState] = useState<
+    "pending" | "granted" | "denied" | "prompt"
+  >("pending");
 
   useEffect(() => {
     // Only run on client side
@@ -87,11 +90,32 @@ export function InteractiveMap({
 
         // Wait for map to load before adding markers
         mapRef.current.on("load", () => {
-          setIsLoading(false);
+          // Don't set loading to false yet if we need location permission
+          if (!showUserLocation || userLocation) {
+            setIsLoading(false);
+          }
 
           // Request user location if enabled
           if (showUserLocation && !userLocation) {
             if (navigator.geolocation) {
+              // Check permission state first
+              if (navigator.permissions) {
+                navigator.permissions
+                  .query({ name: "geolocation" })
+                  .then((permissionStatus) => {
+                    setLocationPermissionState(permissionStatus.state as any);
+
+                    // Listen for permission changes
+                    permissionStatus.onchange = () => {
+                      setLocationPermissionState(permissionStatus.state as any);
+                    };
+                  })
+                  .catch(() => {
+                    // Fallback if permissions API not available
+                    setLocationPermissionState("prompt");
+                  });
+              }
+
               navigator.geolocation.getCurrentPosition(
                 (position) => {
                   const userLoc: [number, number] = [
@@ -99,6 +123,8 @@ export function InteractiveMap({
                     position.coords.latitude,
                   ];
                   setCurrentUserLocation(userLoc);
+                  setLocationPermissionState("granted");
+                  setIsLoading(false);
                   // Center map on user location if no markers
                   if (markers.length === 0) {
                     mapRef.current?.flyTo({ center: userLoc, zoom: 14 });
@@ -109,8 +135,13 @@ export function InteractiveMap({
                     "Geolocation access denied or unavailable:",
                     error.message || "Unknown error",
                   );
+                  setLocationPermissionState("denied");
+                  setIsLoading(false);
                 },
               );
+            } else {
+              setLocationPermissionState("denied");
+              setIsLoading(false);
             }
           }
         });
@@ -138,7 +169,7 @@ export function InteractiveMap({
         mapRef.current = null;
       }
     };
-  }, [center, zoom]);
+  }, [center, zoom, markers.length, showUserLocation, userLocation]);
 
   // Update user location marker
   useEffect(() => {
@@ -269,19 +300,118 @@ export function InteractiveMap({
       className="w-full rounded-lg overflow-hidden relative"
       style={{ height: height, minHeight: "400px" }}
     >
-      <div ref={mapContainerRef} className="w-full h-full" />
+      <div
+        ref={mapContainerRef}
+        className={`w-full h-full transition-all duration-300 ${
+          showUserLocation &&
+          !userLocation &&
+          (locationPermissionState === "pending" ||
+            locationPermissionState === "prompt")
+            ? "blur-sm"
+            : ""
+        }`}
+      />
 
-      {isLoading && (
-        <div className="absolute inset-0 bg-gray-100 dark:bg-gray-800 flex items-center justify-center rounded-lg">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-black dark:border-white mx-auto mb-2"></div>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
-              Loading map...
-            </p>
+      {/* Loading state while waiting for location permission or map load */}
+      {isLoading &&
+        locationPermissionState !== "denied" &&
+        locationPermissionState !== "granted" && (
+          <div className="absolute inset-0 bg-gray-100/90 dark:bg-gray-800/90 backdrop-blur-sm flex items-center justify-center rounded-lg">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-black dark:border-white mx-auto mb-2"></div>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Loading map...
+              </p>
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
+      {/* Location permission prompt overlay */}
+      {showUserLocation &&
+        !userLocation &&
+        (locationPermissionState === "pending" ||
+          locationPermissionState === "prompt") && (
+          <div className="absolute inset-0 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md flex items-center justify-center rounded-lg">
+            <div className="text-center p-6 max-w-md">
+              <div className="mb-4">
+                <svg
+                  className="w-16 h-16 mx-auto text-blue-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                Location Permission Required
+              </h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                Please allow location access to view the interactive map and see
+                nearby issues.
+              </p>
+              <div className="animate-pulse text-xs text-gray-500 dark:text-gray-500">
+                Waiting for permission...
+              </div>
+            </div>
+          </div>
+        )}
+
+      {/* Location permission denied message */}
+      {showUserLocation &&
+        !userLocation &&
+        locationPermissionState === "denied" && (
+          <div className="absolute inset-0 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md flex items-center justify-center rounded-lg">
+            <div className="text-center p-6 max-w-md">
+              <div className="mb-4">
+                <svg
+                  className="w-16 h-16 mx-auto text-red-500"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"
+                  />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                Location Access Denied
+              </h3>
+              <p className="text-base font-medium text-red-600 dark:text-red-400 mb-3">
+                Allow access to location to continue
+              </p>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                To use the map, please enable location permissions in your
+                browser settings and refresh the page.
+              </p>
+              <button
+                onClick={() => window.location.reload()}
+                className="text-sm bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors"
+              >
+                Refresh Page
+              </button>
+            </div>
+          </div>
+        )}
+
+      {/* Map error state */}
       {error && (
         <div className="absolute inset-0 bg-gray-100 dark:bg-gray-800 flex items-center justify-center rounded-lg">
           <div className="text-center p-4">
