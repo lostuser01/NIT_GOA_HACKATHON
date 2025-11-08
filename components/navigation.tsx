@@ -9,6 +9,7 @@ import {
   LayoutDashboard,
   LogOut,
   User,
+  PlusCircle,
 } from "lucide-react";
 import {
   NavigationMenu,
@@ -77,8 +78,19 @@ export function Navigation() {
           </NavigationMenu>
         </div>
 
-        {/* Right Side - Auth & Theme Toggle */}
+        {/* Right Side - Report Issue, Auth & Theme Toggle */}
         <div className="flex items-center gap-2">
+          {isAuthenticated && (
+            <Link href="/report">
+              <Button
+                size="sm"
+                className="bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 font-medium"
+              >
+                <PlusCircle className="mr-1.5 size-4" />
+                Report Issue
+              </Button>
+            </Link>
+          )}
           {isAuthenticated && user ? (
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-gray-100 dark:bg-gray-900">
