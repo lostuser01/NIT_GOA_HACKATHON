@@ -4,6 +4,7 @@ import Link from "next/link";
 import { AlertCircle, TrendingUp, Shield, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ShuffleText } from "@/components/shuffle-text";
+import "@/components/shuffle-text/shuffle.css";
 
 export default function Home() {
   return (
@@ -19,12 +20,21 @@ export default function Home() {
               </span>
             </div>
 
-            <h1 className="max-w-4xl text-4xl font-bold tracking-tight text-black dark:text-white sm:text-5xl md:text-6xl lg:text-7xl">
-              <ShuffleText
-                text="Empower Your Community with CityPulse"
-                className="inline-block"
-              />
-            </h1>
+            <ShuffleText
+              text="Empower Your Community with CityPulse"
+              tag="h1"
+              className="max-w-4xl text-4xl font-bold tracking-tight text-black dark:text-white sm:text-5xl md:text-6xl lg:text-7xl"
+              shuffleDirection="right"
+              duration={1.5}
+              shuffleTimes={3}
+              animationMode="evenodd"
+              ease="power3.out"
+              stagger={0.08}
+              threshold={0.1}
+              triggerOnce={true}
+              triggerOnHover={true}
+              respectReducedMotion={true}
+            />
 
             <p className="max-w-2xl text-lg leading-8 text-gray-600 dark:text-gray-400 sm:text-xl">
               Report civic issues with description, photo, and live location.
