@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -18,10 +20,11 @@ export function SignupForm({
     <form className={cn("flex flex-col gap-6", className)} {...props}>
       <FieldGroup>
         <div className="flex flex-col items-center gap-1 text-center">
-          <h1 className="text-2xl font-bold">Join CityPulse</h1>
+          <h1 className="text-2xl font-bold text-black dark:text-white">
+            Join CityPulse
+          </h1>
           <p className="text-muted-foreground text-sm text-balance">
-            Create an account to report civic issues and make a difference in
-            your community
+            Create an account to start reporting and tracking civic issues
           </p>
         </div>
         <Field>
@@ -32,23 +35,26 @@ export function SignupForm({
           <FieldLabel htmlFor="email">Email</FieldLabel>
           <Input id="email" type="email" placeholder="m@example.com" required />
           <FieldDescription>
-            We&apos;ll use this to send you updates on your reported issues
+            We&apos;ll use this to send you updates on your reported issues.
           </FieldDescription>
         </Field>
         <Field>
           <FieldLabel htmlFor="password">Password</FieldLabel>
           <Input id="password" type="password" required />
           <FieldDescription>
-            Must be at least 8 characters long
+            Must be at least 8 characters long.
           </FieldDescription>
         </Field>
         <Field>
           <FieldLabel htmlFor="confirm-password">Confirm Password</FieldLabel>
           <Input id="confirm-password" type="password" required />
-          <FieldDescription>Please confirm your password</FieldDescription>
+          <FieldDescription>Please confirm your password.</FieldDescription>
         </Field>
         <Field>
-          <Button type="submit" className="w-full">
+          <Button
+            type="submit"
+            className="w-full bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200"
+          >
             Create Account
           </Button>
         </Field>
@@ -71,7 +77,7 @@ export function SignupForm({
             Already have an account?{" "}
             <Link
               href="/login"
-              className="underline underline-offset-4 hover:text-primary"
+              className="underline underline-offset-4 hover:text-black dark:hover:text-white font-medium"
             >
               Sign in
             </Link>

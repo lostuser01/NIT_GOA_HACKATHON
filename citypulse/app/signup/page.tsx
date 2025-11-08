@@ -1,23 +1,30 @@
 import { MapPin } from "lucide-react";
-
 import { SignupForm } from "@/components/signup-form";
+import { ThemeToggle } from "@/components/theme-toggle";
+import Link from "next/link";
 
 export default function SignupPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
-      <div className="flex flex-col gap-4 p-6 md:p-10 w-full max-w-md">
+    <div className="flex min-h-screen items-center justify-center bg-white dark:bg-black">
+      <div className="absolute top-4 right-4">
+        <ThemeToggle />
+      </div>
+      <div className="flex flex-col gap-8 p-6 md:p-10 w-full max-w-md">
         <div className="flex justify-center gap-2">
-          <a href="/" className="flex items-center gap-2 font-medium text-lg">
-            <div className="bg-blue-600 text-white flex size-8 items-center justify-center rounded-md">
-              <MapPin className="size-5" />
+          <Link
+            href="/"
+            className="flex items-center gap-2 font-medium text-lg group"
+          >
+            <div className="bg-black dark:bg-white text-white dark:text-black flex size-10 items-center justify-center rounded-lg transition-transform group-hover:scale-105">
+              <MapPin className="size-6" />
             </div>
-            <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            <span className="text-3xl font-bold text-black dark:text-white">
               CityPulse
             </span>
-          </a>
+          </Link>
         </div>
         <div className="flex flex-1 items-center justify-center">
-          <div className="w-full">
+          <div className="w-full bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-lg p-8 shadow-lg">
             <SignupForm />
           </div>
         </div>
