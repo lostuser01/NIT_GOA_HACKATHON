@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   MapPin,
@@ -52,8 +53,15 @@ export function Navigation() {
       <div className="container mx-auto flex h-14 items-center justify-between px-4">
         {/* Logo - Left */}
         <Link href="/" className="flex items-center gap-2 group">
-          <div className="bg-black dark:bg-white text-white dark:text-black flex size-6 items-center justify-center rounded-md transition-transform group-hover:scale-105">
-            <MapPin className="size-4" />
+          <div className="relative size-10 transition-transform group-hover:scale-105">
+            <Image
+              src="/logo.png"
+              alt="OurStreet Logo"
+              width={40}
+              height={40}
+              className="object-contain"
+              priority
+            />
           </div>
           <span className="text-lg font-semibold text-black dark:text-white">
             OurStreet
