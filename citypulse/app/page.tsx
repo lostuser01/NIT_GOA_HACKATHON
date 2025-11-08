@@ -23,13 +23,13 @@ export default function Home() {
   return (
     <div className="flex min-h-screen flex-col bg-white dark:bg-black">
       {/* Navigation Menu */}
-      <header className="w-full border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-black sticky top-0 z-50 backdrop-blur-sm bg-white/80 dark:bg-black/80">
-        <div className="container mx-auto flex h-16 items-center justify-between px-4">
+      <header className="sticky top-0 z-50 w-full border-b border-gray-200/50 dark:border-gray-800/50 bg-white/80 dark:bg-black/80 backdrop-blur-md supports-[backdrop-filter]:bg-white/60 supports-[backdrop-filter]:dark:bg-black/60">
+        <div className="container mx-auto flex h-14 items-center justify-between px-4">
           <Link href="/" className="flex items-center gap-2 group">
-            <div className="bg-black dark:bg-white text-white dark:text-black flex size-8 items-center justify-center rounded-lg transition-transform group-hover:scale-105">
-              <MapPin className="size-5" />
+            <div className="bg-black dark:bg-white text-white dark:text-black flex size-6 items-center justify-center rounded-md transition-transform group-hover:scale-105">
+              <MapPin className="size-4" />
             </div>
-            <span className="text-xl font-bold text-black dark:text-white">
+            <span className="text-lg font-semibold text-black dark:text-white">
               CityPulse
             </span>
           </Link>
@@ -37,51 +37,46 @@ export default function Home() {
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
-                  <Link href="/map">
-                    <NavigationMenuLink
-                      className={navigationMenuTriggerStyle()}
-                    >
-                      <Map className="mr-2 size-4" />
-                      Map
-                    </NavigationMenuLink>
-                  </Link>
+                  <NavigationMenuLink
+                    href="/map"
+                    className={navigationMenuTriggerStyle()}
+                  >
+                    <Map className="mr-1.5 size-4" />
+                    Map
+                  </NavigationMenuLink>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <Link href="/dashboard">
-                    <NavigationMenuLink
-                      className={navigationMenuTriggerStyle()}
-                    >
-                      Dashboard
-                    </NavigationMenuLink>
-                  </Link>
+                  <NavigationMenuLink
+                    href="/dashboard"
+                    className={navigationMenuTriggerStyle()}
+                  >
+                    Dashboard
+                  </NavigationMenuLink>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <Link href="/team">
-                    <NavigationMenuLink
-                      className={navigationMenuTriggerStyle()}
-                    >
-                      <Users className="mr-2 size-4" />
-                      Team
-                    </NavigationMenuLink>
-                  </Link>
+                  <NavigationMenuLink
+                    href="/team"
+                    className={navigationMenuTriggerStyle()}
+                  >
+                    <Users className="mr-1.5 size-4" />
+                    Team
+                  </NavigationMenuLink>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <Link href="/login">
-                    <NavigationMenuLink
-                      className={navigationMenuTriggerStyle()}
-                    >
-                      Login
-                    </NavigationMenuLink>
-                  </Link>
+                  <NavigationMenuLink
+                    href="/login"
+                    className={navigationMenuTriggerStyle()}
+                  >
+                    Login
+                  </NavigationMenuLink>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <Link href="/signup">
-                    <NavigationMenuLink
-                      className={navigationMenuTriggerStyle()}
-                    >
-                      Sign Up
-                    </NavigationMenuLink>
-                  </Link>
+                  <NavigationMenuLink
+                    href="/signup"
+                    className={navigationMenuTriggerStyle()}
+                  >
+                    Sign Up
+                  </NavigationMenuLink>
                 </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
@@ -94,8 +89,8 @@ export default function Home() {
       <main className="flex flex-1 flex-col">
         <section className="container mx-auto px-4 py-20 md:py-32">
           <div className="flex flex-col items-center gap-8 text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 px-4 py-2 text-sm">
-              <AlertCircle className="size-4" />
+            <div className="inline-flex items-center gap-2 rounded-full border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 px-3 py-1 text-xs">
+              <AlertCircle className="size-3" />
               <span className="text-gray-700 dark:text-gray-300">
                 Local Issue Reporting & Impact Tracker
               </span>
@@ -115,11 +110,11 @@ export default function Home() {
               municipal authorities.
             </p>
 
-            <div className="flex flex-col gap-4 sm:flex-row">
+            <div className="flex flex-col gap-3 sm:flex-row">
               <Button
                 asChild
                 size="lg"
-                className="bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 px-8"
+                className="bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 h-10 px-8"
               >
                 <Link href="/signup">Get Started Free</Link>
               </Button>
@@ -127,7 +122,7 @@ export default function Home() {
                 asChild
                 size="lg"
                 variant="outline"
-                className="border-gray-300 dark:border-gray-700 px-8"
+                className="border-gray-300 dark:border-gray-700 h-10 px-8"
               >
                 <Link href="/map">View Map</Link>
               </Button>
@@ -239,19 +234,18 @@ export default function Home() {
         </section>
 
         {/* CTA Section */}
-        <section className="border-t border-gray-200 dark:border-gray-800 bg-black dark:bg-white py-20">
+        <section className="border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-black py-20">
           <div className="container mx-auto px-4 text-center">
-            <h2 className="mb-4 text-3xl font-bold text-white dark:text-black sm:text-4xl">
+            <h2 className="mb-4 text-3xl font-bold text-black dark:text-white sm:text-4xl">
               Ready to Make a Difference?
             </h2>
-            <p className="mb-8 text-lg text-gray-300 dark:text-gray-700">
+            <p className="mb-8 text-lg text-gray-600 dark:text-gray-400">
               Join CityPulse today and help build a better community
             </p>
             <Button
               asChild
               size="lg"
-              variant="outline"
-              className="border-white dark:border-black bg-transparent text-white dark:text-black hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white px-8"
+              className="bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 h-10 px-8"
             >
               <Link href="/signup">Get Started Now</Link>
             </Button>
