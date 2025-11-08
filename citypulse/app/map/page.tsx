@@ -1,13 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import {
   MapPin,
   Camera,
   MapPinned,
   AlertCircle,
-  TrendingUp,
   CheckCircle,
   Clock,
 } from "lucide-react";
@@ -33,7 +31,6 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { ThemeToggle } from "@/components/theme-toggle";
 
 // Mock issues data
 const mockIssues = [
@@ -63,7 +60,7 @@ const mockIssues = [
     description: "Garbage bin overflowing for 3 days",
     category: "Sanitation",
     status: "resolved",
-    location: { lat: 15.4850, lng: 73.8250 },
+    location: { lat: 15.485, lng: 73.825 },
     address: "Market Area, Panjim",
     date: "2024-01-13",
   },
@@ -73,7 +70,7 @@ const mockIssues = [
     description: "Continuous water leak from pipe",
     category: "Water",
     status: "open",
-    location: { lat: 15.4950, lng: 73.8300 },
+    location: { lat: 15.495, lng: 73.83 },
     address: "Residency Road, Panjim",
     date: "2024-01-12",
   },
@@ -95,7 +92,7 @@ export default function MapPage() {
   const [selectedIssue, setSelectedIssue] = useState<number | null>(null);
   const [isReportDialogOpen, setIsReportDialogOpen] = useState(false);
   const [location, setLocation] = useState<{ lat: number; lng: number } | null>(
-    null
+    null,
   );
 
   const getLocation = () => {
@@ -109,33 +106,13 @@ export default function MapPage() {
         },
         (error) => {
           console.error("Error getting location:", error);
-        }
+        },
       );
     }
   };
 
   return (
     <div className="flex min-h-screen flex-col bg-white dark:bg-black">
-      {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-black/80 backdrop-blur-sm">
-        <div className="container mx-auto flex h-16 items-center justify-between px-4">
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="bg-black dark:bg-white text-white dark:text-black flex size-8 items-center justify-center rounded-lg transition-transform group-hover:scale-105">
-              <MapPin className="size-5" />
-            </div>
-            <span className="text-xl font-bold text-black dark:text-white">
-              CityPulse
-            </span>
-          </Link>
-          <div className="flex items-center gap-4">
-            <Link href="/">
-              <Button variant="outline">Back to Home</Button>
-            </Link>
-            <ThemeToggle />
-          </div>
-        </div>
-      </header>
-
       {/* Main Content */}
       <main className="flex-1">
         <div className="container mx-auto px-4 py-8">
@@ -150,7 +127,10 @@ export default function MapPage() {
                 progress in real-time
               </p>
             </div>
-            <Dialog open={isReportDialogOpen} onOpenChange={setIsReportDialogOpen}>
+            <Dialog
+              open={isReportDialogOpen}
+              onOpenChange={setIsReportDialogOpen}
+            >
               <DialogTrigger asChild>
                 <Button
                   size="lg"
@@ -162,7 +142,9 @@ export default function MapPage() {
               </DialogTrigger>
               <DialogContent className="max-w-2xl">
                 <DialogHeader>
-                  <DialogTitle className="text-2xl">Report Civic Issue</DialogTitle>
+                  <DialogTitle className="text-2xl">
+                    Report Civic Issue
+                  </DialogTitle>
                   <DialogDescription>
                     Fill in the details below to report a civic issue with
                     description, photo, and live location
@@ -248,7 +230,7 @@ export default function MapPage() {
                         <MapPin className="mr-2 size-4" />
                         {location
                           ? `Location Captured: ${location.lat.toFixed(
-                              4
+                              4,
                             )}, ${location.lng.toFixed(4)}`
                           : "Capture Current Location"}
                       </Button>
@@ -382,7 +364,8 @@ export default function MapPage() {
               <CardContent>
                 <div className="space-y-4 max-h-[600px] overflow-y-auto">
                   {mockIssues.map((issue) => {
-                    const StatusIcon = statusIcons[issue.status as keyof typeof statusIcons];
+                    const StatusIcon =
+                      statusIcons[issue.status as keyof typeof statusIcons];
                     return (
                       <div
                         key={issue.id}
@@ -405,7 +388,13 @@ export default function MapPage() {
                               </p>
                             </div>
                           </div>
-                          <Badge className={statusColors[issue.status as keyof typeof statusColors]}>
+                          <Badge
+                            className={
+                              statusColors[
+                                issue.status as keyof typeof statusColors
+                              ]
+                            }
+                          >
                             {issue.status.replace("-", " ")}
                           </Badge>
                         </div>

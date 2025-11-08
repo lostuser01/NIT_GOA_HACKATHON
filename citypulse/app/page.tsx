@@ -1,90 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import {
-  MapPin,
-  AlertCircle,
-  TrendingUp,
-  Shield,
-  Map,
-  Users,
-} from "lucide-react";
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { AlertCircle, TrendingUp, Shield, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col bg-white dark:bg-black">
-      {/* Navigation Menu */}
-      <header className="sticky top-0 z-50 w-full border-b border-gray-200/50 dark:border-gray-800/50 bg-white/80 dark:bg-black/80 backdrop-blur-md supports-[backdrop-filter]:bg-white/60 supports-[backdrop-filter]:dark:bg-black/60">
-        <div className="container mx-auto flex h-14 items-center justify-between px-4">
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="bg-black dark:bg-white text-white dark:text-black flex size-6 items-center justify-center rounded-md transition-transform group-hover:scale-105">
-              <MapPin className="size-4" />
-            </div>
-            <span className="text-lg font-semibold text-black dark:text-white">
-              CityPulse
-            </span>
-          </Link>
-          <div className="flex items-center gap-4">
-            <NavigationMenu>
-              <NavigationMenuList>
-                <NavigationMenuItem>
-                  <NavigationMenuLink
-                    href="/map"
-                    className={navigationMenuTriggerStyle()}
-                  >
-                    <Map className="mr-1.5 size-4" />
-                    Map
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <NavigationMenuLink
-                    href="/dashboard"
-                    className={navigationMenuTriggerStyle()}
-                  >
-                    Dashboard
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <NavigationMenuLink
-                    href="/team"
-                    className={navigationMenuTriggerStyle()}
-                  >
-                    <Users className="mr-1.5 size-4" />
-                    Team
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <NavigationMenuLink
-                    href="/login"
-                    className={navigationMenuTriggerStyle()}
-                  >
-                    Login
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <NavigationMenuLink
-                    href="/signup"
-                    className={navigationMenuTriggerStyle()}
-                  >
-                    Sign Up
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
-            <ThemeToggle />
-          </div>
-        </div>
-      </header>
-
       {/* Hero Section */}
       <main className="flex flex-1 flex-col">
         <section className="container mx-auto px-4 py-20 md:py-32">

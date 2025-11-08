@@ -1,11 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { MapPin, Github, Linkedin, Mail, Users } from "lucide-react";
+import { Github, Linkedin, Mail, Users, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { ThemeToggle } from "@/components/theme-toggle";
 
 const teamMembers = [
   {
@@ -49,27 +48,6 @@ const teamMembers = [
 export default function TeamPage() {
   return (
     <div className="flex min-h-screen flex-col bg-white dark:bg-black">
-      {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-black/80 backdrop-blur-sm">
-        <div className="container mx-auto flex h-16 items-center justify-between px-4">
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="bg-black dark:bg-white text-white dark:text-black flex size-8 items-center justify-center rounded-lg transition-transform group-hover:scale-105">
-              <MapPin className="size-5" />
-            </div>
-            <span className="text-xl font-bold text-black dark:text-white">
-              CityPulse
-            </span>
-          </Link>
-          <div className="flex items-center gap-4">
-            <Link href="/">
-              <Button variant="outline">Back to Home</Button>
-            </Link>
-            <ThemeToggle />
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
       <main className="flex-1">
         <div className="container mx-auto px-4 py-16">
           {/* Page Header */}
