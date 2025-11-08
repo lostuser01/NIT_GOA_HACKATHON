@@ -64,9 +64,13 @@ export default function ReportIssuePage() {
           toast.success("Location captured successfully!");
         },
         (error) => {
+<<<<<<< Updated upstream
           const errorMessage =
             error.message || "Unable to get location. Please enable GPS.";
           toast.error(errorMessage);
+=======
+          toast.error("Unable to get location. Please enable GPS.");
+>>>>>>> Stashed changes
           console.error(error);
         },
       );

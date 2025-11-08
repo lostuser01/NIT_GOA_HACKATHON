@@ -14,6 +14,10 @@ import {
   Loader2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -58,7 +62,11 @@ export default function IssueDetailPage() {
       const data = await response.json();
       setIssue(data.data);
 
+<<<<<<< Updated upstream
       // Check if user has voted
+=======
+      // Check if user has voted (you can enhance this with actual API call)
+>>>>>>> Stashed changes
       const votedIssues = JSON.parse(
         localStorage.getItem("votedIssues") || "[]",
       );
@@ -97,11 +105,19 @@ export default function IssueDetailPage() {
         throw new Error("Failed to vote");
       }
 
+<<<<<<< Updated upstream
+=======
+      // Update local state
+>>>>>>> Stashed changes
       setHasVoted(true);
       if (issue) {
         setIssue({ ...issue, votes: issue.votes + 1 });
       }
 
+<<<<<<< Updated upstream
+=======
+      // Save to localStorage
+>>>>>>> Stashed changes
       const votedIssues = JSON.parse(
         localStorage.getItem("votedIssues") || "[]",
       );
@@ -149,6 +165,10 @@ export default function IssueDetailPage() {
 
       const data = await response.json();
 
+<<<<<<< Updated upstream
+=======
+      // Update local state with new comment
+>>>>>>> Stashed changes
       if (issue) {
         setIssue({
           ...issue,
