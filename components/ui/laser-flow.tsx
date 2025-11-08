@@ -16,6 +16,8 @@ export function LaserFlow({ className = "" }: LaserFlowProps) {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    let animationFrame: number;
+
     // Set canvas size
     const setCanvasSize = () => {
       const rect = canvas.getBoundingClientRect();
@@ -27,129 +29,181 @@ export function LaserFlow({ className = "" }: LaserFlowProps) {
     setCanvasSize();
     window.addEventListener("resize", setCanvasSize);
 
-    // Laser beam properties
-    let animationFrame: number;
-    let offset = 0;
+    // Animation state
+    let time = 0;
 
-    const particles: {
+    // Particle system
+    const particles: Array<{
       x: number;
       y: number;
-      speed: number;
-      size: number;
-      opacity: number;
-    }[] = [];
+      vx: number;
+      vy: number;
+      life: number;
+      maxLife: number;
+    }> = [];
 
-    // Create particles
-    for (let i = 0; i < 50; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        speed: Math.random() * 2 + 1,
-        size: Math.random() * 2 + 1,
-        opacity: Math.random() * 0.5 + 0.2,
-      });
+    const createParticle = (x: number, y: number) => {
+      return {
+        x,
+        y,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: Math.random() * 2 + 1,
+        life: 1,
+        maxLife: Math.random() * 60 + 40,
+      };
+    };
+
+    // Initialize particles
+    for (let i = 0; i < 30; i++) {
+      const x = canvas.width / 2 + (Math.random() - 0.5) * 100;
+      const y = Math.random() * canvas.height;
+      particles.push(createParticle(x, y));
     }
 
     const animate = () => {
       const width = canvas.getBoundingClientRect().width;
       const height = canvas.getBoundingClientRect().height;
 
-      // Clear canvas
-      ctx.clearRect(0, 0, width, height);
+      // Clear with slight trail effect
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, width, height);
 
-      // Draw background particles
-      particles.forEach((particle) => {
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(168, 85, 247, ${particle.opacity * 0.8})`;
-        ctx.shadowBlur = 3;
-        ctx.shadowColor = "rgba(168, 85, 247, 0.8)";
-        ctx.fill();
-        ctx.shadowBlur = 0;
+      time += 0.02;
 
-        // Update particle position
-        particle.y += particle.speed;
-        if (particle.y > height) {
-          particle.y = -10;
-          particle.x = Math.random() * width;
-        }
-      });
-
-      // Draw laser beam from top center
+      // Center position
       const centerX = width / 2;
-      const beamWidth = 300;
-      const beamHeight = height;
 
-      // Main laser glow
-      const gradient = ctx.createRadialGradient(
+      // Main vertical laser beam
+      const beamWidth = 200;
+
+      // Outer glow
+      const outerGlow = ctx.createRadialGradient(
         centerX,
-        0,
+        height * 0.3,
         0,
         centerX,
-        beamHeight,
-        beamWidth,
+        height * 0.5,
+        beamWidth * 1.5,
       );
-      gradient.addColorStop(0, "rgba(255, 255, 255, 1)");
-      gradient.addColorStop(0.1, "rgba(240, 200, 255, 0.9)");
-      gradient.addColorStop(0.3, "rgba(200, 150, 255, 0.7)");
-      gradient.addColorStop(0.5, "rgba(168, 85, 247, 0.5)");
-      gradient.addColorStop(0.7, "rgba(168, 85, 247, 0.3)");
-      gradient.addColorStop(1, "rgba(168, 85, 247, 0)");
+      outerGlow.addColorStop(0, "rgba(168, 85, 247, 0.3)");
+      outerGlow.addColorStop(0.5, "rgba(168, 85, 247, 0.1)");
+      outerGlow.addColorStop(1, "rgba(168, 85, 247, 0)");
 
-      ctx.fillStyle = gradient;
-      ctx.fillRect(centerX - beamWidth, 0, beamWidth * 2, beamHeight);
+      ctx.fillStyle = outerGlow;
+      ctx.fillRect(0, 0, width, height);
 
-      // Central bright beam
-      const coreGradient = ctx.createLinearGradient(
-        centerX - 30,
+      // Main beam gradient
+      const mainGradient = ctx.createLinearGradient(
+        centerX - beamWidth / 2,
         0,
-        centerX + 30,
+        centerX + beamWidth / 2,
+        0,
+      );
+      mainGradient.addColorStop(0, "rgba(168, 85, 247, 0)");
+      mainGradient.addColorStop(0.3, "rgba(200, 150, 255, 0.6)");
+      mainGradient.addColorStop(0.5, "rgba(240, 220, 255, 0.9)");
+      mainGradient.addColorStop(0.7, "rgba(200, 150, 255, 0.6)");
+      mainGradient.addColorStop(1, "rgba(168, 85, 247, 0)");
+
+      ctx.fillStyle = mainGradient;
+      ctx.fillRect(centerX - beamWidth / 2, 0, beamWidth, height);
+
+      // Bright core
+      const coreGradient = ctx.createLinearGradient(
+        centerX - 40,
+        0,
+        centerX + 40,
         0,
       );
       coreGradient.addColorStop(0, "rgba(255, 255, 255, 0)");
+      coreGradient.addColorStop(0.4, "rgba(255, 255, 255, 0.8)");
       coreGradient.addColorStop(0.5, "rgba(255, 255, 255, 1)");
+      coreGradient.addColorStop(0.6, "rgba(255, 255, 255, 0.8)");
       coreGradient.addColorStop(1, "rgba(255, 255, 255, 0)");
 
-      ctx.shadowBlur = 20;
-      ctx.shadowColor = "rgba(255, 255, 255, 0.9)";
       ctx.fillStyle = coreGradient;
-      ctx.fillRect(centerX - 30, 0, 60, beamHeight);
+      ctx.shadowBlur = 30;
+      ctx.shadowColor = "rgba(255, 255, 255, 0.8)";
+      ctx.fillRect(centerX - 40, 0, 80, height);
       ctx.shadowBlur = 0;
 
-      // Animated flowing effect
-      offset += 2;
-      if (offset > 20) offset = 0;
-
-      for (let i = 0; i < 3; i++) {
-        const y = (offset + i * 50) % beamHeight;
-        const flowGradient = ctx.createRadialGradient(
+      // Flowing waves
+      for (let i = 0; i < 5; i++) {
+        const waveY = ((time * 100 + i * 100) % height) - 50;
+        const waveGradient = ctx.createRadialGradient(
           centerX,
-          y,
+          waveY,
           0,
           centerX,
-          y,
-          50,
+          waveY,
+          80,
         );
-        flowGradient.addColorStop(0, "rgba(255, 255, 255, 0.9)");
-        flowGradient.addColorStop(0.5, "rgba(200, 150, 255, 0.6)");
-        flowGradient.addColorStop(1, "rgba(168, 85, 247, 0)");
+        waveGradient.addColorStop(0, "rgba(255, 255, 255, 0.8)");
+        waveGradient.addColorStop(0.3, "rgba(220, 180, 255, 0.6)");
+        waveGradient.addColorStop(0.7, "rgba(168, 85, 247, 0.3)");
+        waveGradient.addColorStop(1, "rgba(168, 85, 247, 0)");
 
-        ctx.fillStyle = flowGradient;
-        ctx.fillRect(centerX - 50, y - 25, 100, 50);
+        ctx.fillStyle = waveGradient;
+        ctx.fillRect(centerX - 80, waveY - 40, 160, 80);
       }
 
-      // Edge glow
-      ctx.shadowBlur = 50;
+      // Edge glow lines
+      ctx.strokeStyle = "rgba(200, 150, 255, 0.5)";
+      ctx.lineWidth = 2;
+      ctx.shadowBlur = 20;
       ctx.shadowColor = "rgba(168, 85, 247, 0.8)";
-      ctx.strokeStyle = "rgba(200, 150, 255, 0.7)";
-      ctx.lineWidth = 3;
+
       ctx.beginPath();
-      ctx.moveTo(centerX - 25, 0);
-      ctx.lineTo(centerX - 25, beamHeight);
-      ctx.moveTo(centerX + 25, 0);
-      ctx.lineTo(centerX + 25, beamHeight);
+      ctx.moveTo(centerX - 35, 0);
+      ctx.lineTo(centerX - 35, height);
       ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(centerX + 35, 0);
+      ctx.lineTo(centerX + 35, height);
+      ctx.stroke();
+
       ctx.shadowBlur = 0;
+
+      // Update and draw particles
+      particles.forEach((particle, index) => {
+        particle.x += particle.vx;
+        particle.y += particle.vy;
+        particle.life -= 1;
+
+        if (particle.life <= 0 || particle.y > height) {
+          particles[index] = createParticle(
+            centerX + (Math.random() - 0.5) * 100,
+            -10,
+          );
+        }
+
+        const alpha = Math.min(particle.life / particle.maxLife, 0.6);
+        const size = Math.random() * 2 + 1;
+
+        ctx.fillStyle = `rgba(200, 150, 255, ${alpha})`;
+        ctx.shadowBlur = 4;
+        ctx.shadowColor = `rgba(168, 85, 247, ${alpha})`;
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      });
+
+      // Sparkles
+      if (Math.random() > 0.7) {
+        const sparkleX = centerX + (Math.random() - 0.5) * 60;
+        const sparkleY = Math.random() * height;
+        const sparkleSize = Math.random() * 3 + 1;
+
+        ctx.fillStyle = `rgba(255, 255, 255, ${Math.random() * 0.8 + 0.2})`;
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = "rgba(255, 255, 255, 0.9)";
+        ctx.beginPath();
+        ctx.arc(sparkleX, sparkleY, sparkleSize, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
 
       animationFrame = requestAnimationFrame(animate);
     };
@@ -165,8 +219,8 @@ export function LaserFlow({ className = "" }: LaserFlowProps) {
   return (
     <canvas
       ref={canvasRef}
-      className={`absolute inset-0 pointer-events-none ${className}`}
-      style={{ width: "100%", height: "100%" }}
+      className={`w-full h-full ${className}`}
+      style={{ display: "block" }}
     />
   );
 }
