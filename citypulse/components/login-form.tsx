@@ -48,7 +48,7 @@ export function LoginForm({
         </Field>
         <FieldSeparator>Or continue with</FieldSeparator>
         <Field>
-          <Button variant="outline" type="button" className="w-full">
+          <Button variant="outline" type="button" className="w-full h-10">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"

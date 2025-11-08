@@ -1,64 +1,18 @@
-import Image from "next/image";
+"use client";
+
 import Link from "next/link";
-import { MapPin, AlertCircle, TrendingUp, Users, Shield } from "lucide-react";
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { AlertCircle, TrendingUp, Shield, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col bg-white dark:bg-black">
-      {/* Navigation Menu */}
-      <header className="w-full border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-black">
-        <div className="container mx-auto flex h-16 items-center justify-between px-4">
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="bg-black dark:bg-white text-white dark:text-black flex size-8 items-center justify-center rounded-lg transition-transform group-hover:scale-105">
-              <MapPin className="size-5" />
-            </div>
-            <span className="text-xl font-bold text-black dark:text-white">
-              CityPulse
-            </span>
-          </Link>
-          <div className="flex items-center gap-4">
-            <NavigationMenu>
-              <NavigationMenuList>
-                <NavigationMenuItem>
-                  <Link href="/login" legacyBehavior passHref>
-                    <NavigationMenuLink
-                      className={navigationMenuTriggerStyle()}
-                    >
-                      Login
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                  <Link href="/signup" legacyBehavior passHref>
-                    <NavigationMenuLink
-                      className={navigationMenuTriggerStyle()}
-                    >
-                      Sign Up
-                    </NavigationMenuLink>
-                  </Link>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
-            <ThemeToggle />
-          </div>
-        </div>
-      </header>
-
       {/* Hero Section */}
       <main className="flex flex-1 flex-col">
         <section className="container mx-auto px-4 py-20 md:py-32">
           <div className="flex flex-col items-center gap-8 text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 px-4 py-2 text-sm">
-              <AlertCircle className="size-4" />
+            <div className="inline-flex items-center gap-2 rounded-full border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 px-3 py-1 text-xs">
+              <AlertCircle className="size-3" />
               <span className="text-gray-700 dark:text-gray-300">
                 Local Issue Reporting & Impact Tracker
               </span>
@@ -72,16 +26,17 @@ export default function Home() {
             </h1>
 
             <p className="max-w-2xl text-lg leading-8 text-gray-600 dark:text-gray-400 sm:text-xl">
-              Report civic issues, track resolutions in real-time, and foster
-              transparent governance. Join thousands of citizens making a
-              difference in their communities.
+              Report civic issues with description, photo, and live location.
+              View them on an interactive city map and track their resolution
+              progress in real-time. Bridge the gap between citizens and
+              municipal authorities.
             </p>
 
-            <div className="flex flex-col gap-4 sm:flex-row">
+            <div className="flex flex-col gap-3 sm:flex-row">
               <Button
                 asChild
                 size="lg"
-                className="bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 px-8"
+                className="bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 h-10 px-8"
               >
                 <Link href="/signup">Get Started Free</Link>
               </Button>
@@ -89,9 +44,9 @@ export default function Home() {
                 asChild
                 size="lg"
                 variant="outline"
-                className="border-gray-300 dark:border-gray-700 px-8"
+                className="border-gray-300 dark:border-gray-700 h-10 px-8"
               >
-                <Link href="/dashboard">View Dashboard</Link>
+                <Link href="/map">View Map</Link>
               </Button>
             </div>
           </div>
@@ -186,11 +141,14 @@ export default function Home() {
                   duplicate reports, and a lack of accountability.
                 </p>
                 <p className="text-lg leading-relaxed">
-                  CityPulse provides a smart, transparent, and community-driven
-                  platform that enables effortless issue reporting, real-time
-                  tracking, and improved collaboration between citizens and
-                  local authorities — fostering a culture of civic participation
-                  and data-driven governance.
+                  <strong className="text-black dark:text-white">
+                    CityPulse
+                  </strong>{" "}
+                  provides a smart, transparent, and community-driven platform
+                  that enables effortless issue reporting, real-time tracking,
+                  and improved collaboration between citizens and local
+                  authorities — fostering a culture of civic participation and
+                  data-driven governance.
                 </p>
               </div>
             </div>
@@ -198,19 +156,18 @@ export default function Home() {
         </section>
 
         {/* CTA Section */}
-        <section className="border-t border-gray-200 dark:border-gray-800 bg-black dark:bg-white py-20">
+        <section className="border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-black py-20">
           <div className="container mx-auto px-4 text-center">
-            <h2 className="mb-4 text-3xl font-bold text-white dark:text-black sm:text-4xl">
+            <h2 className="mb-4 text-3xl font-bold text-black dark:text-white sm:text-4xl">
               Ready to Make a Difference?
             </h2>
-            <p className="mb-8 text-lg text-gray-300 dark:text-gray-700">
+            <p className="mb-8 text-lg text-gray-600 dark:text-gray-400">
               Join CityPulse today and help build a better community
             </p>
             <Button
               asChild
               size="lg"
-              variant="outline"
-              className="border-white dark:border-black bg-transparent text-white dark:text-black hover:bg-white hover:text-black dark:hover:bg-black dark:hover:text-white px-8"
+              className="bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 h-10 px-8"
             >
               <Link href="/signup">Get Started Now</Link>
             </Button>

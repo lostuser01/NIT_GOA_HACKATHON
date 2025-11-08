@@ -53,14 +53,14 @@ export function SignupForm({
         <Field>
           <Button
             type="submit"
-            className="w-full bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200"
+            className="w-full h-10 bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200"
           >
             Create Account
           </Button>
         </Field>
         <FieldSeparator>Or continue with</FieldSeparator>
         <Field>
-          <Button variant="outline" type="button" className="w-full">
+          <Button variant="outline" type="button" className="w-full h-10">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
