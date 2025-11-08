@@ -73,7 +73,7 @@ export default function TeamPage() {
             {teamMembers.map((member, index) => (
               <NeonGradientCard
                 key={index}
-                className="hover:shadow-lg transition-shadow"
+                className="transition-all duration-300 ease-in-out hover:scale-[1.03] cursor-pointer"
               >
                 <div className="flex flex-col items-center text-center">
                   <Avatar className="size-24 mb-4 border-2 border-gray-200 dark:border-gray-800">
@@ -120,7 +120,7 @@ export default function TeamPage() {
           </div>
 
           {/* Project Info */}
-          <NeonGradientCard className="overflow-hidden">
+          <NeonGradientCard className="overflow-hidden transition-all duration-300 ease-in-out hover:scale-[1.02] cursor-pointer">
             <div className="text-center max-w-3xl mx-auto">
               <h2 className="text-3xl font-bold text-black dark:text-white mb-4">
                 About OurStreet
