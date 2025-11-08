@@ -35,16 +35,8 @@ export async function sendEmailNotification(
         Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
         from:
           process.env.EMAIL_FROM || "OurStreet <notifications@ourstreet.app>",
-=======
-        from: process.env.EMAIL_FROM || "OurStreet <notifications@ourstreet.app>",
->>>>>>> Stashed changes
-=======
-        from: process.env.EMAIL_FROM || "OurStreet <notifications@ourstreet.app>",
->>>>>>> Stashed changes
         to: [to],
         subject,
         html: htmlContent,

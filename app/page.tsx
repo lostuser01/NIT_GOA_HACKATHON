@@ -106,7 +106,7 @@ export default function Home() {
             </div>
 
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-              <NeonGradientCard className="transition-shadow hover:shadow-lg">
+              <NeonGradientCard>
                 <div className="flex flex-col items-center gap-4 text-center">
                   <div className="flex size-12 items-center justify-center rounded-lg bg-white/90 text-black">
                     <AlertCircle className="size-6" />
@@ -121,7 +121,7 @@ export default function Home() {
                 </div>
               </NeonGradientCard>
 
-              <NeonGradientCard className="transition-shadow hover:shadow-lg">
+              <NeonGradientCard>
                 <div className="flex flex-col items-center gap-4 text-center">
                   <div className="flex size-12 items-center justify-center rounded-lg bg-white/90 text-black">
                     <MapPin className="size-6" />
@@ -136,7 +136,7 @@ export default function Home() {
                 </div>
               </NeonGradientCard>
 
-              <NeonGradientCard className="transition-shadow hover:shadow-lg">
+              <NeonGradientCard>
                 <div className="flex flex-col items-center gap-4 text-center">
                   <div className="flex size-12 items-center justify-center rounded-lg bg-white/90 text-black">
                     <TrendingUp className="size-6" />
@@ -151,7 +151,7 @@ export default function Home() {
                 </div>
               </NeonGradientCard>
 
-              <NeonGradientCard className="transition-shadow hover:shadow-lg">
+              <NeonGradientCard>
                 <div className="flex flex-col items-center gap-4 text-center">
                   <div className="flex size-12 items-center justify-center rounded-lg bg-white/90 text-black">
                     <Shield className="size-6" />

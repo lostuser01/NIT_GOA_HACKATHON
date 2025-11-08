@@ -1,6 +1,4 @@
 // Analytics utilities for OurStreet
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 import {
   Issue,
   IssueCategory,
@@ -11,11 +9,6 @@ import {
   ImpactReport,
   PublicStats,
 } from "./types";
-=======
-=======
->>>>>>> Stashed changes
-import { Issue, IssueCategory, IssuePriority, WardAnalytics, IssueHotspot, TrendData, ImpactReport, PublicStats } from "./types";
->>>>>>> Stashed changes
 
 /**
  * Calculate average resolution time for a set of issues
