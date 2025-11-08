@@ -359,51 +359,71 @@ export default function MapPage() {
 
           {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <Card className="relative overflow-hidden">
+            <Card
+              className="relative overflow-hidden hover:shadow-2xl hover:shadow-purple-500/20 hover:bg-purple-50/50 dark:hover:bg-purple-950/30 cursor-pointer group"
+              style={{
+                transition:
+                  "box-shadow 300ms ease-out, background-color 300ms ease-out",
+              }}
+            >
               <BorderBeam duration={8} delay={0} />
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
+                <CardTitle className="text-sm font-medium group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300">
                   Total Issues
                 </CardTitle>
-                <MapPin className="size-4 text-gray-500 dark:text-gray-400" />
+                <MapPin className="size-4 text-gray-500 dark:text-gray-400 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-all duration-300 group-hover:scale-110" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-black dark:text-white">
+                <div className="text-2xl font-bold text-black dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 group-hover:text-4xl transition-all duration-300 ease-out">
                   {issues.length}
                 </div>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
+                <p className="text-xs text-gray-500 dark:text-gray-400 group-hover:text-purple-500 transition-colors duration-300">
                   Reported by citizens
                 </p>
               </CardContent>
             </Card>
-            <Card className="relative overflow-hidden">
+            <Card
+              className="relative overflow-hidden hover:shadow-2xl hover:shadow-cyan-500/20 hover:bg-cyan-50/50 dark:hover:bg-cyan-950/30 cursor-pointer group"
+              style={{
+                transition:
+                  "box-shadow 300ms ease-out, background-color 300ms ease-out",
+              }}
+            >
               <BorderBeam duration={8} delay={2} />
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
+                <CardTitle className="text-sm font-medium group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors duration-300">
                   Open Issues
                 </CardTitle>
-                <AlertCircle className="size-4 text-gray-500 dark:text-gray-400" />
+                <AlertCircle className="size-4 text-gray-500 dark:text-gray-400 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-black dark:text-white">
+                <div className="text-2xl font-bold text-black dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-hover:text-4xl transition-all duration-300 ease-out">
                   {issues.filter((issue) => issue.status === "open").length}
                 </div>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
+                <p className="text-xs text-gray-500 dark:text-gray-400 group-hover:text-cyan-500 transition-colors duration-300">
                   Awaiting resolution
                 </p>
               </CardContent>
             </Card>
-            <Card className="relative overflow-hidden">
+            <Card
+              className="relative overflow-hidden hover:shadow-2xl hover:shadow-emerald-500/20 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/30 cursor-pointer group"
+              style={{
+                transition:
+                  "box-shadow 300ms ease-out, background-color 300ms ease-out",
+              }}
+            >
               <BorderBeam duration={8} delay={4} />
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Resolved</CardTitle>
-                <CheckCircle className="size-4 text-gray-500 dark:text-gray-400" />
+                <CardTitle className="text-sm font-medium group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors duration-300">
+                  Resolved
+                </CardTitle>
+                <CheckCircle className="size-4 text-gray-500 dark:text-gray-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-all duration-300 group-hover:scale-110 group-hover:rotate-[360deg]" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-black dark:text-white">
+                <div className="text-2xl font-bold text-black dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 group-hover:text-4xl transition-all duration-300 ease-out">
                   {issues.filter((issue) => issue.status === "resolved").length}
                 </div>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
+                <p className="text-xs text-gray-500 dark:text-gray-400 group-hover:text-emerald-500 transition-colors duration-300">
                   Successfully fixed
                 </p>
               </CardContent>
