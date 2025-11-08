@@ -6,9 +6,16 @@ export function LaserFlowBackground() {
   return (
     <div
       style={{
+        position: "absolute",
+        top: 0,
+        left: 0,
         width: "100%",
-        height: "800px",
+        height: "600px",
         pointerEvents: "none",
+        margin: 0,
+        padding: 0,
+        transform: "translate3d(0, 0, 0)",
+        willChange: "transform",
       }}
     >
       <LaserFlow

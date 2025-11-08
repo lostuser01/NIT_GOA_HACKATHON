@@ -35,22 +35,32 @@ export default function RootLayout({
           overflow: "auto",
         }}
       >
-        {/* LaserFlow - Completely isolated fixed layer */}
+        {/* LaserFlow - Completely isolated fixed layer - ABSOLUTELY LOCKED */}
         <div
           id="laser-flow-fixed-container"
+          className="laser-flow-absolutely-fixed"
           style={{
             position: "fixed",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
+            top: "0px",
+            left: "0px",
+            right: "0px",
+            bottom: "auto",
             width: "100vw",
-            height: "100vh",
+            height: "800px",
+            maxHeight: "800px",
             zIndex: 1,
             pointerEvents: "none",
             overflow: "hidden",
-            transform: "translateZ(0)",
+            transform: "translate3d(0, 0, 0)",
+            transformStyle: "preserve-3d",
             willChange: "transform",
+            backfaceVisibility: "hidden",
+            WebkitBackfaceVisibility: "hidden",
+            perspective: 1000,
+            WebkitPerspective: 1000,
+            margin: 0,
+            padding: 0,
+            isolation: "isolate",
           }}
         >
           <LaserFlowBackground />
