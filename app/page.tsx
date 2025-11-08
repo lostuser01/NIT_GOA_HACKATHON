@@ -107,7 +107,7 @@ export default function Home() {
             </div>
 
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-              <NeonGradientCard>
+              <NeonGradientCard className="transition-all duration-300 ease-in-out hover:scale-[1.03] cursor-pointer">
                 <div className="flex flex-col items-center gap-4 text-center">
                   <div className="flex size-12 items-center justify-center rounded-lg bg-white/90 dark:bg-black/90 text-black dark:text-white">
                     <AlertCircle className="size-6" />
@@ -122,7 +122,7 @@ export default function Home() {
                 </div>
               </NeonGradientCard>
 
-              <NeonGradientCard>
+              <NeonGradientCard className="transition-all duration-300 ease-in-out hover:scale-[1.03] cursor-pointer">
                 <div className="flex flex-col items-center gap-4 text-center">
                   <div className="flex size-12 items-center justify-center rounded-lg bg-white/90 dark:bg-black/90 text-black dark:text-white">
                     <MapPin className="size-6" />
@@ -137,7 +137,7 @@ export default function Home() {
                 </div>
               </NeonGradientCard>
 
-              <NeonGradientCard>
+              <NeonGradientCard className="transition-all duration-300 ease-in-out hover:scale-[1.03] cursor-pointer">
                 <div className="flex flex-col items-center gap-4 text-center">
                   <div className="flex size-12 items-center justify-center rounded-lg bg-white/90 dark:bg-black/90 text-black dark:text-white">
                     <TrendingUp className="size-6" />
@@ -152,7 +152,7 @@ export default function Home() {
                 </div>
               </NeonGradientCard>
 
-              <NeonGradientCard>
+              <NeonGradientCard className="transition-all duration-300 ease-in-out hover:scale-[1.03] cursor-pointer">
                 <div className="flex flex-col items-center gap-4 text-center">
                   <div className="flex size-12 items-center justify-center rounded-lg bg-white/90 dark:bg-black/90 text-black dark:text-white">
                     <Shield className="size-6" />

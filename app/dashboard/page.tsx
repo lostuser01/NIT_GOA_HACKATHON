@@ -118,16 +118,16 @@ export default function Page() {
               <div className="px-4 lg:px-6">
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                   {/* Real-time Activity Feed */}
-                  <NeonGradientCard>
+                  <NeonGradientCard className="transition-all duration-300 ease-in-out hover:scale-[1.03] cursor-pointer">
                     <div className="flex flex-col gap-6">
-                      <div className="flex items-center gap-2 text-lg font-semibold text-white">
+                      <div className="flex items-center gap-2 text-lg font-semibold text-black dark:text-white">
                         <Activity className="h-5 w-5 text-blue-500" />
                         Recent Activity
                       </div>
-                      <div className="text-gray-400 text-sm">
+                      <div className="text-gray-600 dark:text-gray-400 text-sm">
                         Latest system updates and resolved issues
                       </div>
-                      <div className="space-y-3 text-white">
+                      <div className="space-y-3 text-black dark:text-white">
                         <div className="flex items-start gap-3">
                           <div className="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
                           <div className="flex-1 space-y-1">
@@ -190,18 +190,18 @@ export default function Page() {
                   </NeonGradientCard>
 
                   {/* Predictive Insights */}
-                  <NeonGradientCard>
+                  <NeonGradientCard className="transition-all duration-300 ease-in-out hover:scale-[1.03] cursor-pointer">
                     <div className="flex flex-col gap-6">
-                      <div className="flex items-center gap-2 text-lg font-semibold text-white">
+                      <div className="flex items-center gap-2 text-lg font-semibold text-black dark:text-white">
                         <TrendingUp className="h-5 w-5 text-purple-500" />
                         Predictive Insights
                       </div>
-                      <div className="text-gray-400 text-sm">
+                      <div className="text-gray-600 dark:text-gray-400 text-sm">
                         AI-powered recommendations and forecasts
                       </div>
                       <div className="space-y-4">
                         <div className="p-3 bg-blue-50 dark:bg-blue-950/20 rounded-lg">
-                          <h4 className="font-medium text-sm mb-1">
+                          <h4 className="font-medium text-sm mb-1 text-black dark:text-white">
                             Hotspot Prediction
                           </h4>
                           <p className="text-xs text-muted-foreground">
@@ -210,7 +210,7 @@ export default function Page() {
                           </p>
                         </div>
                         <div className="p-3 bg-green-50 dark:bg-green-950/20 rounded-lg">
-                          <h4 className="font-medium text-sm mb-1">
+                          <h4 className="font-medium text-sm mb-1 text-black dark:text-white">
                             Resource Allocation
                           </h4>
                           <p className="text-xs text-muted-foreground">
@@ -219,7 +219,7 @@ export default function Page() {
                           </p>
                         </div>
                         <div className="p-3 bg-yellow-50 dark:bg-yellow-950/20 rounded-lg">
-                          <h4 className="font-medium text-sm mb-1">
+                          <h4 className="font-medium text-sm mb-1 text-black dark:text-white">
                             Citizen Engagement
                           </h4>
                           <p className="text-xs text-muted-foreground">
@@ -227,7 +227,7 @@ export default function Page() {
                           </p>
                         </div>
                         <div className="p-3 bg-purple-50 dark:bg-purple-950/20 rounded-lg">
-                          <h4 className="font-medium text-sm mb-1">
+                          <h4 className="font-medium text-sm mb-1 text-black dark:text-white">
                             Preventive Maintenance
                           </h4>
                           <p className="text-xs text-muted-foreground">
@@ -239,19 +239,19 @@ export default function Page() {
                   </NeonGradientCard>
 
                   {/* Community Impact Assessment */}
-                  <NeonGradientCard>
+                  <NeonGradientCard className="transition-all duration-300 ease-in-out hover:scale-[1.03] cursor-pointer">
                     <div className="flex flex-col gap-6">
-                      <div className="flex items-center gap-2 text-lg font-semibold text-white">
+                      <div className="flex items-center gap-2 text-lg font-semibold text-black dark:text-white">
                         <AlertTriangle className="h-5 w-5 text-orange-500" />
                         Community Impact Assessment
                       </div>
-                      <div className="text-gray-400 text-sm">
+                      <div className="text-gray-600 dark:text-gray-400 text-sm">
                         High-impact areas requiring urgent civic attention
                       </div>
-                      <div className="space-y-3 text-white">
+                      <div className="space-y-3 text-black dark:text-white">
                         <div className="flex items-center justify-between">
                           <div>
-                            <p className="font-medium text-sm">
+                            <p className="font-medium text-sm text-black dark:text-white">
                               Panjim City Center
                             </p>
                             <p className="text-xs text-muted-foreground">
@@ -264,7 +264,7 @@ export default function Page() {
                         </div>
                         <div className="flex items-center justify-between">
                           <div>
-                            <p className="font-medium text-sm">
+                            <p className="font-medium text-sm text-black dark:text-white">
                               Margao Station Area
                             </p>
                             <p className="text-xs text-muted-foreground">
@@ -277,7 +277,9 @@ export default function Page() {
                         </div>
                         <div className="flex items-center justify-between">
                           <div>
-                            <p className="font-medium text-sm">Mapusa Market</p>
+                            <p className="font-medium text-sm text-black dark:text-white">
+                              Mapusa Market
+                            </p>
                             <p className="text-xs text-muted-foreground">
                               28 active issues
                             </p>
@@ -288,7 +290,9 @@ export default function Page() {
                         </div>
                         <div className="flex items-center justify-between">
                           <div>
-                            <p className="font-medium text-sm">Vasco da Gama</p>
+                            <p className="font-medium text-sm text-black dark:text-white">
+                              Vasco da Gama
+                            </p>
                             <p className="text-xs text-muted-foreground">
                               19 active issues
                             </p>
