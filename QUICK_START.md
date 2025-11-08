@@ -1,4 +1,5 @@
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 # CityPulse - Quick Start Guide 🚀
 
 ## ✨ New Features Added
@@ -302,6 +303,8 @@ All features are implemented and tested. Start by:
 
 Happy testing! 🚀
 =======
+=======
+>>>>>>> Stashed changes
 # 🚀 Quick Start - Test Your API Integration
 
 ## ✅ What's Been Done
@@ -427,5 +430,9 @@ npm run dev
 
 ---
 
+<<<<<<< Updated upstream
+**Everything is working! Start testing now! 🎊**
+>>>>>>> Stashed changes
+=======
 **Everything is working! Start testing now! 🎊**
 >>>>>>> Stashed changes
