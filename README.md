@@ -32,6 +32,7 @@
 - 👍 **Vote & Comment** - Support important issues and engage in discussions
 - 📱 **Mobile Responsive** - Works seamlessly on all devices
 - 🏘️ **Ward Selection** - Select your specific ward/district for accurate tracking
+- 👤 **User Profile** - Personalized dashboard with your name displayed in navbar and sidebar
 
 ### For Authorities
 - 🛡️ **Admin Dashboard** - Comprehensive admin panel with role-based access control
