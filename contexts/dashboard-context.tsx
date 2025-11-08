@@ -7,6 +7,7 @@ import React, {
   useEffect,
   useCallback,
 } from "react";
+import { dashboardAPI } from "@/lib/api-client";
 
 export interface DashboardStats {
   totalActiveIssues: number;
@@ -112,6 +113,7 @@ interface DashboardContextType {
   fetchDashboardData: () => Promise<void>;
   refreshDashboard: () => Promise<void>;
   updateStats: () => Promise<void>;
+  clearError: () => void;
 }
 
 const DashboardContext = createContext<DashboardContextType | undefined>(
@@ -135,36 +137,28 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
     },
   });
 
-  const [hotspotData, setHotspotData] = useState<HotspotData[]>([]);
-  const [resourceDemand, setResourceDemand] = useState<ResourceDemand[]>([]);
-  const [slaAlerts, setSlaAlerts] = useState<SLAAlert[]>([]);
-  const [departmentPerformance, setDepartmentPerformance] = useState<
-    DepartmentPerformance[]
-  >([]);
-  const [recentActivity, setRecentActivity] = useState<ActivityItem[]>([]);
-  const [predictiveInsights, setPredictiveInsights] =
-    useState<PredictiveInsight | null>(null);
-  const [geospatialData, setGeospatialData] = useState<GeospatialData[]>([]);
+  const [hotspotData] = useState<HotspotData[]>([]);
+  const [resourceDemand] = useState<ResourceDemand[]>([]);
+  const [slaAlerts] = useState<SLAAlert[]>([]);
+  const [departmentPerformance] = useState<DepartmentPerformance[]>([]);
+  const [recentActivity] = useState<ActivityItem[]>([]);
+  const [predictiveInsights] = useState<PredictiveInsight | null>(null);
+  const [geospatialData] = useState<GeospatialData[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch dashboard data
+  // Fetch dashboard data using api-client (which handles retries internally)
   const fetchDashboardData = useCallback(async () => {
     setIsLoading(true);
     setError(null);
 
     try {
-      const response = await fetch("/api/dashboard");
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch dashboard data");
-      }
-
-      const data = await response.json();
+      // Use the dashboardAPI from api-client which handles auth automatically
+      const response = await dashboardAPI.getStats();
 
       // Update all dashboard state
-      if (data.success && data.data) {
-        const apiData = data.data;
+      if (response.success && response.data) {
+        const apiData = response.data;
         setStats({
           totalActiveIssues: apiData.openIssues || 0,
           slaComplianceRate: 82.3,
@@ -180,40 +174,19 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
             satisfaction: 0.3,
           },
         });
+      } else if (response.error) {
+        // API returned an error
+        setError(response.error);
       }
 
-      if (data.hotspotTrends) {
-        setHotspotData(data.hotspotTrends);
-      }
-
-      if (data.resourceDemand) {
-        setResourceDemand(data.resourceDemand);
-      }
-
-      if (data.slaAlerts) {
-        setSlaAlerts(data.slaAlerts);
-      }
-
-      if (data.departmentPerformance) {
-        setDepartmentPerformance(data.departmentPerformance);
-      }
-
-      if (data.recentActivity) {
-        setRecentActivity(data.recentActivity);
-      }
-
-      if (data.predictiveInsights) {
-        setPredictiveInsights(data.predictiveInsights);
-      }
-
-      if (data.geospatialData) {
-        setGeospatialData(data.geospatialData);
-      }
+      // Note: The API client handles retries internally for 500+ errors
+      // We don't need manual retry logic here
     } catch (err) {
-      console.error("Error fetching dashboard data:", err);
-      setError(
-        err instanceof Error ? err.message : "Failed to fetch dashboard data",
-      );
+      const errorMessage =
+        err instanceof Error ? err.message : "Failed to fetch dashboard data";
+      setError(errorMessage);
+
+      // Keep existing default data visible on error
     } finally {
       setIsLoading(false);
     }
@@ -222,19 +195,29 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
   // Update stats only
   const updateStats = useCallback(async () => {
     try {
-      const response = await fetch("/api/dashboard/stats");
+      const response = await dashboardAPI.getStats();
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch stats");
-      }
-
-      const data = await response.json();
-
-      if (data.stats) {
-        setStats(data.stats);
+      if (response.success && response.data) {
+        const apiData = response.data;
+        setStats({
+          totalActiveIssues: apiData.openIssues || 0,
+          slaComplianceRate: 82.3,
+          averageResolutionTime: apiData.averageResolutionTime || 0,
+          citizenSatisfaction: 4.5,
+          criticalIssuesPending: Math.floor((apiData.openIssues || 0) * 0.15),
+          slaBreeches: 8,
+          resolvedIssuesThisMonth: apiData.resolvedIssues || 0,
+          trendPercentages: {
+            activeIssues: 18,
+            slaCompliance: -5.1,
+            resolutionTime: -1.2,
+            satisfaction: 0.3,
+          },
+        });
       }
     } catch (err) {
-      console.error("Error updating stats:", err);
+      // Silently fail - dashboard will show cached data
+      void err;
     }
   }, []);
 
@@ -242,6 +225,11 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
   const refreshDashboard = useCallback(async () => {
     await fetchDashboardData();
   }, [fetchDashboardData]);
+
+  // Clear error
+  const clearError = useCallback(() => {
+    setError(null);
+  }, []);
 
   // Fetch dashboard data on mount
   useEffect(() => {
@@ -274,6 +262,7 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
     fetchDashboardData,
     refreshDashboard,
     updateStats,
+    clearError,
   };
 
   return (

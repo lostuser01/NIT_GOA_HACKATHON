@@ -74,10 +74,11 @@ export default function MapPage() {
   );
   const [focusOnMarker, setFocusOnMarker] = useState<string | null>(null);
 
+  // User location for form submission only (map handles its own location display)
   const [userLocation, setUserLocation] = useState<{
     lat: number;
     lng: number;
-  } | null>(DEFAULT_LOCATION);
+  } | null>(null);
 
   // Form state
   const [formTitle, setFormTitle] = useState("");
@@ -86,7 +87,7 @@ export default function MapPage() {
   const [formPhoto, setFormPhoto] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Get user location on mount
+  // Get user location on mount - for form purposes only, map handles its own location
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -95,27 +96,11 @@ export default function MapPage() {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
           });
-          toast.success("Your location has been detected!");
         },
         (error) => {
           // Use default location on error
           setUserLocation(DEFAULT_LOCATION);
-          let errorMessage = "Using default location (Goa, India). ";
-          switch (error.code) {
-            case error.PERMISSION_DENIED:
-              errorMessage +=
-                "Enable location access in browser settings for accurate location.";
-              break;
-            case error.POSITION_UNAVAILABLE:
-              errorMessage += "Your location is currently unavailable.";
-              break;
-            case error.TIMEOUT:
-              errorMessage += "Location request timed out.";
-              break;
-            default:
-              errorMessage += "Unable to determine your location.";
-          }
-          toast.error(errorMessage, { duration: 5000 });
+          console.warn("Location error for form:", error.message);
         },
         {
           enableHighAccuracy: true,
@@ -125,9 +110,6 @@ export default function MapPage() {
       );
     } else {
       setUserLocation(DEFAULT_LOCATION);
-      toast.error(
-        "Geolocation not supported. Using default location (Goa, India).",
-      );
     }
   }, []);
 
@@ -606,12 +588,8 @@ export default function MapPage() {
             </CardHeader>
             <CardContent>
               <InteractiveMap
-                center={
-                  userLocation
-                    ? [userLocation.lng, userLocation.lat]
-                    : [73.8278, 15.4909]
-                }
-                zoom={userLocation ? 14 : 12}
+                center={[73.8278, 15.4909]}
+                zoom={12}
                 markers={issues.map((issue) => ({
                   id: issue.id,
                   position: [issue.location.lng, issue.location.lat],
@@ -621,9 +599,6 @@ export default function MapPage() {
                 onMarkerClick={handleMarkerClick}
                 height="calc(100vh - 500px)"
                 showUserLocation={true}
-                userLocation={
-                  userLocation ? [userLocation.lng, userLocation.lat] : null
-                }
                 focusOnMarker={focusOnMarker}
               />
             </CardContent>

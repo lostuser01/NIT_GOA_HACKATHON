@@ -127,8 +127,13 @@ export function InteractiveMap({
                   setCurrentUserLocation(userLoc);
                   setLocationPermissionState("granted");
                   setIsLoading(false);
-                  // Always center map on user location
-                  mapRef.current?.flyTo({ center: userLoc, zoom: 14 });
+                  // Immediately center map on user location with higher zoom
+                  mapRef.current?.flyTo({
+                    center: userLoc,
+                    zoom: 15,
+                    duration: 1000,
+                    essential: true,
+                  });
                 },
                 (error) => {
                   console.warn(
@@ -137,6 +142,11 @@ export function InteractiveMap({
                   );
                   setLocationPermissionState("denied");
                   setIsLoading(false);
+                },
+                {
+                  enableHighAccuracy: true,
+                  timeout: 5000,
+                  maximumAge: 0,
                 },
               );
             } else {
@@ -174,10 +184,11 @@ export function InteractiveMap({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Update user location marker
+  // Update user location marker - only use internal location if no external location provided
   useEffect(() => {
     if (mapRef.current && !isLoading && showUserLocation) {
-      const effectiveUserLocation = userLocation || currentUserLocation;
+      // Only use currentUserLocation if no userLocation prop was passed
+      const effectiveUserLocation = userLocation ? null : currentUserLocation;
 
       if (effectiveUserLocation) {
         import("@maptiler/sdk").then((maptilersdk) => {
