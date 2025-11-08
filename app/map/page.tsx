@@ -83,14 +83,34 @@ export default function MapPage() {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
           });
+          toast.success("Your location has been detected!");
         },
         (error) => {
-          console.warn(
-            "Geolocation access denied or unavailable:",
-            error.message || "Unknown error",
-          );
+          let errorMessage = "Unable to get your location. ";
+          switch (error.code) {
+            case error.PERMISSION_DENIED:
+              errorMessage +=
+                "Please enable location access in your browser settings.";
+              break;
+            case error.POSITION_UNAVAILABLE:
+              errorMessage += "Location information is unavailable.";
+              break;
+            case error.TIMEOUT:
+              errorMessage += "Location request timed out. Please try again.";
+              break;
+            default:
+              errorMessage += "An unknown error occurred.";
+          }
+          toast.error(errorMessage);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0,
         },
       );
+    } else {
+      toast.error("Geolocation is not supported by your browser.");
     }
   }, []);
 
@@ -156,17 +176,46 @@ export default function MapPage() {
 
   const getLocation = () => {
     if (navigator.geolocation) {
+      setLocationCaptured(false);
+      toast.loading("Getting your location...", { id: "location-loading" });
+
       navigator.geolocation.getCurrentPosition(
         (position) => {
           setLocation({
             lat: position.coords.latitude,
             lng: position.coords.longitude,
           });
+          setLocationCaptured(true);
+          toast.dismiss("location-loading");
+          toast.success("Location captured successfully!");
         },
         (error) => {
-          console.error("Error getting location:", error);
+          toast.dismiss("location-loading");
+          let errorMessage = "Unable to get your location. ";
+          switch (error.code) {
+            case error.PERMISSION_DENIED:
+              errorMessage +=
+                "Please enable location access in your browser settings.";
+              break;
+            case error.POSITION_UNAVAILABLE:
+              errorMessage += "Location information is unavailable.";
+              break;
+            case error.TIMEOUT:
+              errorMessage += "Location request timed out. Please try again.";
+              break;
+            default:
+              errorMessage += "An unknown error occurred.";
+          }
+          toast.error(errorMessage);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0,
         },
       );
+    } else {
+      toast.error("Geolocation is not supported by your browser.");
     }
   };
 
