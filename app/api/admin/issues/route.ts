@@ -1,8 +1,7 @@
 // Admin Issues Management API
 import { NextRequest, NextResponse } from "next/server";
 import { requireAdmin } from "@/lib/auth";
-import { issueDb, userDb } from "@/lib/db";
-import { IssueStatus, IssuePriority } from "@/lib/types";
+import { issueDb } from "@/lib/db";
 import { logAdminAction, getRequestMetadata } from "@/lib/audit-log";
 
 // GET /api/admin/issues - Get all issues with filters (admin only)

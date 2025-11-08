@@ -4,7 +4,7 @@ import { ApiResponse } from "@/lib/types";
 import { generatePublicStats } from "@/lib/analytics";
 
 // GET /api/public/stats - Get public transparency statistics (no auth required)
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
     // Get all issues
     const allIssues = await issueDb.getAll();
@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
           // Cache for 5 minutes
           "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600",
         },
-      }
+      },
     );
   } catch (error) {
     console.error("Error fetching public stats:", error);
@@ -40,13 +40,13 @@ export async function GET(request: NextRequest) {
         success: false,
         error: "Failed to fetch public statistics",
       } as ApiResponse,
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
 
 // OPTIONS handler for CORS preflight
-export async function OPTIONS(request: NextRequest) {
+export async function OPTIONS(_request: NextRequest) {
   return new NextResponse(null, {
     status: 200,
     headers: {

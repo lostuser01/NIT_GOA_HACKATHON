@@ -103,7 +103,7 @@ async function uploadToSupabase(file: File, userId: string): Promise<string> {
   const fileName = `${userId}/${timestamp}-${randomString}.${fileExt}`;
 
   // Upload to Supabase Storage
-  const { data: _data, error } = await supabase.storage
+  const { error } = await supabase.storage
     .from("issue-photos")
     .upload(fileName, file, {
       contentType: file.type,

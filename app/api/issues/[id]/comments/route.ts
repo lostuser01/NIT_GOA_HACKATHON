@@ -163,7 +163,7 @@ export async function POST(
 // DELETE /api/issues/[id]/comments?commentId=xxx - Delete a comment
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> },
+  { params: _params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const user = getUserFromRequest(request);

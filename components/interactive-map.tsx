@@ -169,7 +169,10 @@ export function InteractiveMap({
         mapRef.current = null;
       }
     };
-  }, [center, zoom, markers.length, showUserLocation, userLocation]);
+    // Map initialization should only happen once on mount
+    // showUserLocation and userLocation are handled in the load callback
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Update user location marker
   useEffect(() => {

@@ -211,7 +211,48 @@ export default function MapPage() {
   };
 
   const getLocation = () => {
+<<<<<<< Updated upstream
     if (!navigator.geolocation) {
+=======
+    if (navigator.geolocation) {
+      toast.loading("Getting your location...", { id: "location-loading" });
+
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLocation({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
+          toast.dismiss("location-loading");
+          toast.success("Location captured successfully!");
+        },
+        (error) => {
+          toast.dismiss("location-loading");
+          let errorMessage = "Unable to get your location. ";
+          switch (error.code) {
+            case error.PERMISSION_DENIED:
+              errorMessage +=
+                "Please enable location access in your browser settings.";
+              break;
+            case error.POSITION_UNAVAILABLE:
+              errorMessage += "Location information is unavailable.";
+              break;
+            case error.TIMEOUT:
+              errorMessage += "Location request timed out. Please try again.";
+              break;
+            default:
+              errorMessage += "An unknown error occurred.";
+          }
+          toast.error(errorMessage);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0,
+        },
+      );
+    } else {
+>>>>>>> Stashed changes
       toast.error("Geolocation is not supported by your browser.");
       return;
     }

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { voteDb, issueDb, userDb } from "@/lib/db";
+import { voteDb, issueDb } from "@/lib/db";
 import { getUserFromRequest } from "@/lib/auth";
 import { ApiResponse } from "@/lib/types";
 

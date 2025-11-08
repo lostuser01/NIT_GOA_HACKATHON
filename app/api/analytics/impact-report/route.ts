@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { issueDb, userDb } from "@/lib/db";
+import { issueDb } from "@/lib/db";
 import { getUserFromRequest } from "@/lib/auth";
 import { ApiResponse, WARDS } from "@/lib/types";
 import { generateImpactReport } from "@/lib/analytics";
@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
           success: false,
           error: "Unauthorized - Please login",
         } as ApiResponse,
-        { status: 401 }
+        { status: 401 },
       );
     }
 
@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
           success: false,
           error: "Forbidden - Admin or authority access required",
         } as ApiResponse,
-        { status: 403 }
+        { status: 403 },
       );
     }
 
@@ -43,14 +43,18 @@ export async function GET(request: NextRequest) {
     const allIssues = await issueDb.getAll();
 
     // Generate comprehensive impact report
-    const report = generateImpactReport(allIssues, Array.from(WARDS), dateRange);
+    const report = generateImpactReport(
+      allIssues,
+      Array.from(WARDS),
+      dateRange,
+    );
 
     return NextResponse.json(
       {
         success: true,
         data: report,
       } as ApiResponse,
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("Error generating impact report:", error);
@@ -59,7 +63,7 @@ export async function GET(request: NextRequest) {
         success: false,
         error: "Failed to generate impact report",
       } as ApiResponse,
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

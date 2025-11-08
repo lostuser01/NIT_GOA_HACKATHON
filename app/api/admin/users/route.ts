@@ -25,8 +25,8 @@ export async function GET(request: NextRequest) {
     }
 
     // Remove passwords from response
-    const sanitizedUsers = users.map((user) => {
-      const { password, ...sanitizedUser } = user;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const sanitizedUsers = users.map(({ password, ...sanitizedUser }) => {
       return sanitizedUser;
     });
 
@@ -90,7 +90,8 @@ export async function PATCH(request: NextRequest) {
       );
     }
 
-    const { password: _password, ...sanitizedUser } = updated;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...sanitizedUser } = updated;
 
     return NextResponse.json({
       success: true,

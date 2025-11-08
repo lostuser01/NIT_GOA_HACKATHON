@@ -2,11 +2,7 @@
 // Supports email notifications via Resend API
 // SMS can be integrated with Twilio or similar service
 
-import {
-  NotificationPayload,
-  NotificationResponse,
-  IssueStatus,
-} from "./types";
+import { NotificationPayload, NotificationResponse } from "./types";
 
 /**
  * Send email notification using Resend API
