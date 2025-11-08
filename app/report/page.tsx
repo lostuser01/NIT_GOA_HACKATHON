@@ -32,7 +32,6 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { WARDS, IssueCategory } from "@/lib/types";
-import { NeonGradientCard } from "@/components/magicui/neon-gradient-card";
 
 interface FilePreview {
   file: File;

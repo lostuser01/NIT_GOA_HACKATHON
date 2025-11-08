@@ -8,7 +8,6 @@ import {
   Users,
   LayoutDashboard,
   LogOut,
-  User,
   PlusCircle,
   Home,
 } from "lucide-react";
@@ -47,7 +46,7 @@ export function Navigation() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/10 dark:bg-black/10 backdrop-blur-sm supports-backdrop-filter:bg-white/10 supports-backdrop-filter:dark:bg-black/10 relative overflow-hidden">
+    <header className="sticky top-0 z-50 w-full bg-white/10 dark:bg-black/10 backdrop-blur-sm supports-backdrop-filter:bg-white/10 supports-backdrop-filter:dark:bg-black/10 overflow-hidden">
       {/* Animated gradient borders - Multiple layers for depth */}
       <div className="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-transparent via-blue-500 to-transparent animate-border-flow" />
       <div className="absolute inset-x-0 bottom-0 h-[2px] bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 animate-gradient-x opacity-60" />

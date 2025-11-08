@@ -377,16 +377,3 @@ function generateSMSContent(payload: NotificationPayload): string {
       return `OurStreet: Update on "${payload.issueTitle}". View: ${issueUrl}`;
   }
 }
-
-/**
- * Helper to get status display name
- */
-function getStatusDisplayName(status: IssueStatus): string {
-  const statusMap: Record<IssueStatus, string> = {
-    open: "Open",
-    "in-progress": "In Progress",
-    resolved: "Resolved",
-    closed: "Closed",
-  };
-  return statusMap[status] || status;
-}

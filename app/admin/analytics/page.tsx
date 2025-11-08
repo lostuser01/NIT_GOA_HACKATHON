@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { AppSidebar } from "@/components/app-sidebar";
 import { SiteHeader } from "@/components/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
@@ -87,11 +87,7 @@ export default function AnalyticsPage() {
   const [loading, setLoading] = useState(true);
   const [dateRange, setDateRange] = useState<"30" | "90" | "365" | "all">("30");
 
-  useEffect(() => {
-    fetchAnalytics();
-  }, [dateRange]);
-
-  const fetchAnalytics = async () => {
+  const fetchAnalytics = useCallback(async () => {
     setLoading(true);
     try {
       const token = localStorage.getItem("token");
@@ -132,7 +128,11 @@ export default function AnalyticsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [dateRange]);
+
+  useEffect(() => {
+    fetchAnalytics();
+  }, [fetchAnalytics]);
 
   const handleExport = () => {
     if (!report) return;

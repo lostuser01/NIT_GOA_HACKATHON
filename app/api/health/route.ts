@@ -1,6 +1,6 @@
 // Health Check API - Monitor system health and dependencies
 import { NextRequest, NextResponse } from "next/server";
-import { issueDb, userDb } from "@/lib/db";
+import { userDb } from "@/lib/db";
 
 interface HealthStatus {
   status: "healthy" | "degraded" | "unhealthy";
@@ -28,7 +28,7 @@ interface HealthStatus {
 const startTime = Date.now();
 
 // GET /api/health - Health check endpoint
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   const checkStartTime = Date.now();
 
   try {
@@ -71,13 +71,14 @@ export async function GET(request: NextRequest) {
 
     // Check environment configuration
     const envWarnings: string[] = [];
-    const envStatus: "ok" | "warning" = "ok";
 
     if (!process.env.JWT_SECRET) {
       envWarnings.push("JWT_SECRET not configured");
     }
 
-    if (process.env.JWT_SECRET === "citypulse-secret-key-change-in-production") {
+    if (
+      process.env.JWT_SECRET === "citypulse-secret-key-change-in-production"
+    ) {
       envWarnings.push("Using default JWT_SECRET - change in production");
     }
 
@@ -149,7 +150,7 @@ export async function GET(request: NextRequest) {
 }
 
 // HEAD /api/health - Quick health check (no body)
-export async function HEAD(request: NextRequest) {
+export async function HEAD(_request: NextRequest) {
   try {
     // Quick check - just verify server is responding
     await userDb.getAll();
@@ -160,7 +161,7 @@ export async function HEAD(request: NextRequest) {
         "Cache-Control": "no-cache, no-store, must-revalidate",
       },
     });
-  } catch (error) {
+  } catch (_error) {
     return new NextResponse(null, {
       status: 503,
       headers: {

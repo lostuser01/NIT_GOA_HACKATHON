@@ -55,7 +55,7 @@ export function SignupForm({
       } else {
         setError(result.error || "Signup failed. Please try again.");
       }
-    } catch (err) {
+    } catch (_err) {
       setError("An unexpected error occurred. Please try again.");
     } finally {
       setIsLoading(false);
