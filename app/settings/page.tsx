@@ -34,23 +34,46 @@ import {
   Save,
   Upload,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
+import { useAuth } from "@/contexts/auth-context";
 
 export default function SettingsPage() {
+  const { user } = useAuth();
   const [profileImage, setProfileImage] = useState("/avatars/admin.jpg");
   const [formData, setFormData] = useState({
-    fullName: "Municipal Admin",
-    email: "admin@citypulse.gov",
-    phone: "+91 9876543210",
-    address: "Municipal Corporation Office, Panjim, Goa",
-    city: "Panjim",
-    state: "Goa",
-    pincode: "403001",
-    role: "Municipal Officer",
-    department: "Public Works Department",
-    bio: "Dedicated to improving civic infrastructure and citizen satisfaction through transparent issue management.",
+    fullName: "",
+    email: "",
+    phone: "",
+    address: "",
+    city: "",
+    state: "",
+    pincode: "",
+    role: "Citizen",
+    department: "",
+    bio: "",
   });
+
+  // Load user data when component mounts
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        fullName: user.name || "",
+        email: user.email || "",
+        phone: "",
+        address: "",
+        city: "",
+        state: "",
+        pincode: "",
+        role: user.role || "Citizen",
+        department: "",
+        bio: "",
+      });
+      if (user.avatar) {
+        setProfileImage(user.avatar);
+      }
+    }
+  }, [user]);
 
   const [notificationSettings, setNotificationSettings] = useState({
     emailNotifications: true,

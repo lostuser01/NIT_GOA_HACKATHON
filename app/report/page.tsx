@@ -29,7 +29,7 @@ export default function ReportIssuePage() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [location, setLocation] = useState<{ lat: number; lng: number } | null>(
-    null
+    null,
   );
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [formData, setFormData] = useState({
@@ -50,9 +50,10 @@ export default function ReportIssuePage() {
           toast.success("Location captured successfully!");
         },
         (error) => {
-          toast.error("Unable to get location. Please enable GPS.");
-          console.error(error);
-        }
+          const errorMessage =
+            error.message || "Unable to get location. Please enable GPS.";
+          toast.error(errorMessage);
+        },
       );
     } else {
       toast.error("Geolocation is not supported by your browser");
@@ -130,8 +131,8 @@ export default function ReportIssuePage() {
             Report Civic Issue
           </h1>
           <p className="text-gray-600 dark:text-gray-400 text-lg">
-            Help improve your community by reporting civic issues with description,
-            photo, and live location.
+            Help improve your community by reporting civic issues with
+            description, photo, and live location.
           </p>
         </div>
 
@@ -173,13 +174,23 @@ export default function ReportIssuePage() {
                     <SelectValue placeholder="Select category" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="road">🛣️ Road & Infrastructure</SelectItem>
+                    <SelectItem value="road">
+                      🛣️ Road & Infrastructure
+                    </SelectItem>
                     <SelectItem value="lighting">💡 Street Lighting</SelectItem>
-                    <SelectItem value="sanitation">🗑️ Sanitation & Waste</SelectItem>
+                    <SelectItem value="sanitation">
+                      🗑️ Sanitation & Waste
+                    </SelectItem>
                     <SelectItem value="water">💧 Water Supply</SelectItem>
-                    <SelectItem value="drainage">🌊 Drainage & Sewage</SelectItem>
-                    <SelectItem value="parks">🌳 Parks & Green Spaces</SelectItem>
-                    <SelectItem value="traffic">🚦 Traffic & Signals</SelectItem>
+                    <SelectItem value="drainage">
+                      🌊 Drainage & Sewage
+                    </SelectItem>
+                    <SelectItem value="parks">
+                      🌳 Parks & Green Spaces
+                    </SelectItem>
+                    <SelectItem value="traffic">
+                      🚦 Traffic & Signals
+                    </SelectItem>
                     <SelectItem value="other">📋 Other</SelectItem>
                   </SelectContent>
                 </Select>
@@ -243,7 +254,9 @@ export default function ReportIssuePage() {
                         <div className="flex flex-col items-center justify-center pt-5 pb-6">
                           <Camera className="w-12 h-12 mb-3 text-gray-400 dark:text-gray-500" />
                           <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                            <span className="font-semibold">Click to upload</span>{" "}
+                            <span className="font-semibold">
+                              Click to upload
+                            </span>{" "}
                             or drag and drop
                           </p>
                           <p className="text-xs text-gray-500 dark:text-gray-400">
@@ -276,7 +289,7 @@ export default function ReportIssuePage() {
                     <MapPin className="mr-2 size-5" />
                     {location
                       ? `Location Captured: ${location.lat.toFixed(
-                          5
+                          5,
                         )}°, ${location.lng.toFixed(5)}°`
                       : "Capture Current Location"}
                   </Button>
@@ -284,15 +297,15 @@ export default function ReportIssuePage() {
                     <Alert className="bg-green-50 dark:bg-green-950 border-green-200 dark:border-green-800">
                       <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400" />
                       <AlertDescription className="text-green-800 dark:text-green-200">
-                        Location captured successfully! Your GPS coordinates will be
-                        attached to the report for precise tracking.
+                        Location captured successfully! Your GPS coordinates
+                        will be attached to the report for precise tracking.
                       </AlertDescription>
                     </Alert>
                   )}
                   {!location && (
                     <p className="text-xs text-gray-500 dark:text-gray-400">
-                      We need your location to help authorities identify and resolve the
-                      issue quickly.
+                      We need your location to help authorities identify and
+                      resolve the issue quickly.
                     </p>
                   )}
                 </div>
@@ -331,7 +344,8 @@ export default function ReportIssuePage() {
               {/* Helper Text */}
               <p className="text-xs text-center text-gray-500 dark:text-gray-400 pt-2">
                 By submitting this report, you agree to our terms of service and
-                privacy policy. Your report will be reviewed by municipal authorities.
+                privacy policy. Your report will be reviewed by municipal
+                authorities.
               </p>
             </form>
           </CardContent>
