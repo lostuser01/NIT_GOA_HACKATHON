@@ -22,7 +22,7 @@ export default function Home() {
               </span>
             </div>
 
-            <div className="relative flex min-h-[600px] sm:min-h-[700px] md:min-h-[800px] w-full flex-col items-center justify-center overflow-hidden py-16 md:py-24">
+            <div className="relative flex min-h-[200px] sm:min-h-[250px] md:min-h-[300px] w-full flex-col items-center justify-center overflow-hidden py-8 md:py-12">
               <ShuffleText
                 text="Empower Your Community with OurStreet"
                 tag="h1"
@@ -69,7 +69,7 @@ export default function Home() {
         </section>
 
         {/* App Screen Showcase Section */}
-        <section className="py-20 bg-white/20 dark:bg-black/20 overflow-hidden">
+        <section className="py-8 bg-white/20 dark:bg-black/20 overflow-hidden">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-black dark:text-white sm:text-4xl mb-4">
