@@ -1,6 +1,12 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 
 export interface DashboardStats {
   totalActiveIssues: number;
@@ -108,7 +114,9 @@ interface DashboardContextType {
   updateStats: () => Promise<void>;
 }
 
-const DashboardContext = createContext<DashboardContextType | undefined>(undefined);
+const DashboardContext = createContext<DashboardContextType | undefined>(
+  undefined,
+);
 
 export function DashboardProvider({ children }: { children: React.ReactNode }) {
   const [stats, setStats] = useState<DashboardStats>({
@@ -130,9 +138,12 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
   const [hotspotData, setHotspotData] = useState<HotspotData[]>([]);
   const [resourceDemand, setResourceDemand] = useState<ResourceDemand[]>([]);
   const [slaAlerts, setSlaAlerts] = useState<SLAAlert[]>([]);
-  const [departmentPerformance, setDepartmentPerformance] = useState<DepartmentPerformance[]>([]);
+  const [departmentPerformance, setDepartmentPerformance] = useState<
+    DepartmentPerformance[]
+  >([]);
   const [recentActivity, setRecentActivity] = useState<ActivityItem[]>([]);
-  const [predictiveInsights, setPredictiveInsights] = useState<PredictiveInsight | null>(null);
+  const [predictiveInsights, setPredictiveInsights] =
+    useState<PredictiveInsight | null>(null);
   const [geospatialData, setGeospatialData] = useState<GeospatialData[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -152,15 +163,16 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
       const data = await response.json();
 
       // Update all dashboard state
-      if (data.issueStatistics) {
+      if (data.success && data.data) {
+        const apiData = data.data;
         setStats({
-          totalActiveIssues: data.issueStatistics.totalIssues || 243,
-          slaComplianceRate: data.issueStatistics.slaCompliance || 82.3,
-          averageResolutionTime: data.issueStatistics.averageResolutionTime || 3.8,
-          citizenSatisfaction: data.issueStatistics.citizenSatisfaction || 4.5,
-          criticalIssuesPending: data.issueStatistics.criticalIssues || 35,
+          totalActiveIssues: apiData.openIssues || 0,
+          slaComplianceRate: 82.3,
+          averageResolutionTime: apiData.averageResolutionTime || 0,
+          citizenSatisfaction: 4.5,
+          criticalIssuesPending: Math.floor((apiData.openIssues || 0) * 0.15), // Estimate 15% are critical
           slaBreeches: 8,
-          resolvedIssuesThisMonth: 127,
+          resolvedIssuesThisMonth: apiData.resolvedIssues || 0,
           trendPercentages: {
             activeIssues: 18,
             slaCompliance: -5.1,
@@ -199,7 +211,9 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
       }
     } catch (err) {
       console.error("Error fetching dashboard data:", err);
-      setError(err instanceof Error ? err.message : "Failed to fetch dashboard data");
+      setError(
+        err instanceof Error ? err.message : "Failed to fetch dashboard data",
+      );
     } finally {
       setIsLoading(false);
     }
@@ -236,9 +250,12 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
 
   // Auto-refresh dashboard every 5 minutes
   useEffect(() => {
-    const interval = setInterval(() => {
-      updateStats();
-    }, 5 * 60 * 1000); // 5 minutes
+    const interval = setInterval(
+      () => {
+        updateStats();
+      },
+      5 * 60 * 1000,
+    ); // 5 minutes
 
     return () => clearInterval(interval);
   }, [updateStats]);
@@ -259,7 +276,11 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
     updateStats,
   };
 
-  return <DashboardContext.Provider value={value}>{children}</DashboardContext.Provider>;
+  return (
+    <DashboardContext.Provider value={value}>
+      {children}
+    </DashboardContext.Provider>
+  );
 }
 
 // Custom hook to use dashboard context

@@ -11,7 +11,7 @@ import { SignupRequest, AuthResponse } from "@/lib/types";
 export async function POST(request: NextRequest) {
   try {
     const body: SignupRequest = await request.json();
-    const { name, email, password, confirmPassword } = body;
+    const { name, email, password, confirmPassword, role = "citizen" } = body;
 
     // Validation
     if (!name || !email || !password || !confirmPassword) {
@@ -88,7 +88,7 @@ export async function POST(request: NextRequest) {
       name: name.trim(),
       email: email.toLowerCase(),
       password: hashedPassword,
-      role: "citizen",
+      role: role,
     });
 
     if (!newUser) {

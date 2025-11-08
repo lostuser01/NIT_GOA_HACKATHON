@@ -16,6 +16,7 @@ interface MapProps {
   height?: string;
   showUserLocation?: boolean;
   userLocation?: [number, number] | null;
+  focusOnMarker?: string | number | null; // New prop to trigger zoom on specific marker
 }
 
 export function InteractiveMap({
@@ -26,6 +27,7 @@ export function InteractiveMap({
   height = "600px",
   showUserLocation = true,
   userLocation = null,
+  focusOnMarker = null,
 }: MapProps) {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<any>(null);
@@ -125,10 +127,8 @@ export function InteractiveMap({
                   setCurrentUserLocation(userLoc);
                   setLocationPermissionState("granted");
                   setIsLoading(false);
-                  // Center map on user location if no markers
-                  if (markers.length === 0) {
-                    mapRef.current?.flyTo({ center: userLoc, zoom: 14 });
-                  }
+                  // Always center map on user location
+                  mapRef.current?.flyTo({ center: userLoc, zoom: 14 });
                 },
                 (error) => {
                   console.warn(
@@ -259,18 +259,26 @@ export function InteractiveMap({
           if (marker.status === "open") {
             el.style.backgroundColor = "#ef4444"; // red
           } else if (marker.status === "in-progress") {
-            el.style.backgroundColor = "#f59e0b"; // amber
+            el.style.backgroundColor = "#eab308"; // yellow
           } else if (
             marker.status === "resolved" ||
             marker.status === "closed"
           ) {
-            el.style.backgroundColor = "#10b981"; // green
+            el.style.backgroundColor = "#3b82f6"; // blue
           } else {
             el.style.backgroundColor = "#6b7280"; // gray for unknown
           }
 
           // Add click event
           el.addEventListener("click", () => {
+            // Zoom to marker on click
+            if (mapRef.current) {
+              mapRef.current.flyTo({
+                center: [marker.position[0], marker.position[1]],
+                zoom: 16,
+                duration: 1000,
+              });
+            }
             if (onMarkerClick) {
               onMarkerClick(marker.id);
             }
@@ -297,6 +305,20 @@ export function InteractiveMap({
       });
     }
   }, [markers, onMarkerClick, isLoading]);
+
+  // Focus on specific marker when focusOnMarker prop changes
+  useEffect(() => {
+    if (mapRef.current && !isLoading && focusOnMarker) {
+      const marker = markers.find((m) => m.id === focusOnMarker);
+      if (marker) {
+        mapRef.current.flyTo({
+          center: [marker.position[0], marker.position[1]],
+          zoom: 16,
+          duration: 1500,
+        });
+      }
+    }
+  }, [focusOnMarker, markers, isLoading]);
 
   return (
     <div

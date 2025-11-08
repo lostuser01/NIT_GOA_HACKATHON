@@ -77,11 +77,31 @@ Available categories:
 - traffic: Traffic congestion, signal issues, parking problems, traffic safety
 - other: Issues that don't fit the above categories
 
-Priority levels:
-- critical: Immediate danger to life or property (e.g., major water leaks, electrical hazards, severe traffic issues)
-- high: Significant impact on daily life or potential escalation (e.g., potholes on main roads, drainage issues during monsoon)
-- medium: Important but not urgent (e.g., streetlights, moderate garbage accumulation)
-- low: Minor inconveniences (e.g., small potholes on side streets, cosmetic issues)
+Priority levels (based on FACILITY IMPORTANCE and HEALTH RISK):
+- critical: Immediate danger to life, property, or public health. Includes:
+  * Major health risks (sewage overflow, contaminated water, biohazards)
+  * Life-threatening hazards (electrical hazards, severe structural damage)
+  * Critical facility failures (hospitals, schools, emergency services access)
+  * Severe traffic safety issues causing accidents
+- high: Significant health concerns or important facility issues. Includes:
+  * Sanitation problems affecting public health (garbage accumulation, drainage blockage)
+  * Important facility damage (main roads, public water supply, major streetlights)
+  * Moderate health risks (water leaks, pest infestation from waste)
+  * Issues affecting essential services or high-traffic areas
+- medium: Notable impact but manageable health/facility concerns. Includes:
+  * Minor facility issues (side street potholes, single streetlight)
+  * Low health risk sanitation issues (isolated garbage)
+  * Non-critical infrastructure (cosmetic road damage, minor drainage)
+- low: Minimal health risk and low facility importance. Includes:
+  * Cosmetic issues with no health impact
+  * Minor inconveniences in low-traffic areas
+  * Non-urgent maintenance items
+
+IMPORTANT: Prioritize based on:
+1. HEALTH RISK (highest weight) - disease transmission, contamination, injury risk
+2. FACILITY IMPORTANCE - hospitals, schools, main roads > residential streets
+3. PUBLIC SAFETY - potential for accidents or harm
+4. IMPACT SCALE - number of people affected
 
 Analyze the issue and provide:
 1. The most appropriate category

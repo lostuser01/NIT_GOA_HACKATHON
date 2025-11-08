@@ -13,6 +13,13 @@ import {
   FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useAuth } from "@/contexts/auth-context";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
@@ -25,6 +32,7 @@ export function SignupForm({
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [role, setRole] = useState<"citizen" | "admin">("citizen");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { signup } = useAuth();
@@ -48,10 +56,10 @@ export function SignupForm({
     setIsLoading(true);
 
     try {
-      const result = await signup(name, email, password, confirmPassword);
+      const result = await signup(name, email, password, confirmPassword, role);
 
       if (result.success) {
-        router.push("/dashboard");
+        router.push(role === "admin" ? "/admin" : "/dashboard");
       } else {
         setError(result.error || "Signup failed. Please try again.");
       }
@@ -110,6 +118,27 @@ export function SignupForm({
           />
           <FieldDescription>
             We&apos;ll use this to send you updates on your reported issues.
+          </FieldDescription>
+        </Field>
+        <Field>
+          <FieldLabel htmlFor="role">Account Type</FieldLabel>
+          <Select
+            value={role}
+            onValueChange={(value: "citizen" | "admin") => setRole(value)}
+            disabled={isLoading}
+          >
+            <SelectTrigger id="role">
+              <SelectValue placeholder="Select account type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="citizen">User (Citizen)</SelectItem>
+              <SelectItem value="admin">Administrator</SelectItem>
+            </SelectContent>
+          </Select>
+          <FieldDescription>
+            {role === "admin"
+              ? "Administrators can manage issues and assign time estimates"
+              : "Citizens can report and track civic issues"}
           </FieldDescription>
         </Field>
         <Field>

@@ -312,6 +312,7 @@ export const authAPI = {
     email: string;
     password: string;
     confirmPassword: string;
+    role?: "citizen" | "admin";
   }): Promise<AuthResponse> {
     try {
       const response = (await apiRequest<AuthUser>("/auth/signup", {

@@ -50,9 +50,9 @@ interface MapIssue {
 }
 
 const statusColors = {
-  open: "bg-red-500 dark:bg-red-600 text-white dark:text-white",
-  "in-progress": "bg-yellow-500 dark:bg-yellow-600 text-black dark:text-black",
-  resolved: "bg-blue-500 dark:bg-blue-600 text-white dark:text-white",
+  open: "bg-black dark:bg-white text-white dark:text-black",
+  "in-progress": "bg-gray-700 dark:bg-gray-300 text-white dark:text-black",
+  resolved: "bg-gray-400 dark:bg-gray-600 text-white dark:text-white",
 };
 
 const statusIcons = {
@@ -388,16 +388,16 @@ export default function MapPage() {
                     location will be automatically captured.
                   </DialogDescription>
                 </DialogHeader>
-                <form className="space-y-4" onSubmit={handleSubmitReport}>
+                <form className="space-y-4" onSubmit={handleReportSubmit}>
                   <div className="space-y-2">
                     <Label htmlFor="title">Issue Title *</Label>
                     <Input
                       id="title"
                       placeholder="Brief description"
-                      value={formTitle}
-                      onChange={(e) => setFormTitle(e.target.value)}
+                      value={reportTitle}
+                      onChange={(e) => setReportTitle(e.target.value)}
                       required
-                      disabled={isSubmitting}
+                      disabled={isSubmittingReport}
                     />
                   </div>
                   <div className="space-y-2">
@@ -406,18 +406,18 @@ export default function MapPage() {
                       id="description"
                       placeholder="Detailed description of the issue"
                       rows={4}
-                      value={formDescription}
-                      onChange={(e) => setFormDescription(e.target.value)}
+                      value={reportDescription}
+                      onChange={(e) => setReportDescription(e.target.value)}
                       required
-                      disabled={isSubmitting}
+                      disabled={isSubmittingReport}
                     />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="category">Category *</Label>
                     <Select
-                      value={formCategory}
-                      onValueChange={setFormCategory}
-                      disabled={isSubmitting}
+                      value={reportCategory}
+                      onValueChange={setReportCategory}
+                      disabled={isSubmittingReport}
                     >
                       <SelectTrigger>
                         <SelectValue placeholder="Select category" />
@@ -433,31 +433,11 @@ export default function MapPage() {
                         <SelectItem value="sanitation">Sanitation</SelectItem>
                         <SelectItem value="drainage">Drainage</SelectItem>
                         <SelectItem value="electricity">Electricity</SelectItem>
-                        <SelectItem value="traffic">Traffic</SelectItem>
-                        <SelectItem value="other">Other</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-2">
-                    {" "}
+                        <SelectItem value="trafficdiv className="space-y-2">
                     <Label htmlFor="photo">Photo (Optional)</Label>
                     <div className="flex items-center gap-2">
-                      <Input
-                        id="photo"
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => {
-                          const file = e.target.files?.[0];
-                          if (file) setFormPhoto(file);
-                        }}
-                        disabled={isSubmitting}
-                      />
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="icon"
-                        disabled={isSubmitting}
-                      >
+                      <Input id="photo" type="file" accept="image/*" />
+                      <Button type="button" variant="outline" size="icon">
                         <Camera className="size-4" />
                       </Button>
                     </div>

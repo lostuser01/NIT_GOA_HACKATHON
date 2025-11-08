@@ -22,6 +22,7 @@ interface AuthContextType {
     email: string,
     password: string,
     confirmPassword: string,
+    role?: "citizen" | "admin",
   ) => Promise<{ success: boolean; error?: string }>;
   logout: () => void;
   refreshUser: () => Promise<void>;
@@ -147,6 +148,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     email: string,
     password: string,
     confirmPassword: string,
+    role: "citizen" | "admin" = "citizen",
   ) => {
     try {
       setIsLoading(true);
@@ -155,6 +157,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         email,
         password,
         confirmPassword,
+        role,
       });
 
       if (response.success && response.user) {
