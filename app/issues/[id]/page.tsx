@@ -14,10 +14,6 @@ import {
   Loader2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -62,11 +58,6 @@ export default function IssueDetailPage() {
       const data = await response.json();
       setIssue(data.data);
 
-<<<<<<< Updated upstream
-      // Check if user has voted
-=======
-      // Check if user has voted (you can enhance this with actual API call)
->>>>>>> Stashed changes
       const votedIssues = JSON.parse(
         localStorage.getItem("votedIssues") || "[]",
       );
@@ -105,19 +96,11 @@ export default function IssueDetailPage() {
         throw new Error("Failed to vote");
       }
 
-<<<<<<< Updated upstream
-=======
-      // Update local state
->>>>>>> Stashed changes
       setHasVoted(true);
       if (issue) {
         setIssue({ ...issue, votes: issue.votes + 1 });
       }
 
-<<<<<<< Updated upstream
-=======
-      // Save to localStorage
->>>>>>> Stashed changes
       const votedIssues = JSON.parse(
         localStorage.getItem("votedIssues") || "[]",
       );
@@ -165,10 +148,6 @@ export default function IssueDetailPage() {
 
       const data = await response.json();
 
-<<<<<<< Updated upstream
-=======
-      // Update local state with new comment
->>>>>>> Stashed changes
       if (issue) {
         setIssue({
           ...issue,
@@ -283,7 +262,6 @@ export default function IssueDetailPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-black dark:to-gray-950">
       <div className="container mx-auto px-4 py-8 max-w-5xl">
-        {/* Header */}
         <div className="mb-6">
           <Link href="/map">
             <Button variant="ghost" className="mb-4">
@@ -294,9 +272,7 @@ export default function IssueDetailPage() {
         </div>
 
         <div className="grid lg:grid-cols-3 gap-6">
-          {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Issue Header */}
             <Card>
               <CardHeader>
                 <div className="flex items-start justify-between gap-4">
@@ -339,7 +315,6 @@ export default function IssueDetailPage() {
               </CardContent>
             </Card>
 
-            {/* Before/After Photos */}
             {issue.beforePhotoUrls && issue.beforePhotoUrls.length > 0 && (
               <BeforeAfterPhotos
                 beforeUrls={issue.beforePhotoUrls}
@@ -349,7 +324,6 @@ export default function IssueDetailPage() {
               />
             )}
 
-            {/* Comments Section */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -358,7 +332,6 @@ export default function IssueDetailPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                {/* Comment Form */}
                 <form onSubmit={handleComment} className="space-y-3">
                   <Textarea
                     placeholder="Share your thoughts or provide additional information..."
@@ -390,7 +363,6 @@ export default function IssueDetailPage() {
 
                 <Separator />
 
-                {/* Comments List */}
                 {issue.comments.length > 0 ? (
                   <div className="space-y-4">
                     {issue.comments.map((comment) => (
@@ -426,9 +398,7 @@ export default function IssueDetailPage() {
             </Card>
           </div>
 
-          {/* Sidebar */}
           <div className="space-y-6">
-            {/* Actions Card */}
             <Card>
               <CardHeader>
                 <CardTitle className="text-lg">Actions</CardTitle>
@@ -451,7 +421,6 @@ export default function IssueDetailPage() {
               </CardContent>
             </Card>
 
-            {/* Issue Stats */}
             <Card>
               <CardHeader>
                 <CardTitle className="text-lg">Issue Statistics</CardTitle>
@@ -484,7 +453,6 @@ export default function IssueDetailPage() {
               </CardContent>
             </Card>
 
-            {/* Location Map Preview */}
             <Card>
               <CardHeader>
                 <CardTitle className="text-lg flex items-center gap-2">
