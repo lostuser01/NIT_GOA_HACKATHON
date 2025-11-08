@@ -4,7 +4,7 @@ import Link from "next/link";
 import { AlertCircle, TrendingUp, Shield, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ShuffleText } from "@/components/shuffle-text";
-import { LaserBeamBorder } from "@/components/laser-beam-border";
+import { LaserFlow } from "@/components/ui/laser-flow";
 import "@/components/shuffle-text/shuffle.css";
 
 export default function Home() {
@@ -78,18 +78,29 @@ export default function Home() {
             </div>
 
             <div className="relative mt-12 overflow-visible px-2 sm:px-4">
-              <LaserBeamBorder
-                className="relative mx-auto max-w-6xl overflow-hidden rounded-2xl border border-gray-200/50 dark:border-gray-800/50 bg-gradient-to-b from-white to-gray-50 dark:from-black dark:to-gray-950 p-4 shadow-2xl shadow-gray-900/20 dark:shadow-gray-950/40 ring-1 ring-gray-200/50 dark:ring-gray-800/50"
-                beamColor="rgba(168, 85, 247, 0.9)"
-                beamWidth={3}
-                speed={2.5}
-                glowIntensity={25}
-              >
-                <div className="relative min-h-[500px] overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
-                  {/* Empty clean screen */}
+              <div className="relative mx-auto max-w-6xl overflow-hidden rounded-2xl border border-purple-500/20 dark:border-purple-500/30 bg-gradient-to-b from-white to-gray-50 dark:from-gray-950 dark:to-black p-4 shadow-2xl shadow-purple-900/20 dark:shadow-purple-950/40 ring-1 ring-purple-500/10 dark:ring-purple-500/20">
+                {/* LaserFlow Effect */}
+                <div className="absolute inset-x-0 -top-40 h-80 z-10">
+                  <LaserFlow />
                 </div>
-              </LaserBeamBorder>
-              {/* Gradient fade effect */}
+
+                {/* App Screen */}
+                <div className="relative min-h-[500px] overflow-hidden rounded-xl border border-gray-200/50 dark:border-gray-800/50 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 dark:from-slate-950 dark:via-black dark:to-slate-950 z-20">
+                  {/* Ambient glow effect */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-purple-500/5 via-transparent to-transparent pointer-events-none" />
+
+                  {/* Content placeholder with subtle grid */}
+                  <div
+                    className="absolute inset-0 opacity-20 dark:opacity-10"
+                    style={{
+                      backgroundImage: `radial-gradient(circle at 1px 1px, rgb(168 85 247 / 0.15) 1px, transparent 0)`,
+                      backgroundSize: "40px 40px",
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* Gradient fade effect at bottom */}
               <div className="absolute inset-x-0 -bottom-20 h-40 bg-gradient-to-t from-white dark:from-black to-transparent pointer-events-none" />
             </div>
           </div>
