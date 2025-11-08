@@ -16,12 +16,12 @@ import {
   Legend,
 } from "recharts";
 import {
-  Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { NeonGradientCard } from "@/components/magicui/neon-gradient-card";
 import {
   Select,
   SelectContent,
@@ -293,7 +293,7 @@ export function ChartAreaInteractive() {
 
         {/* Hotspot Trend Projection */}
         <TabsContent value="hotspot">
-          <Card className="transition-all duration-300 ease-out hover:shadow-lg">
+          <NeonGradientCard className="transition-all duration-300 ease-out hover:shadow-lg">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <TrendingUp className="h-5 w-5 text-blue-500" />
@@ -385,12 +385,12 @@ export function ChartAreaInteractive() {
                 </div>
               </div>
             </CardContent>
-          </Card>
+          </NeonGradientCard>
         </TabsContent>
 
         {/* Resource Demand Forecasting */}
         <TabsContent value="resource">
-          <Card className="transition-all duration-300 ease-out hover:shadow-lg">
+          <NeonGradientCard className="transition-all duration-300 ease-out hover:shadow-lg">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <BarChart3 className="h-5 w-5 text-green-500" />
@@ -479,12 +479,12 @@ export function ChartAreaInteractive() {
                 </div>
               </div>
             </CardContent>
-          </Card>
+          </NeonGradientCard>
         </TabsContent>
 
         {/* Department Performance */}
         <TabsContent value="performance">
-          <Card className="transition-all duration-300 ease-out hover:shadow-lg">
+          <NeonGradientCard className="transition-all duration-300 ease-out hover:shadow-lg">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Activity className="h-5 w-5 text-purple-500" />
@@ -561,12 +561,12 @@ export function ChartAreaInteractive() {
                 ))}
               </div>
             </CardContent>
-          </Card>
+          </NeonGradientCard>
         </TabsContent>
 
         {/* Prediction Accuracy */}
         <TabsContent value="prediction">
-          <Card className="transition-all duration-300 ease-out hover:shadow-lg">
+          <NeonGradientCard className="transition-all duration-300 ease-out hover:shadow-lg">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <TrendingUp className="h-5 w-5 text-indigo-500" />
@@ -644,7 +644,7 @@ export function ChartAreaInteractive() {
                 </div>
               </div>
             </CardContent>
-          </Card>
+          </NeonGradientCard>
         </TabsContent>
       </Tabs>
     </div>
