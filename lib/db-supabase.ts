@@ -2,7 +2,61 @@
 // This replaces the in-memory database with persistent Supabase storage
 
 import { supabase } from "./supabase";
-import { User, Issue, Comment, Vote } from "./types";
+import {
+  User,
+  Issue,
+  Comment,
+  Vote,
+  IssueCategory,
+  IssueStatus,
+  IssuePriority,
+} from "./types";
+
+// Supabase database row types
+type UserRow = {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+  role: string;
+  avatar: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+type IssueRow = {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  location: string;
+  latitude: number;
+  longitude: number;
+  photo_url: string | null;
+  status: string;
+  priority: string;
+  user_id: string;
+  votes: number;
+  created_at: string;
+  updated_at: string;
+  resolved_at: string | null;
+};
+
+type CommentRow = {
+  id: string;
+  issue_id: string;
+  user_id: string;
+  user_name: string;
+  content: string;
+  created_at: string;
+};
+
+type VoteRow = {
+  id: string;
+  issue_id: string;
+  user_id: string;
+  created_at: string;
+};
 
 // Safety check helper
 function getSupabase() {
@@ -143,12 +197,12 @@ export const userDb = {
       return [];
     }
 
-    return data.map((user) => ({
+    return data.map((user: UserRow) => ({
       id: user.id,
       name: user.name,
       email: user.email,
       password: user.password,
-      role: user.role,
+      role: user.role as "citizen" | "admin" | "authority",
       avatar: user.avatar || undefined,
       createdAt: user.created_at,
       updatedAt: user.updated_at,
@@ -307,18 +361,18 @@ export const issueDb = {
 
     // Convert database records to Issue type
     const issues = await Promise.all(
-      data.map(async (issue) => {
+      data.map(async (issue: IssueRow) => {
         const comments = await commentDb.findByIssueId(issue.id);
         return {
           id: issue.id,
           title: issue.title,
           description: issue.description,
-          category: issue.category,
+          category: issue.category as IssueCategory,
           location: issue.location,
           coordinates: { lat: issue.latitude, lng: issue.longitude },
           photoUrl: issue.photo_url || undefined,
-          status: issue.status,
-          priority: issue.priority,
+          status: issue.status as IssueStatus,
+          priority: issue.priority as IssuePriority,
           userId: issue.user_id,
           votes: issue.votes || 0,
           comments: comments,
@@ -344,18 +398,18 @@ export const issueDb = {
     }
 
     const issues = await Promise.all(
-      data.map(async (issue) => {
+      data.map(async (issue: IssueRow) => {
         const comments = await commentDb.findByIssueId(issue.id);
         return {
           id: issue.id,
           title: issue.title,
           description: issue.description,
-          category: issue.category,
+          category: issue.category as IssueCategory,
           location: issue.location,
           coordinates: { lat: issue.latitude, lng: issue.longitude },
           photoUrl: issue.photo_url || undefined,
-          status: issue.status,
-          priority: issue.priority,
+          status: issue.status as IssueStatus,
+          priority: issue.priority as IssuePriority,
           userId: issue.user_id,
           votes: issue.votes || 0,
           comments: comments,
@@ -381,18 +435,18 @@ export const issueDb = {
     }
 
     const issues = await Promise.all(
-      data.map(async (issue) => {
+      data.map(async (issue: IssueRow) => {
         const comments = await commentDb.findByIssueId(issue.id);
         return {
           id: issue.id,
           title: issue.title,
           description: issue.description,
-          category: issue.category,
+          category: issue.category as IssueCategory,
           location: issue.location,
           coordinates: { lat: issue.latitude, lng: issue.longitude },
           photoUrl: issue.photo_url || undefined,
-          status: issue.status,
-          priority: issue.priority,
+          status: issue.status as IssueStatus,
+          priority: issue.priority as IssuePriority,
           userId: issue.user_id,
           votes: issue.votes || 0,
           comments: comments,
@@ -418,18 +472,18 @@ export const issueDb = {
     }
 
     const issues = await Promise.all(
-      data.map(async (issue) => {
+      data.map(async (issue: IssueRow) => {
         const comments = await commentDb.findByIssueId(issue.id);
         return {
           id: issue.id,
           title: issue.title,
           description: issue.description,
-          category: issue.category,
+          category: issue.category as IssueCategory,
           location: issue.location,
           coordinates: { lat: issue.latitude, lng: issue.longitude },
           photoUrl: issue.photo_url || undefined,
-          status: issue.status,
-          priority: issue.priority,
+          status: issue.status as IssueStatus,
+          priority: issue.priority as IssuePriority,
           userId: issue.user_id,
           votes: issue.votes || 0,
           comments: comments,
@@ -581,7 +635,7 @@ export const commentDb = {
       return [];
     }
 
-    return data.map((comment) => ({
+    return data.map((comment: CommentRow) => ({
       id: comment.id,
       issueId: comment.issue_id,
       userId: comment.user_id,
@@ -663,7 +717,7 @@ export const voteDb = {
       return [];
     }
 
-    return data.map((vote) => ({
+    return data.map((vote: VoteRow) => ({
       id: vote.id,
       issueId: vote.issue_id,
       userId: vote.user_id,

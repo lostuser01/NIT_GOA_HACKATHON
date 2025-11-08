@@ -147,3 +147,52 @@ export function generateSecureToken(): string {
     Date.now().toString(36)
   );
 }
+
+// Middleware helper for admin-only routes
+export async function requireAdmin(request: NextRequest): Promise<{
+  authorized: boolean;
+  user: { userId: string; email: string; role: string } | null;
+  error?: string;
+}> {
+  const authResult = await requireAuth(request);
+
+  if (!authResult.authorized || !authResult.user) {
+    return authResult;
+  }
+
+  if (!isAdmin(authResult.user.role)) {
+    return {
+      authorized: false,
+      user: null,
+      error: "Forbidden - Admin access required",
+    };
+  }
+
+  return authResult;
+}
+
+// Middleware helper for authority-only routes
+export async function requireAuthority(request: NextRequest): Promise<{
+  authorized: boolean;
+  user: { userId: string; email: string; role: string } | null;
+  error?: string;
+}> {
+  const authResult = await requireAuth(request);
+
+  if (!authResult.authorized || !authResult.user) {
+    return authResult;
+  }
+
+  if (
+    authResult.user.role !== "authority" &&
+    authResult.user.role !== "admin"
+  ) {
+    return {
+      authorized: false,
+      user: null,
+      error: "Forbidden - Authority access required",
+    };
+  }
+
+  return authResult;
+}

@@ -22,11 +22,14 @@ export interface Issue {
     lng: number;
   };
   photoUrl?: string;
+  beforePhotoUrls?: string[]; // Multiple before photos
+  afterPhotoUrls?: string[]; // Multiple after photos for resolved issues
   status: IssueStatus;
   priority: IssuePriority;
   userId: string;
   votes: number;
   comments: Comment[];
+  ward?: string; // Ward/district identifier
   createdAt: string;
   updatedAt: string;
   resolvedAt?: string;
@@ -125,6 +128,8 @@ export interface CreateIssueRequest {
     lng: number;
   };
   photoUrl?: string;
+  beforePhotoUrls?: string[];
+  ward?: string;
 }
 
 export interface UpdateIssueRequest {
@@ -133,6 +138,8 @@ export interface UpdateIssueRequest {
   status?: IssueStatus;
   priority?: IssuePriority;
   assignedTo?: string;
+  afterPhotoUrls?: string[];
+  ward?: string;
 }
 
 export interface CreateCommentRequest {
@@ -145,9 +152,34 @@ export interface IssueFilters {
   category?: IssueCategory;
   priority?: IssuePriority;
   userId?: string;
+  ward?: string;
   search?: string;
   sortBy?: "createdAt" | "votes" | "priority";
   sortOrder?: "asc" | "desc";
   limit?: number;
   offset?: number;
+}
+
+// Ward/District list for Goa
+export const WARDS = [
+  "Panjim - Fontainhas",
+  "Panjim - St. Inez",
+  "Panjim - Miramar",
+  "Margao - Market Area",
+  "Margao - Fatorda",
+  "Vasco - Town Center",
+  "Mapusa - Municipal Market",
+  "Ponda - City Center",
+  "Bicholim - Town",
+  "Canacona - Chaudi",
+] as const;
+
+export type Ward = (typeof WARDS)[number];
+
+// Upload response type
+export interface UploadResponse {
+  success: boolean;
+  url?: string;
+  urls?: string[];
+  error?: string;
 }

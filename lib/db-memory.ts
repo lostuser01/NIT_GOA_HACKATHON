@@ -19,7 +19,9 @@ export function generateId(): string {
 
 // User operations
 export const userDb = {
-  create(user: Omit<User, "id" | "createdAt" | "updatedAt">): User {
+  async create(
+    user: Omit<User, "id" | "createdAt" | "updatedAt">,
+  ): Promise<User> {
     const newUser: User = {
       ...user,
       id: generateId(),
@@ -30,15 +32,15 @@ export const userDb = {
     return newUser;
   },
 
-  findById(id: string): User | undefined {
+  async findById(id: string): Promise<User | undefined> {
     return db.users.get(id);
   },
 
-  findByEmail(email: string): User | undefined {
+  async findByEmail(email: string): Promise<User | undefined> {
     return Array.from(db.users.values()).find((user) => user.email === email);
   },
 
-  update(id: string, updates: Partial<User>): User | undefined {
+  async update(id: string, updates: Partial<User>): Promise<User | undefined> {
     const user = db.users.get(id);
     if (!user) return undefined;
 
@@ -51,20 +53,20 @@ export const userDb = {
     return updatedUser;
   },
 
-  delete(id: string): boolean {
+  async delete(id: string): Promise<boolean> {
     return db.users.delete(id);
   },
 
-  getAll(): User[] {
+  async getAll(): Promise<User[]> {
     return Array.from(db.users.values());
   },
 };
 
 // Issue operations
 export const issueDb = {
-  create(
+  async create(
     issue: Omit<Issue, "id" | "createdAt" | "updatedAt" | "votes" | "comments">,
-  ): Issue {
+  ): Promise<Issue> {
     const newIssue: Issue = {
       ...issue,
       id: generateId(),
@@ -77,11 +79,14 @@ export const issueDb = {
     return newIssue;
   },
 
-  findById(id: string): Issue | undefined {
+  async findById(id: string): Promise<Issue | undefined> {
     return db.issues.get(id);
   },
 
-  update(id: string, updates: Partial<Issue>): Issue | undefined {
+  async update(
+    id: string,
+    updates: Partial<Issue>,
+  ): Promise<Issue | undefined> {
     const issue = db.issues.get(id);
     if (!issue) return undefined;
 
@@ -99,33 +104,33 @@ export const issueDb = {
     return updatedIssue;
   },
 
-  delete(id: string): boolean {
+  async delete(id: string): Promise<boolean> {
     return db.issues.delete(id);
   },
 
-  getAll(): Issue[] {
+  async getAll(): Promise<Issue[]> {
     return Array.from(db.issues.values());
   },
 
-  findByUserId(userId: string): Issue[] {
+  async findByUserId(userId: string): Promise<Issue[]> {
     return Array.from(db.issues.values()).filter(
       (issue) => issue.userId === userId,
     );
   },
 
-  findByStatus(status: string): Issue[] {
+  async findByStatus(status: string): Promise<Issue[]> {
     return Array.from(db.issues.values()).filter(
       (issue) => issue.status === status,
     );
   },
 
-  findByCategory(category: string): Issue[] {
+  async findByCategory(category: string): Promise<Issue[]> {
     return Array.from(db.issues.values()).filter(
       (issue) => issue.category === category,
     );
   },
 
-  incrementVotes(id: string): Issue | undefined {
+  async incrementVotes(id: string): Promise<Issue | undefined> {
     const issue = db.issues.get(id);
     if (!issue) return undefined;
 
@@ -135,7 +140,7 @@ export const issueDb = {
     return issue;
   },
 
-  decrementVotes(id: string): Issue | undefined {
+  async decrementVotes(id: string): Promise<Issue | undefined> {
     const issue = db.issues.get(id);
     if (!issue) return undefined;
 
@@ -150,7 +155,7 @@ export const issueDb = {
 
 // Comment operations
 export const commentDb = {
-  create(comment: Omit<Comment, "id" | "createdAt">): Comment {
+  async create(comment: Omit<Comment, "id" | "createdAt">): Promise<Comment> {
     const newComment: Comment = {
       ...comment,
       id: generateId(),
@@ -168,17 +173,17 @@ export const commentDb = {
     return newComment;
   },
 
-  findById(id: string): Comment | undefined {
+  async findById(id: string): Promise<Comment | undefined> {
     return db.comments.get(id);
   },
 
-  findByIssueId(issueId: string): Comment[] {
+  async findByIssueId(issueId: string): Promise<Comment[]> {
     return Array.from(db.comments.values()).filter(
       (comment) => comment.issueId === issueId,
     );
   },
 
-  delete(id: string): boolean {
+  async delete(id: string): Promise<boolean> {
     const comment = db.comments.get(id);
     if (!comment) return false;
 
@@ -195,7 +200,7 @@ export const commentDb = {
 
 // Vote operations
 export const voteDb = {
-  create(vote: Omit<Vote, "id" | "createdAt">): Vote {
+  async create(vote: Omit<Vote, "id" | "createdAt">): Promise<Vote> {
     const newVote: Vote = {
       ...vote,
       id: generateId(),
@@ -205,17 +210,20 @@ export const voteDb = {
     return newVote;
   },
 
-  findByUserAndIssue(userId: string, issueId: string): Vote | undefined {
+  async findByUserAndIssue(
+    userId: string,
+    issueId: string,
+  ): Promise<Vote | undefined> {
     return Array.from(db.votes.values()).find(
       (vote) => vote.userId === userId && vote.issueId === issueId,
     );
   },
 
-  delete(id: string): boolean {
+  async delete(id: string): Promise<boolean> {
     return db.votes.delete(id);
   },
 
-  findByIssueId(issueId: string): Vote[] {
+  async findByIssueId(issueId: string): Promise<Vote[]> {
     return Array.from(db.votes.values()).filter(
       (vote) => vote.issueId === issueId,
     );
@@ -225,21 +233,21 @@ export const voteDb = {
 // Seed data for demo purposes
 export async function seedDatabase() {
   // Create sample users with properly hashed passwords
-  const user1 = userDb.create({
+  const user1 = await userDb.create({
     name: "John Doe",
     email: "john@example.com",
     password: await hashPassword("Demo1234"), // Password: Demo1234
     role: "citizen",
   });
 
-  const user2 = userDb.create({
+  const user2 = await userDb.create({
     name: "Jane Smith",
     email: "jane@example.com",
     password: await hashPassword("Demo1234"), // Password: Demo1234
     role: "citizen",
   });
 
-  const admin = userDb.create({
+  const admin = await userDb.create({
     name: "Admin User",
     email: "admin@citypulse.com",
     password: await hashPassword("Admin1234"), // Password: Admin1234
@@ -247,7 +255,7 @@ export async function seedDatabase() {
   });
 
   // Create sample issues
-  const issue1 = issueDb.create({
+  const issue1 = await issueDb.create({
     title: "Pothole on Main Street",
     description: "Large pothole causing traffic issues and vehicle damage",
     category: "pothole",
@@ -258,7 +266,7 @@ export async function seedDatabase() {
     userId: user1.id,
   });
 
-  const issue2 = issueDb.create({
+  const issue2 = await issueDb.create({
     title: "Broken Streetlight",
     description:
       "Streetlight not working since last week, making the area unsafe at night",
@@ -270,7 +278,7 @@ export async function seedDatabase() {
     userId: user2.id,
   });
 
-  const _issue3 = issueDb.create({
+  const _issue3 = await issueDb.create({
     title: "Overflowing Garbage Bin",
     description: "Garbage bin overflowing for 3 days, creating health hazards",
     category: "garbage",
@@ -282,7 +290,7 @@ export async function seedDatabase() {
     resolvedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
   });
 
-  const issue4 = issueDb.create({
+  const issue4 = await issueDb.create({
     title: "Water Leak",
     description: "Continuous water leak from pipe, wasting water",
     category: "water_leak",
@@ -293,7 +301,7 @@ export async function seedDatabase() {
     userId: user2.id,
   });
 
-  const _issue5 = issueDb.create({
+  const _issue5 = await issueDb.create({
     title: "Damaged Road",
     description: "Road surface damaged after recent rains",
     category: "road",
@@ -305,28 +313,28 @@ export async function seedDatabase() {
   });
 
   // Add some votes
-  issueDb.incrementVotes(issue1.id);
-  issueDb.incrementVotes(issue1.id);
-  issueDb.incrementVotes(issue1.id);
-  issueDb.incrementVotes(issue2.id);
-  issueDb.incrementVotes(issue4.id);
+  await issueDb.incrementVotes(issue1.id);
+  await issueDb.incrementVotes(issue1.id);
+  await issueDb.incrementVotes(issue1.id);
+  await issueDb.incrementVotes(issue2.id);
+  await issueDb.incrementVotes(issue4.id);
 
   // Add some comments
-  commentDb.create({
+  await commentDb.create({
     issueId: issue1.id,
     userId: user2.id,
     userName: user2.name,
     content: "I saw this too! It's really bad and needs immediate attention.",
   });
 
-  commentDb.create({
+  await commentDb.create({
     issueId: issue1.id,
     userId: admin.id,
     userName: admin.name,
     content: "This has been escalated to the road maintenance department.",
   });
 
-  commentDb.create({
+  await commentDb.create({
     issueId: issue2.id,
     userId: user1.id,
     userName: user1.name,

@@ -69,7 +69,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if user already exists
-    const existingUser = userDb.findByEmail(email.toLowerCase());
+    const existingUser = await userDb.findByEmail(email.toLowerCase());
     if (existingUser) {
       return NextResponse.json(
         {
