@@ -55,7 +55,7 @@ export default function Home() {
                 size="lg"
                 className="bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 h-10 px-8"
               >
-                <Link href="/signup">Get Started Free</Link>
+                <Link href="/signup">Get Started</Link>
               </Button>
               <Button
                 asChild
@@ -219,7 +219,7 @@ export default function Home() {
               size="lg"
               className="bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 h-10 px-8"
             >
-              <Link href="/signup">Get Started Now</Link>
+              <Link href="/signup">Get Started</Link>
             </Button>
           </div>
         </section>

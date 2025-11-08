@@ -491,94 +491,12 @@ export default function ReportIssuePage() {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Label>Category *</Label>
-                    {aiSuggestion && (
-                      <span className="text-xs text-green-600 dark:text-green-400 flex items-center gap-1">
-                        <Sparkles className="h-3 w-3" />
-                        AI Suggestion Available
-                      </span>
-                    )}
+
                   </div>
-                  {!useAI && (
-                    <div className="flex items-center gap-2">
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={handleAICategorization}
-                        disabled={
-                          isAICategorizing ||
-                          !formData.title ||
-                          !formData.description
-                        }
-                        className="text-xs"
-                      >
-                        {isAICategorizing ? (
-                          <>
-                            <Loader2 className="mr-1 h-3 w-3 animate-spin" />
-                            Analyzing...
-                          </>
-                        ) : (
-                          <>
-                            <Sparkles className="mr-1 h-3 w-3" />
-                            Get AI Suggestion
-                          </>
-                        )}
-                      </Button>
-                    </div>
-                  )}
+
                 </div>
 
-                {/* AI Suggestion Card */}
-                {aiSuggestion && (
-                  <Alert className="bg-blue-50 dark:bg-blue-950 border-blue-200 dark:border-blue-800">
-                    <Sparkles className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-                    <AlertDescription className="text-blue-800 dark:text-blue-200">
-                      <div className="space-y-2">
-                        <p className="font-semibold text-sm">
-                          AI Recommendation:{" "}
-                          {aiSuggestion.category
-                            .replace("_", " ")
-                            .toUpperCase()}
-                          <span className="ml-2 text-xs">
-                            (Priority: {aiSuggestion.priority}, Confidence:{" "}
-                            {Math.round(aiSuggestion.confidence * 100)}%)
-                          </span>
-                        </p>
-                        <p className="text-xs">{aiSuggestion.reasoning}</p>
-                        {aiSuggestion.suggestedTitle &&
-                          aiSuggestion.suggestedTitle !== formData.title && (
-                            <p className="text-xs">
-                              <strong>Better title:</strong>{" "}
-                              {aiSuggestion.suggestedTitle}
-                            </p>
-                          )}
-                        {aiSuggestion.tags && aiSuggestion.tags.length > 0 && (
-                          <div className="flex gap-1 flex-wrap mt-1">
-                            {aiSuggestion.tags.slice(0, 3).map((tag, idx) => (
-                              <span
-                                key={idx}
-                                className="text-xs px-2 py-0.5 bg-blue-100 dark:bg-blue-900 rounded"
-                              >
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-                        {formData.category !== aiSuggestion.category && (
-                          <Button
-                            type="button"
-                            size="sm"
-                            variant="default"
-                            className="text-xs mt-2"
-                            onClick={applyAISuggestion}
-                          >
-                            Apply Suggestion
-                          </Button>
-                        )}
-                      </div>
-                    </AlertDescription>
-                  </Alert>
-                )}
+
 
                 <Select
                   value={formData.category}

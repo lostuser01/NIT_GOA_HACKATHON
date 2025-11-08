@@ -1,35 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import {
   MapPin,
-  Camera,
-  MapPinned,
   AlertCircle,
   CheckCircle,
   Clock,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import { InteractiveMap } from "@/components/interactive-map";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BorderBeam } from "@/components/magicui/border-beam";
@@ -65,53 +44,11 @@ const statusIcons = {
 const DEFAULT_LOCATION = { lat: 15.2993, lng: 74.124 };
 
 export default function MapPage() {
+  const router = useRouter();
   const [issues, setIssues] = useState<MapIssue[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedIssue, setSelectedIssue] = useState<string | null>(null);
-  const [isReportDialogOpen, setIsReportDialogOpen] = useState(false);
-  const [location, setLocation] = useState<{ lat: number; lng: number } | null>(
-    null,
-  );
   const [focusOnMarker, setFocusOnMarker] = useState<string | null>(null);
-
-  // User location for form submission only (map handles its own location display)
-  const [userLocation, setUserLocation] = useState<{
-    lat: number;
-    lng: number;
-  } | null>(null);
-
-  // Form state
-  const [formTitle, setFormTitle] = useState("");
-  const [formDescription, setFormDescription] = useState("");
-  const [formCategory, setFormCategory] = useState("");
-  const [formPhoto, setFormPhoto] = useState<File | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  // Get user location on mount - for form purposes only, map handles its own location
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setUserLocation({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          });
-        },
-        (error) => {
-          // Use default location on error
-          setUserLocation(DEFAULT_LOCATION);
-          console.warn("Location error for form:", error.message);
-        },
-        {
-          enableHighAccuracy: true,
-          timeout: 10000,
-          maximumAge: 0,
-        },
-      );
-    } else {
-      setUserLocation(DEFAULT_LOCATION);
-    }
-  }, []);
 
   // Fetch issues from API
   useEffect(() => {
@@ -173,164 +110,10 @@ export default function MapPage() {
     return categoryMap[category] || category;
   };
 
-  const getLocation = () => {
-    if (navigator.geolocation) {
-      toast.loading("Getting your location...", { id: "location-loading" });
-
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLocation({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          });
-          toast.dismiss("location-loading");
-          toast.success("Location captured successfully!");
-        },
-        (error) => {
-          toast.dismiss("location-loading");
-          // Use default location on error
-          setLocation(DEFAULT_LOCATION);
-          let errorMessage = "Using default location. ";
-          switch (error.code) {
-            case error.PERMISSION_DENIED:
-              errorMessage +=
-                "Enable location access in browser settings for accurate location.";
-              break;
-            case error.POSITION_UNAVAILABLE:
-              errorMessage += "Your location is currently unavailable.";
-              break;
-            case error.TIMEOUT:
-              errorMessage += "Location request timed out.";
-              break;
-            default:
-              errorMessage += "Unable to determine your location.";
-          }
-          toast.error(errorMessage, { duration: 5000 });
-        },
-        {
-          enableHighAccuracy: true,
-          timeout: 10000,
-          maximumAge: 0,
-        },
-      );
-    } else {
-      setLocation(DEFAULT_LOCATION);
-      toast.error("Geolocation not supported. Using default location.");
-    }
-  };
-
   const handleMarkerClick = (id: string | number) => {
     const issueId = id.toString();
     setSelectedIssue(issueId);
     setFocusOnMarker(issueId);
-  };
-
-  const handleSubmitReport = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!location) {
-      toast.error("Please capture your location before submitting");
-      return;
-    }
-
-    if (!formTitle || !formDescription || !formCategory) {
-      toast.error("Please fill in all required fields");
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    try {
-      let photoUrl: string | undefined;
-
-      // Upload photo if provided
-      if (formPhoto) {
-        toast.loading("Uploading photo...", { id: "photo-upload" });
-        const formData = new FormData();
-        formData.append("file", formPhoto);
-
-        const uploadResponse = await fetch("/api/upload", {
-          method: "POST",
-          body: formData,
-        });
-
-        const uploadData = await uploadResponse.json();
-        toast.dismiss("photo-upload");
-
-        if (uploadData.success && uploadData.url) {
-          photoUrl = uploadData.url;
-        } else {
-          toast.error("Photo upload failed, but continuing with report");
-        }
-      }
-
-      // Create issue
-      toast.loading("Submitting report...", { id: "submit-report" });
-
-      const issueData = {
-        title: formTitle,
-        description: formDescription,
-        category: formCategory,
-        location: `${location.lat.toFixed(6)}, ${location.lng.toFixed(6)}`,
-        coordinates: {
-          lat: location.lat,
-          lng: location.lng,
-        },
-        photoUrl,
-      };
-
-      const response = await fetch("/api/issues", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(issueData),
-      });
-
-      const result = await response.json();
-      toast.dismiss("submit-report");
-
-      if (result.success && result.data) {
-        toast.success("Issue reported successfully!");
-
-        // Add new issue to the map
-        const newIssue: MapIssue = {
-          id: result.data.id,
-          title: result.data.title,
-          description: result.data.description,
-          category: formatCategory(result.data.category),
-          status: result.data.status,
-          location: {
-            lat: result.data.coordinates.lat,
-            lng: result.data.coordinates.lng,
-          },
-          address: result.data.location,
-          date: new Date(result.data.createdAt).toLocaleDateString(),
-          photoUrl: result.data.photoUrl,
-        };
-
-        setIssues((prev) => [newIssue, ...prev]);
-
-        // Zoom to the newly created issue
-        setFocusOnMarker(newIssue.id);
-        setSelectedIssue(newIssue.id);
-
-        // Reset form and close dialog
-        setFormTitle("");
-        setFormDescription("");
-        setFormCategory("");
-        setFormPhoto(null);
-        setLocation(null);
-        setIsReportDialogOpen(false);
-      } else {
-        toast.error(result.error || "Failed to submit report");
-      }
-    } catch (error) {
-      console.error("Error submitting report:", error);
-      toast.error("An error occurred while submitting the report");
-    } finally {
-      setIsSubmitting(false);
-    }
   };
 
   return (
@@ -349,160 +132,7 @@ export default function MapPage() {
                 progress in real-time
               </p>
             </div>
-            <Dialog
-              open={isReportDialogOpen}
-              onOpenChange={setIsReportDialogOpen}
-            >
-              <DialogTrigger asChild>
-                <Button
-                  size="lg"
-                  className="bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200"
-                >
-                  <MapPinned className="mr-2 size-5" />
-                  Report New Issue
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-                <DialogHeader>
-                  <DialogTitle>Report a New Issue</DialogTitle>
-                  <DialogDescription>
-                    Fill out the form below to report a civic issue. Your
-                    location will be automatically captured.
-                  </DialogDescription>
-                </DialogHeader>
-                <form className="space-y-4" onSubmit={handleSubmitReport}>
-                  <div className="space-y-2">
-                    <Label htmlFor="title">Issue Title *</Label>
-                    <Input
-                      id="title"
-                      placeholder="Brief description"
-                      value={formTitle}
-                      onChange={(e) => setFormTitle(e.target.value)}
-                      required
-                      disabled={isSubmitting}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="description">Description *</Label>
-                    <Textarea
-                      id="description"
-                      placeholder="Detailed description of the issue"
-                      rows={4}
-                      value={formDescription}
-                      onChange={(e) => setFormDescription(e.target.value)}
-                      required
-                      disabled={isSubmitting}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="category">Category *</Label>
-                    <Select
-                      value={formCategory}
-                      onValueChange={setFormCategory}
-                      disabled={isSubmitting}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select category" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="pothole">Pothole</SelectItem>
-                        <SelectItem value="streetlight">
-                          Street Light
-                        </SelectItem>
-                        <SelectItem value="garbage">Garbage</SelectItem>
-                        <SelectItem value="water_leak">Water Leak</SelectItem>
-                        <SelectItem value="road">Road</SelectItem>
-                        <SelectItem value="sanitation">Sanitation</SelectItem>
-                        <SelectItem value="drainage">Drainage</SelectItem>
-                        <SelectItem value="electricity">Electricity</SelectItem>
-                        <SelectItem value="traffic">Traffic</SelectItem>
-                        <SelectItem value="other">Other</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-2">
-                    {" "}
-                    <Label htmlFor="photo">Photo (Optional)</Label>
-                    <div className="flex items-center gap-2">
-                      <Input
-                        id="photo"
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => {
-                          const file = e.target.files?.[0];
-                          if (file) setFormPhoto(file);
-                        }}
-                        disabled={isSubmitting}
-                      />
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="icon"
-                        disabled={isSubmitting}
-                      >
-                        <Camera className="size-4" />
-                      </Button>
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <Label>Location</Label>
-                    <div className="flex items-center gap-2">
-                      <Input
-                        readOnly
-                        value={
-                          location
-                            ? `${location.lat.toFixed(6)}, ${location.lng.toFixed(6)}`
-                            : "Not captured yet"
-                        }
-                        placeholder="Click button to capture location"
-                      />
-                      <Button
-                        type="button"
-                        onClick={getLocation}
-                        variant="outline"
-                        size="icon"
-                      >
-                        <MapPin className="size-4" />
-                      </Button>
-                    </div>
-                    {location && (
-                      <Alert>
-                        <AlertCircle className="size-4" />
-                        <AlertDescription>
-                          Location captured successfully! Latitude:{" "}
-                          {location.lat.toFixed(6)}, Longitude:{" "}
-                          {location.lng.toFixed(6)}
-                        </AlertDescription>
-                      </Alert>
-                    )}
-                  </div>
-                  <div className="flex justify-end gap-2 pt-4">
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={() => {
-                        setIsReportDialogOpen(false);
-                        setFormTitle("");
-                        setFormDescription("");
-                        setFormCategory("");
-                        setFormPhoto(null);
-                        setLocation(null);
-                      }}
-                      disabled={isSubmitting}
-                    >
-                      Cancel
-                    </Button>
-                    <Button
-                      type="submit"
-                      className="bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200"
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? "Submitting..." : "Submit Report"}
-                    </Button>
-                  </div>
-                </form>
-              </DialogContent>
-            </Dialog>
+
           </div>
 
           {/* Stats Cards */}
@@ -632,7 +262,10 @@ export default function MapPage() {
                             ? "bg-gray-50 dark:bg-gray-900"
                             : ""
                         }`}
-                        onClick={() => setSelectedIssue(issue.id)}
+                        onClick={() => {
+                          setSelectedIssue(issue.id);
+                          router.push(`/issues/${issue.id}`);
+                        }}
                       >
                         <div className="flex items-start justify-between">
                           <div className="flex-1">
