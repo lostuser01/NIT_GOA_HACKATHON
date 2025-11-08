@@ -236,7 +236,7 @@ export default function Home() {
               </span>
             </div>
             <p className="text-sm text-gray-600 dark:text-gray-400">
-              © 2024 OurStreet. Empowering communities through technology.
+              © 2025 OurStreet. Empowering communities through technology.
             </p>
           </div>
         </div>
