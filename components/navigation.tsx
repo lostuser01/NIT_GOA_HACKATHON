@@ -46,7 +46,7 @@ export function Navigation() {
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/10 dark:bg-black/10 backdrop-blur-sm supports-backdrop-filter:bg-white/10 supports-backdrop-filter:dark:bg-black/10 border-b border-gray-200 dark:border-gray-800">
+    <header className="sticky top-0 z-50 w-full bg-white dark:bg-black border-b border-gray-200 dark:border-gray-800">
       <div className="container mx-auto flex h-14 items-center justify-between px-4">
         {/* Logo - Left */}
         <Link href="/" className="flex items-center gap-2 group">
