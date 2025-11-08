@@ -41,26 +41,16 @@ export default function RootLayout({
           className="laser-flow-absolutely-fixed"
           style={{
             position: "fixed",
-            top: "0px",
-            left: "0px",
-            right: "0px",
-            bottom: "auto",
+            top: 0,
+            left: 0,
+            right: 0,
             width: "100vw",
             height: "800px",
-            maxHeight: "800px",
             zIndex: 1,
             pointerEvents: "none",
             overflow: "hidden",
-            transform: "translate3d(0, 0, 0)",
-            transformStyle: "preserve-3d",
-            willChange: "transform",
-            backfaceVisibility: "hidden",
-            WebkitBackfaceVisibility: "hidden",
-            perspective: 1000,
-            WebkitPerspective: 1000,
             margin: 0,
             padding: 0,
-            isolation: "isolate",
           }}
         >
           <LaserFlowBackground />

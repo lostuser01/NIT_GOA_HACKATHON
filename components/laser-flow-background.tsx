@@ -14,8 +14,6 @@ export function LaserFlowBackground() {
         pointerEvents: "none",
         margin: 0,
         padding: 0,
-        transform: "translate3d(0, 0, 0)",
-        willChange: "transform",
       }}
     >
       <LaserFlow
