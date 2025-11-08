@@ -59,6 +59,16 @@ const navData = {
       url: "/dashboard",
       icon: IconHistory,
     },
+    {
+      title: "Analytics",
+      url: "/admin/analytics",
+      icon: IconTrendingUp,
+    },
+    {
+      title: "Transparency",
+      url: "/transparency",
+      icon: IconChartBar,
+    },
   ],
   secondary: [
     {
