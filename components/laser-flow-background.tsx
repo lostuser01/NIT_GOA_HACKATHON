@@ -11,7 +11,7 @@ export function LaserFlowBackground() {
         left: 0,
         width: "100%",
         height: "100vh",
-        zIndex: 0,
+        zIndex: 10,
         pointerEvents: "none",
         overflow: "hidden",
       }}
@@ -19,13 +19,14 @@ export function LaserFlowBackground() {
       <LaserFlow
         verticalBeamOffset={-0.45}
         horizontalBeamOffset={0.0}
-        color="#3b82f6"
-        verticalSizing={3.5}
-        horizontalSizing={1.2}
-        fogIntensity={0.35}
-        wispDensity={1.2}
-        flowSpeed={0.25}
-        fogFallSpeed={0.8}
+        color="#00d9ff"
+        verticalSizing={4.0}
+        horizontalSizing={1.5}
+        fogIntensity={0.8}
+        wispDensity={1.5}
+        flowSpeed={0.3}
+        fogFallSpeed={1.0}
+        wispIntensity={8.0}
       />
     </div>
   );

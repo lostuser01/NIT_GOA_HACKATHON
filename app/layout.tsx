@@ -26,9 +26,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <link rel="stylesheet" href="/maptiler-sdk.css" />
-      </head>
       <body className={`${inter.variable} antialiased font-sans`}>
         <ThemeProvider
           attribute="class"
@@ -41,9 +38,13 @@ export default function RootLayout({
             <LaserFlowBackground />
 
             {/* Content Layer */}
-            <div style={{ position: "relative", zIndex: 1 }}>
+            <div style={{ position: "relative", zIndex: 20 }}>
               <Navigation />
               {children}
+            </div>
+
+            {/* Toaster */}
+            <div style={{ position: "relative", zIndex: 9999 }}>
               <Toaster
                 position="top-right"
                 toastOptions={{

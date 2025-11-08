@@ -8,7 +8,7 @@ import "@/components/shuffle-text/shuffle.css";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col bg-white dark:bg-black">
+    <div className="flex min-h-screen flex-col bg-white/70 dark:bg-black/70">
       {/* Hero Section */}
       <main className="flex flex-1 flex-col">
         <section className="container mx-auto px-4 py-20 md:py-32">
@@ -64,7 +64,7 @@ export default function Home() {
         </section>
 
         {/* App Screen Showcase Section */}
-        <section className="py-20 bg-white dark:bg-black overflow-hidden">
+        <section className="py-20 bg-white/50 dark:bg-black/50 overflow-hidden">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-black dark:text-white sm:text-4xl mb-4">
@@ -89,7 +89,7 @@ export default function Home() {
         </section>
 
         {/* Features Section */}
-        <section className="border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-950 py-20">
+        <section className="border-t border-gray-200 dark:border-gray-800 bg-gray-50/60 dark:bg-gray-950/60 py-20">
           <div className="container mx-auto px-4">
             <div className="mb-16 text-center">
               <h2 className="text-3xl font-bold text-black dark:text-white sm:text-4xl">
@@ -102,7 +102,7 @@ export default function Home() {
 
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
               <div className="flex flex-col items-center gap-4 rounded-lg border border-gray-200 dark:border-gray-800 bg-white dark:bg-black p-6 text-center transition-shadow hover:shadow-lg">
-                <div className="flex size-12 items-center justify-center rounded-lg bg-black dark:bg-white text-white dark:text-black">
+                <div className="flex size-12 items-center justify-center rounded-lg bg-black/90 dark:bg-white/90 text-white dark:text-black">
                   <AlertCircle className="size-6" />
                 </div>
                 <h3 className="text-xl font-semibold text-black dark:text-white">
@@ -115,7 +115,7 @@ export default function Home() {
               </div>
 
               <div className="flex flex-col items-center gap-4 rounded-lg border border-gray-200 dark:border-gray-800 bg-white dark:bg-black p-6 text-center transition-shadow hover:shadow-lg">
-                <div className="flex size-12 items-center justify-center rounded-lg bg-black dark:bg-white text-white dark:text-black">
+                <div className="flex size-12 items-center justify-center rounded-lg bg-black/90 dark:bg-white/90 text-white dark:text-black">
                   <MapPin className="size-6" />
                 </div>
                 <h3 className="text-xl font-semibold text-black dark:text-white">
@@ -128,7 +128,7 @@ export default function Home() {
               </div>
 
               <div className="flex flex-col items-center gap-4 rounded-lg border border-gray-200 dark:border-gray-800 bg-white dark:bg-black p-6 text-center transition-shadow hover:shadow-lg">
-                <div className="flex size-12 items-center justify-center rounded-lg bg-black dark:bg-white text-white dark:text-black">
+                <div className="flex size-12 items-center justify-center rounded-lg bg-black/90 dark:bg-white/90 text-white dark:text-black">
                   <TrendingUp className="size-6" />
                 </div>
                 <h3 className="text-xl font-semibold text-black dark:text-white">
@@ -141,7 +141,7 @@ export default function Home() {
               </div>
 
               <div className="flex flex-col items-center gap-4 rounded-lg border border-gray-200 dark:border-gray-800 bg-white dark:bg-black p-6 text-center transition-shadow hover:shadow-lg">
-                <div className="flex size-12 items-center justify-center rounded-lg bg-black dark:bg-white text-white dark:text-black">
+                <div className="flex size-12 items-center justify-center rounded-lg bg-black/90 dark:bg-white/90 text-white dark:text-black">
                   <Shield className="size-6" />
                 </div>
                 <h3 className="text-xl font-semibold text-black dark:text-white">
@@ -192,7 +192,7 @@ export default function Home() {
         </section>
 
         {/* CTA Section */}
-        <section className="border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-black py-20">
+        <section className="border-t border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-black/50 py-20">
           <div className="container mx-auto px-4 text-center">
             <h2 className="mb-4 text-3xl font-bold text-black dark:text-white sm:text-4xl">
               Ready to Make a Difference?
@@ -212,7 +212,7 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-950 py-8">
+      <footer className="border-t border-gray-200 dark:border-gray-800 bg-gray-50/60 dark:bg-gray-950/60 py-8">
         <div className="container mx-auto px-4">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <div className="flex items-center gap-2">
