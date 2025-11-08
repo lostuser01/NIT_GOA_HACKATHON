@@ -17,11 +17,18 @@ import {
   NavigationMenuItem,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/auth-context";
+import { Dock, DockIcon } from "@/components/magicui/dock";
 
 export function Navigation() {
   const pathname = usePathname();
@@ -52,32 +59,39 @@ export function Navigation() {
           </span>
         </Link>
 
-        {/* Center Navigation - Map, Dashboard, Team */}
+        {/* Center Navigation - Map, Dashboard, Team with Dock Animation */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-          <NavigationMenu>
-            <NavigationMenuList>
+          <TooltipProvider>
+            <Dock direction="middle" magnification={50} distance={120}>
               {centerNavItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = pathname === item.href;
                 return (
-                  <NavigationMenuItem key={item.href}>
-                    <Link
-                      href={item.href}
-                      className={cn(
-                        buttonVariants({ variant: "ghost", size: "sm" }),
-                        "font-medium",
-                        isActive &&
-                          "bg-gray-100 dark:bg-gray-900 text-black dark:text-white",
-                      )}
-                    >
-                      {Icon && <Icon className="mr-1.5 size-4" />}
-                      {item.label}
-                    </Link>
-                  </NavigationMenuItem>
+                  <DockIcon key={item.href}>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Link
+                          href={item.href}
+                          aria-label={item.label}
+                          className={cn(
+                            buttonVariants({ variant: "ghost", size: "icon" }),
+                            "size-10 rounded-full",
+                            isActive &&
+                              "bg-gray-100 dark:bg-gray-900 text-black dark:text-white",
+                          )}
+                        >
+                          <Icon className="size-4" />
+                        </Link>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>{item.label}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </DockIcon>
                 );
               })}
-            </NavigationMenuList>
-          </NavigationMenu>
+            </Dock>
+          </TooltipProvider>
         </div>
 
         {/* Right Side - Report Issue, Auth & Theme Toggle */}
@@ -86,7 +100,7 @@ export function Navigation() {
             <Link href="/report">
               <Button
                 size="sm"
-                className="bg-blue-600 dark:bg-blue-500 text-white hover:bg-blue-700 dark:hover:bg-blue-600 font-medium"
+                className="bg-black dark:bg-white text-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 font-medium"
               >
                 <PlusCircle className="mr-1.5 size-4" />
                 Report Issue
