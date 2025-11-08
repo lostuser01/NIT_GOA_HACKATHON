@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/auth-context";
+import { getAuthToken } from "@/lib/api-client";
 import Image from "next/image";
 import {
   Camera,
@@ -45,6 +47,7 @@ interface FilePreview {
 
 export default function ReportIssuePage() {
   const router = useRouter();
+  const { user, isAuthenticated, isLoading } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [isAICategorizing, setIsAICategorizing] = useState(false);
@@ -68,6 +71,18 @@ export default function ReportIssuePage() {
     description: "",
     ward: "",
   });
+
+  // Check authentication after loading completes
+  useEffect(() => {
+    // Wait for auth context to finish loading
+    if (isLoading) return;
+
+    // If not authenticated after loading, redirect to login
+    if (!isAuthenticated) {
+      router.push("/login");
+      return;
+    }
+  }, [isAuthenticated, isLoading, router]);
 
   // Auto-capture location on page load
   useEffect(() => {
@@ -305,9 +320,8 @@ export default function ReportIssuePage() {
         toast.success(`${photoUrls.length} photo(s) uploaded successfully`);
       }
 
-      // Get user token
-      const token = localStorage.getItem("token");
-      if (!token) {
+      // Check authentication
+      if (!isAuthenticated || !user) {
         toast.error("Please login to report an issue");
         router.push("/login");
         return;
@@ -348,7 +362,7 @@ export default function ReportIssuePage() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${getAuthToken()}`,
         },
         body: JSON.stringify(issueData),
       });
@@ -378,6 +392,18 @@ export default function ReportIssuePage() {
       setIsSubmitting(false);
     }
   };
+
+  // Show loading while authentication is being checked
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-linear-to-b from-gray-50 to-white dark:from-black dark:to-gray-950 flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-purple-600" />
+          <p className="text-gray-600 dark:text-gray-400">Checking authentication...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-linear-to-b from-gray-50 to-white dark:from-black dark:to-gray-950">
