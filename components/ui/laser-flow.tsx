@@ -61,8 +61,11 @@ export function LaserFlow({ className = "" }: LaserFlowProps) {
       particles.forEach((particle) => {
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(168, 85, 247, ${particle.opacity * 0.3})`;
+        ctx.fillStyle = `rgba(168, 85, 247, ${particle.opacity * 0.8})`;
+        ctx.shadowBlur = 3;
+        ctx.shadowColor = "rgba(168, 85, 247, 0.8)";
         ctx.fill();
+        ctx.shadowBlur = 0;
 
         // Update particle position
         particle.y += particle.speed;
@@ -74,8 +77,8 @@ export function LaserFlow({ className = "" }: LaserFlowProps) {
 
       // Draw laser beam from top center
       const centerX = width / 2;
-      const beamWidth = 200;
-      const beamHeight = 300;
+      const beamWidth = 300;
+      const beamHeight = height;
 
       // Main laser glow
       const gradient = ctx.createRadialGradient(
@@ -84,12 +87,13 @@ export function LaserFlow({ className = "" }: LaserFlowProps) {
         0,
         centerX,
         beamHeight,
-        beamWidth
+        beamWidth,
       );
-      gradient.addColorStop(0, "rgba(255, 255, 255, 0.8)");
-      gradient.addColorStop(0.2, "rgba(200, 150, 255, 0.6)");
-      gradient.addColorStop(0.4, "rgba(168, 85, 247, 0.4)");
-      gradient.addColorStop(0.7, "rgba(168, 85, 247, 0.2)");
+      gradient.addColorStop(0, "rgba(255, 255, 255, 1)");
+      gradient.addColorStop(0.1, "rgba(240, 200, 255, 0.9)");
+      gradient.addColorStop(0.3, "rgba(200, 150, 255, 0.7)");
+      gradient.addColorStop(0.5, "rgba(168, 85, 247, 0.5)");
+      gradient.addColorStop(0.7, "rgba(168, 85, 247, 0.3)");
       gradient.addColorStop(1, "rgba(168, 85, 247, 0)");
 
       ctx.fillStyle = gradient;
@@ -100,14 +104,17 @@ export function LaserFlow({ className = "" }: LaserFlowProps) {
         centerX - 30,
         0,
         centerX + 30,
-        0
+        0,
       );
       coreGradient.addColorStop(0, "rgba(255, 255, 255, 0)");
-      coreGradient.addColorStop(0.5, "rgba(255, 255, 255, 0.9)");
+      coreGradient.addColorStop(0.5, "rgba(255, 255, 255, 1)");
       coreGradient.addColorStop(1, "rgba(255, 255, 255, 0)");
 
+      ctx.shadowBlur = 20;
+      ctx.shadowColor = "rgba(255, 255, 255, 0.9)";
       ctx.fillStyle = coreGradient;
       ctx.fillRect(centerX - 30, 0, 60, beamHeight);
+      ctx.shadowBlur = 0;
 
       // Animated flowing effect
       offset += 2;
@@ -121,10 +128,10 @@ export function LaserFlow({ className = "" }: LaserFlowProps) {
           0,
           centerX,
           y,
-          50
+          50,
         );
-        flowGradient.addColorStop(0, "rgba(255, 255, 255, 0.6)");
-        flowGradient.addColorStop(0.5, "rgba(200, 150, 255, 0.3)");
+        flowGradient.addColorStop(0, "rgba(255, 255, 255, 0.9)");
+        flowGradient.addColorStop(0.5, "rgba(200, 150, 255, 0.6)");
         flowGradient.addColorStop(1, "rgba(168, 85, 247, 0)");
 
         ctx.fillStyle = flowGradient;
@@ -132,10 +139,10 @@ export function LaserFlow({ className = "" }: LaserFlowProps) {
       }
 
       // Edge glow
-      ctx.shadowBlur = 40;
-      ctx.shadowColor = "rgba(168, 85, 247, 0.5)";
-      ctx.strokeStyle = "rgba(200, 150, 255, 0.4)";
-      ctx.lineWidth = 2;
+      ctx.shadowBlur = 50;
+      ctx.shadowColor = "rgba(168, 85, 247, 0.8)";
+      ctx.strokeStyle = "rgba(200, 150, 255, 0.7)";
+      ctx.lineWidth = 3;
       ctx.beginPath();
       ctx.moveTo(centerX - 25, 0);
       ctx.lineTo(centerX - 25, beamHeight);
