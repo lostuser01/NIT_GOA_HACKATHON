@@ -13,7 +13,7 @@ export default function Home() {
     <div className="flex min-h-screen flex-col bg-white/30 dark:bg-black/30">
       {/* Hero Section */}
       <main className="flex flex-1 flex-col">
-        <section className="container mx-auto px-4 py-20 md:py-32">
+        <section className="container mx-auto px-4 py-32 md:py-48">
           <div className="flex flex-col items-center gap-8 text-center">
             <div className="inline-flex items-center gap-2 rounded-full border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900 px-3 py-1 text-xs">
               <AlertCircle className="size-3" />
@@ -22,7 +22,7 @@ export default function Home() {
               </span>
             </div>
 
-            <div className="relative flex min-h-[400px] sm:min-h-[500px] w-full flex-col items-center justify-center overflow-hidden py-12">
+            <div className="relative flex min-h-[600px] sm:min-h-[700px] md:min-h-[800px] w-full flex-col items-center justify-center overflow-hidden py-16 md:py-24">
               <ShuffleText
                 text="Empower Your Community with OurStreet"
                 tag="h1"

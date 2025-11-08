@@ -11,7 +11,7 @@ export function RetroGrid({ className, angle = 65 }: RetroGridProps) {
   return (
     <div
       className={cn(
-        "pointer-events-none absolute inset-0 overflow-hidden opacity-70 perspective-[200px]",
+        "pointer-events-none absolute inset-0 overflow-hidden opacity-70 perspective-[300px]",
         className,
       )}
       style={{ "--grid-angle": `${angle}deg` } as React.CSSProperties}
@@ -21,7 +21,7 @@ export function RetroGrid({ className, angle = 65 }: RetroGridProps) {
         <div
           className={cn(
             "animate-grid",
-            "absolute inset-0 bg-repeat bg-size-[70px_70px] h-[300vh] ml-[-50%] origin-[100%_0_0] w-[600vw]",
+            "absolute inset-0 bg-repeat bg-size-[70px_70px] h-[400vh] ml-[-50%] origin-[100%_0_0] w-[800vw]",
             // Light styles
             "bg-[linear-gradient(to_right,rgba(0,0,0,0.5)_1.5px,transparent_0),linear-gradient(to_bottom,rgba(0,0,0,0.5)_1.5px,transparent_0)]",
             // Dark styles
@@ -44,7 +44,8 @@ export function RetroGrid({ className, angle = 65 }: RetroGridProps) {
         }
 
         .animate-grid {
-          animation: grid 80s ease-in-out infinite;
+          animation: grid 100s ease-in-out infinite;
+          will-change: transform;
         }
       `}</style>
     </div>
