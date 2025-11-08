@@ -2,7 +2,36 @@
 
 All notable changes to the CityPulse project will be documented in this file.
 
-## [Unreleased] - 2024-01-XX
+## [Latest] - 2024-01-XX
+
+### Added
+
+#### Interactive Map Integration 🗺️
+- **MapTiler SDK Integration**: Fully interactive map powered by MapTiler Cloud
+- **Live Markers**: Color-coded markers based on issue status (Red=Open, Amber=In Progress, Green=Resolved)
+- **Click Interactions**: Click markers to view detailed issue information
+- **Geolocation Support**: Built-in user location tracking with high-accuracy positioning
+- **Navigation Controls**: Zoom, pan, compass, and geolocation controls
+- **Responsive Design**: Map automatically adjusts to container size
+- **Smooth Performance**: Dynamic loading with proper cleanup to prevent memory leaks
+
+#### Map Features
+- Real-time marker rendering for all civic issues
+- Interactive popups showing issue title and status
+- Streets v4 map style centered on Goa, India [81.81298, 15.215]
+- Custom circular markers with white borders and shadows
+- Status-based color coding (red/amber/green)
+- Support for browser geolocation API
+
+#### Technical Implementation
+- Created `InteractiveMap` component (`components/interactive-map.tsx`)
+- Installed `@maptiler/sdk` package
+- Imported MapTiler CSS in global styles
+- Client-side only rendering with proper cleanup
+- TypeScript support with proper typing
+- Integration with existing issue data structure
+
+### Changed
 
 ### Changed
 
@@ -52,9 +81,44 @@ const inter = Inter({ variable: "--font-inter", subsets: ["latin"], display: "sw
    Left                  Center                       Right
 ```
 
+### Technical Details - Map Integration
+
+**New Files Created:**
+- `components/interactive-map.tsx` - Reusable interactive map component
+- `MAP_INTEGRATION.md` - Comprehensive map documentation
+
+**Modified Files:**
+- `app/map/page.tsx` - Replaced placeholder with live interactive map
+- `app/globals.css` - Added MapTiler SDK CSS import
+- `package.json` - Added @maptiler/sdk dependency
+
+**Map Configuration:**
+```typescript
+// Default center: Goa, India
+center: [81.81298, 15.215]
+zoom: 12
+apiKey: "dA7RH7aBOA9zMomjXvTC"
+style: MapStyle.STREETS
+```
+
+**Marker Structure:**
+```typescript
+{
+  id: number;
+  position: [lng, lat];
+  title: string;
+  status: "open" | "in-progress" | "resolved";
+}
+```
+
 ### Deployment
 - Successfully committed and pushed to GitHub repository
-- Commit hash: `deb1f3e`
+- Initial navigation refactor: `deb1f3e`
+- Changelog added: `d87e7cc`
+- Navigation layout docs: `0ec06f9`
+- Fixed legacyBehavior: `1a841e7`
+- Interactive map: `77d4d8a`
+- Map documentation: `f7662c4`
 - Repository: https://github.com/VibhavBilgoji/NIT_GOA_HACKATHON-1.git
 
 ---
