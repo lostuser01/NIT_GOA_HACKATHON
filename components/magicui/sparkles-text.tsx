@@ -29,24 +29,25 @@ const DEFAULT_COLORS = {
   second: "#FE8BBB",
 };
 
-const SparkleIcon: React.FC<{ color: string; delay: number; scale: number }> = ({
-  color,
-  delay,
-  scale,
-}) => {
+const SparkleIcon: React.FC<{
+  color: string;
+  delay: number;
+  scale: number;
+}> = ({ color, delay, scale }) => {
   return (
     <motion.svg
       className="pointer-events-none absolute"
       initial={{ opacity: 0, scale: 0 }}
       animate={{
-        opacity: [0, 1, 0],
-        scale: [0, scale, 0],
+        opacity: [0, 1, 0.8, 1, 0],
+        scale: [0, scale, scale * 1.2, scale, 0],
       }}
       transition={{
-        duration: 0.8,
+        duration: 2.5,
         repeat: Infinity,
         delay: delay,
         ease: "easeInOut",
+        repeatDelay: 0,
       }}
       width="21"
       height="21"
@@ -73,23 +74,17 @@ export function SparklesText({
   React.useEffect(() => {
     const generateSparkles = (): Sparkle[] => {
       return Array.from({ length: sparklesCount }, (_, i) => ({
-        id: `sparkle-${i}`,
+        id: `sparkle-${i}-${Date.now()}`,
         x: `${Math.random() * 100}%`,
         y: `${Math.random() * 100}%`,
         color: i % 2 === 0 ? colors.first : colors.second,
-        delay: Math.random() * 2,
-        scale: 0.4 + Math.random() * 0.6,
-        lifespan: 1.5 + Math.random(),
+        delay: Math.random() * 2.5,
+        scale: 0.5 + Math.random() * 0.8,
+        lifespan: 2.5,
       }));
     };
 
     setSparkles(generateSparkles());
-
-    const interval = setInterval(() => {
-      setSparkles(generateSparkles());
-    }, 3000);
-
-    return () => clearInterval(interval);
   }, [sparklesCount, colors.first, colors.second]);
 
   return (

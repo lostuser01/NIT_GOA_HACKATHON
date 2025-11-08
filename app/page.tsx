@@ -18,7 +18,7 @@ export default function Home() {
             <div className="relative flex w-full flex-col items-center justify-center py-8 md:py-12">
               <SparklesText
                 className="pointer-events-none z-10 max-w-4xl text-4xl font-bold tracking-tight text-black dark:text-white sm:text-5xl md:text-6xl lg:text-7xl"
-                sparklesCount={15}
+                sparklesCount={30}
                 colors={{
                   first: "#9E7AFF",
                   second: "#FE8BBB",
