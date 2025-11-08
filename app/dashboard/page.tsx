@@ -18,6 +18,7 @@ import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import { NeonGradientCard } from "@/components/magicui/neon-gradient-card";
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import { RotatingText } from "@/components/magicui/rotating-text";
 import { useDashboard } from "@/contexts/dashboard-context";
 import { Button } from "@/components/ui/button";
@@ -48,6 +49,23 @@ interface DashboardStats {
 }
 
 export default function Page() {
+=======
+import { Skeleton } from "@/components/ui/skeleton";
+
+interface RecentActivity {
+  id: string;
+  type: string;
+  message: string;
+  location?: string;
+  timestamp: string;
+}
+
+interface DashboardStats {
+  recentActivity: RecentActivity[];
+}
+
+export default function Page() {
+>>>>>>> Stashed changes
   const [recentActivity, setRecentActivity] = useState<RecentActivity[]>([]);
   const [isLoadingActivity, setIsLoadingActivity] = useState(true);
 
@@ -75,6 +93,9 @@ export default function Page() {
 
     return () => clearInterval(interval);
   }, []);
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
   // Show toast notification for critical SLA alerts
@@ -98,6 +119,20 @@ export default function Page() {
       return () => clearTimeout(timer);
     }
   }, [slaAlerts, stats.criticalIssuesPending]);
+
+  const getActivityIcon = (type: string) => {
+    switch (type.toLowerCase()) {
+      case "resolved":
+        return "🟢";
+      case "critical":
+        return "🔴";
+      case "in-progress":
+        return "🟡";
+      case "new":
+      default:
+        return "🔵";
+    }
+  };
 
   const getActivityIcon = (type: string) => {
     switch (type.toLowerCase()) {
@@ -207,6 +242,7 @@ export default function Page() {
                     </div>
                     <div className="space-y-3 text-black dark:text-white">
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                       {recentActivity.slice(0, 5).map((activity) => {
                         const severityColors = {
                           success: "bg-green-500",
@@ -222,6 +258,8 @@ export default function Page() {
                         };
                         return (
 =======
+=======
+>>>>>>> Stashed changes
                       {isLoadingActivity ? (
                         <>
                           {[1, 2, 3, 4, 5].map((i) => (
@@ -236,11 +274,15 @@ export default function Page() {
                         </>
                       ) : recentActivity.length > 0 ? (
                         recentActivity.map((activity) => (
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
                           <div
                             key={activity.id}
                             className="flex items-start gap-3"
                           >
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
                             <div
                               className={`w-2 h-2 ${severityColors[activity.severity as keyof typeof severityColors] || "bg-gray-500"} rounded-full mt-2`}
@@ -262,6 +304,8 @@ export default function Page() {
                         );
                       })}
 =======
+=======
+>>>>>>> Stashed changes
                             <div className="text-lg mt-0.5">
                               {getActivityIcon(activity.type)}
                             </div>
@@ -279,6 +323,9 @@ export default function Page() {
                           </p>
                         </div>
                       )}
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
                     </div>
                   </div>
