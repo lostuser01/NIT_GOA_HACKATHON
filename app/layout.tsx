@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { AuthProvider } from "@/contexts/auth-context";
 import { Navigation } from "@/components/navigation";
 import { Toaster } from "react-hot-toast";
+import { LaserFlowBackground } from "@/components/laser-flow-background";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -36,19 +37,25 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <AuthProvider>
-            <Navigation />
-            {children}
-            <Toaster
-              position="top-right"
-              toastOptions={{
-                duration: 4000,
-                style: {
-                  background: "var(--background)",
-                  color: "var(--foreground)",
-                  border: "1px solid var(--border)",
-                },
-              }}
-            />
+            {/* LaserFlow Background Effect */}
+            <LaserFlowBackground />
+
+            {/* Content Layer */}
+            <div style={{ position: "relative", zIndex: 1 }}>
+              <Navigation />
+              {children}
+              <Toaster
+                position="top-right"
+                toastOptions={{
+                  duration: 4000,
+                  style: {
+                    background: "var(--background)",
+                    color: "var(--foreground)",
+                    border: "1px solid var(--border)",
+                  },
+                }}
+              />
+            </div>
           </AuthProvider>
         </ThemeProvider>
       </body>

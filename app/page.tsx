@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { AlertCircle, TrendingUp, Shield, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ShuffleText } from "@/components/shuffle-text";
