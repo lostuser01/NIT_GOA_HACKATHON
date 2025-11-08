@@ -122,18 +122,18 @@ const DashboardContext = createContext<DashboardContextType | undefined>(
 
 export function DashboardProvider({ children }: { children: React.ReactNode }) {
   const [stats, setStats] = useState<DashboardStats>({
-    totalActiveIssues: 243,
-    slaComplianceRate: 82.3,
-    averageResolutionTime: 3.8,
-    citizenSatisfaction: 4.5,
-    criticalIssuesPending: 35,
-    slaBreeches: 8,
-    resolvedIssuesThisMonth: 127,
+    totalActiveIssues: 0,
+    slaComplianceRate: 0,
+    averageResolutionTime: 0,
+    citizenSatisfaction: 0,
+    criticalIssuesPending: 0,
+    slaBreeches: 0,
+    resolvedIssuesThisMonth: 0,
     trendPercentages: {
-      activeIssues: 18,
-      slaCompliance: -5.1,
-      resolutionTime: -1.2,
-      satisfaction: 0.3,
+      activeIssues: 0,
+      slaCompliance: 0,
+      resolutionTime: 0,
+      satisfaction: 0,
     },
   });
 
@@ -147,36 +147,37 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch dashboard data using api-client (which handles retries internally)
+  // Fetch dashboard data using analytics/stats endpoint
   const fetchDashboardData = useCallback(async () => {
     setIsLoading(true);
     setError(null);
 
     try {
-      // Use the dashboardAPI from api-client which handles auth automatically
-      const response = await dashboardAPI.getStats();
+      // Use analytics/stats endpoint for comprehensive dashboard data
+      const response = await fetch("/api/analytics/stats");
+      const result = await response.json();
 
       // Update all dashboard state
-      if (response.success && response.data) {
-        const apiData = response.data;
+      if (result.success && result.data) {
+        const apiData = result.data;
         setStats({
-          totalActiveIssues: apiData.openIssues || 0,
-          slaComplianceRate: 82.3,
+          totalActiveIssues: apiData.totalActiveIssues || 0,
+          slaComplianceRate: apiData.slaComplianceRate || 0,
           averageResolutionTime: apiData.averageResolutionTime || 0,
-          citizenSatisfaction: 4.5,
-          criticalIssuesPending: Math.floor((apiData.openIssues || 0) * 0.15), // Estimate 15% are critical
-          slaBreeches: 8,
-          resolvedIssuesThisMonth: apiData.resolvedIssues || 0,
+          citizenSatisfaction: apiData.citizenSatisfaction || 0,
+          criticalIssuesPending: apiData.criticalIssues || 0,
+          slaBreeches: apiData.slaBreaches || 0,
+          resolvedIssuesThisMonth: apiData.resolvedThisMonth || 0,
           trendPercentages: {
-            activeIssues: 18,
-            slaCompliance: -5.1,
-            resolutionTime: -1.2,
-            satisfaction: 0.3,
+            activeIssues: apiData.issuesTrend || 0,
+            slaCompliance: apiData.slaComplianceTrend || 0,
+            resolutionTime: apiData.resolutionTimeTrend || 0,
+            satisfaction: apiData.satisfactionTrend || 0,
           },
         });
-      } else if (response.error) {
+      } else if (result.error) {
         // API returned an error
-        setError(response.error);
+        setError(result.error);
       }
 
       // Note: The API client handles retries internally for 500+ errors
@@ -195,23 +196,24 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
   // Update stats only
   const updateStats = useCallback(async () => {
     try {
-      const response = await dashboardAPI.getStats();
+      const response = await fetch("/api/analytics/stats");
+      const result = await response.json();
 
-      if (response.success && response.data) {
-        const apiData = response.data;
+      if (result.success && result.data) {
+        const apiData = result.data;
         setStats({
-          totalActiveIssues: apiData.openIssues || 0,
-          slaComplianceRate: 82.3,
+          totalActiveIssues: apiData.totalActiveIssues || 0,
+          slaComplianceRate: apiData.slaComplianceRate || 0,
           averageResolutionTime: apiData.averageResolutionTime || 0,
-          citizenSatisfaction: 4.5,
-          criticalIssuesPending: Math.floor((apiData.openIssues || 0) * 0.15),
-          slaBreeches: 8,
-          resolvedIssuesThisMonth: apiData.resolvedIssues || 0,
+          citizenSatisfaction: apiData.citizenSatisfaction || 0,
+          criticalIssuesPending: apiData.criticalIssues || 0,
+          slaBreeches: apiData.slaBreaches || 0,
+          resolvedIssuesThisMonth: apiData.resolvedThisMonth || 0,
           trendPercentages: {
-            activeIssues: 18,
-            slaCompliance: -5.1,
-            resolutionTime: -1.2,
-            satisfaction: 0.3,
+            activeIssues: apiData.issuesTrend || 0,
+            slaCompliance: apiData.slaComplianceTrend || 0,
+            resolutionTime: apiData.resolutionTimeTrend || 0,
+            satisfaction: apiData.satisfactionTrend || 0,
           },
         });
       }

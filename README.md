@@ -1,368 +1,197 @@
-# OurStreet - Smart City Issue Reporting Platform
+# OurStreet - Civic Issue Reporting & Tracking Platform
 
-> A modern, serverless Next.js application for citizens to report local issues and authorities to manage them efficiently with real-time tracking, ward-wise analytics, and cloud-based photo management.
+A modern, transparent platform for citizens to report civic issues, track their resolution, and foster collaboration between communities and local authorities.
 
-[![Next.js](https://img.shields.io/badge/Next.js-15.0-black)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.0-38bdf8)](https://tailwindcss.com/)
-[![Status](https://img.shields.io/badge/Status-Production%20Ready-success)](/)
-
----
-
-## 🎉 NEW: Real-Time Analytics & Database Integration Complete!
-
-Your OurStreet platform now features **100% real data** from the database with:
-- ✅ Live dashboard with auto-refreshing metrics
-- ✅ Interactive charts with real-time data
-- ✅ Automated SLA monitoring and breach detection
-- ✅ AI-powered predictions and insights
-- ✅ Real-time activity feed and notifications
-
-**📚 Complete Documentation:**
-- 🚀 [Quick Start Guide](QUICK_START_GUIDE.md) - Test all new features
-- 📊 [Database Integration Details](DATABASE_INTEGRATION_COMPLETE.md) - Technical documentation
-- 🔄 [Transformation Summary](TRANSFORMATION_SUMMARY.md) - Before/after comparison
-- ✅ [Implementation Checklist](IMPLEMENTATION_CHECKLIST.md) - Verification guide
+![OurStreet Dashboard](https://img.shields.io/badge/Status-Production%20Ready-brightgreen)
+![Next.js](https://img.shields.io/badge/Next.js-14-black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
 ---
 
 ## 📋 Table of Contents
 
-- [What's New](#-whats-new)
-- [Features](#-features)
-- [Quick Start](#-quick-start)
-- [Project Structure](#-project-structure)
-- [API Documentation](#-api-documentation)
-- [Deployment](#-deployment)
-- [Testing Guide](#-testing-guide)
-- [Troubleshooting](#-troubleshooting)
-- [Tech Stack](#-tech-stack)
+- [Overview](#overview)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Getting Started](#getting-started)
+- [Environment Variables](#environment-variables)
+- [Project Structure](#project-structure)
+- [API Endpoints](#api-endpoints)
+- [Authentication](#authentication)
+- [Database Schema](#database-schema)
+- [AI Features](#ai-features)
+- [Deployment](#deployment)
+- [Contributing](#contributing)
+- [Troubleshooting](#troubleshooting)
 
 ---
 
-## 🆕 What's New
+## 🌟 Overview
 
-### Real-Time Analytics Dashboard
-- **Live Metrics**: Dashboard cards update every 30 seconds with real database data
-- **No More Hardcoded Data**: All statistics computed from actual issues
-- **Trend Analysis**: Automatic calculation of month-over-month changes
-- **Smart Calculations**: SLA compliance, resolution times, satisfaction scores
+**OurStreet** is a comprehensive civic engagement platform that enables citizens to:
+- Report local issues (potholes, broken streetlights, garbage, water leaks, etc.)
+- Track issue resolution progress in real-time
+- View issues on an interactive map
+- Access transparent analytics and impact reports
+- Collaborate with municipal authorities
 
-### Interactive Charts
-- **Hotspot Trends**: 8-month historical data with AI predictions
-- **Resource Demand**: Weekly utilization analysis
-- **Department Performance**: Comparative efficiency metrics
-- **Prediction Accuracy**: Model performance tracking
+### The Problem We Solve
 
-### SLA Monitoring System
-- **Automated Tracking**: Real-time breach risk assessment
-- **Priority-Based SLA**: 24h (critical) to 120h (low)
-- **Live Countdown**: Time remaining updates every 30 seconds
-- **Toast Notifications**: Critical alert warnings
-- **Interactive Filtering**: Filter by risk level
+Urban citizens face everyday civic issues but lack accessible and transparent reporting systems. Even when complaints are registered, citizens rarely receive updates, leading to:
+- Low civic engagement
+- Duplicate reports
+- Lack of accountability
+- Inefficient resource allocation
 
-### New API Endpoints
-- `GET /api/analytics/stats` - Dashboard statistics
-- `GET /api/analytics/trends` - Chart data
-- `GET /api/analytics/sla-alerts` - SLA monitoring
+**OurStreet** bridges this gap with a smart, transparent, community-driven platform.
 
 ---
 
-## 🌟 Features
+## ✨ Features
 
 ### For Citizens
-- 📍 **Report Issues** - Submit local problems with GPS location, photos, and category
-- 🗺️ **Interactive Map** - View all reported issues on a real-time map
-- 📊 **Track Progress** - Monitor status updates on your reported issues
-- 👍 **Vote & Comment** - Support important issues and engage in discussions
+- 🎯 **Easy Issue Reporting** - Report with description, photo, and GPS location
+- 🗺️ **Interactive Map** - View all issues on a live map with color-coded status markers
+- 📊 **Real-Time Tracking** - Track progress from Open → In Progress → Resolved
+- 🔔 **Notifications** - Get updates on your reported issues
+- 👍 **Voting System** - Upvote issues to prioritize community concerns
+- 💬 **Comments** - Discuss issues with community members and officials
 - 📱 **Mobile Responsive** - Works seamlessly on all devices
-- 🏘️ **Ward Selection** - Select your specific ward/district for accurate tracking
-- 📸 **Multi-Photo Upload** - Upload up to 5 photos per report
-- 🤖 **AI-Powered Categorization** - Automatic issue classification with Gemini 1.5 Pro/Flash
 
-### For Authorities
-- 🛡️ **Admin Dashboard** - Comprehensive admin panel with role-based access control
-- 📈 **Ward Analytics** - Performance metrics and resolution rates per ward
-- 👥 **User Management** - Manage user roles and permissions
-- 🔄 **Bulk Operations** - Update multiple issues simultaneously
-- 📊 **Performance Stats** - Real-time statistics and trend analysis
-- 🖼️ **Before/After Photos** - Document issue resolution with photo comparisons
-- 🎯 **AI Priority Ranking** - Intelligent priority scoring based on severity and impact
+### For Administrators
+- 📈 **Analytics Dashboard** - Real-time metrics and KPIs
+- 🎯 **SLA Monitoring** - Track Service Level Agreements and at-risk tickets
+- 📊 **Trend Analysis** - Predictive insights for resource allocation
+- 🔄 **Issue Management** - Update status, assign teams, add notes
+- 👥 **User Management** - Manage citizens and admin accounts
+- 📉 **Performance Metrics** - Department efficiency and resolution times
+- 🗺️ **Geospatial Analytics** - Hotspot identification and risk assessment
 
-### Technical Features
-- ⚡ **Serverless Architecture** - Next.js API routes for scalability
-- 🔐 **JWT Authentication** - Secure token-based authentication
-- ☁️ **Cloud Storage** - Cloudinary/Supabase storage for photo uploads
-- 🎨 **Modern UI** - Shadcn/ui components with dark mode support
-- 📱 **Responsive Design** - Mobile-first approach
-- 🔍 **Advanced Filtering** - Filter by status, category, priority, and ward
-- 🌐 **Geolocation** - Real-time GPS tracking for issue reporting
-- 🧠 **AI Integration** - Google Gemini for intelligent categorization and priority ranking
+### Advanced Features
+- 🤖 **AI Categorization** - Automatic issue categorization using Google Gemini AI
+- 🎨 **Dark Mode** - Full dark/light theme support
+- ♿ **Accessibility** - WCAG compliant interface
+- 🌍 **Multi-Ward Support** - Geographic segmentation for efficient management
+- 📸 **Image Upload** - Cloud storage for issue documentation
+- 🔐 **Secure Authentication** - JWT-based auth with refresh tokens
 
 ---
 
-## 🤖 AI-Powered Features
+## 🛠️ Tech Stack
 
-### Automatic Issue Categorization
-OurStreet uses **Google Gemini 1.5 Pro/Flash** to automatically categorize civic issues:
+### Frontend
+- **Next.js 14** - React framework with App Router
+- **TypeScript** - Type-safe development
+- **Tailwind CSS** - Utility-first styling
+- **Shadcn/ui** - Component library
+- **Magic UI** - Advanced UI components
+- **MapTiler** - Interactive maps
+- **React Hook Form** - Form management
 
-- **Smart Classification** - AI analyzes title and description to determine the correct category
-- **Priority Scoring** - Intelligent priority assignment based on severity, urgency, and impact
-- **User Choice** - Toggle between manual and AI-powered categorization
-- **High Accuracy** - 90%+ accuracy with confidence scoring
-- **Fallback System** - Rule-based categorization when AI is unavailable
+### Backend
+- **Next.js API Routes** - Serverless API
+- **Supabase** - PostgreSQL database (optional)
+- **In-Memory DB** - Development fallback
+- **JWT** - Secure authentication
+- **bcrypt** - Password hashing
 
-### How It Works
-1. User enters issue title and description
-2. Toggle "AI-Powered Categorization" switch (optional)
-3. AI analyzes text considering:
-   - Severity and urgency
-   - Public safety risks
-   - Infrastructure impact
-   - Historical patterns
-4. System suggests category, priority, and provides reasoning
-5. User can accept or override AI suggestions
+### AI & ML
+- **Google Gemini API** - AI-powered categorization and insights
 
-### Setup AI Features
-
-Add your Gemini API key to `.env.local`:
-
-```bash
-GEMINI_API_KEY=your_gemini_api_key_here
-GEMINI_MODEL=gemini-1.5-flash  # or gemini-1.5-pro
-```
-
-Get your free API key at [Google AI Studio](https://makersuite.google.com/app/apikey)
-
-📖 **Full Documentation**: See [AI_CATEGORIZATION_GUIDE.md](./AI_CATEGORIZATION_GUIDE.md) and [GEMINI_SETUP.md](./GEMINI_SETUP.md)
+### DevOps
+- **Vercel** - Deployment platform
+- **Git** - Version control
 
 ---
 
-## 🔧 Recent Fixes & Improvements
-
-### Build Status: ✅ **ALL ISSUES RESOLVED**
-**Date**: 2025 | **Status**: Production Ready | **Build**: Passing with 0 errors
-
----
-
-### 🎯 Overview
-
-Successfully resolved **all merge conflicts** and ensured **all hover animations** work properly throughout the application without breaking existing functionality. The build now completes successfully with **zero errors**.
-
----
-
-### 🔴 Critical Issues Fixed
-
-#### 1. **Merge Conflicts (Build-Breaking)**
-
-Found and resolved merge conflicts in **5 files** that were preventing the application from building:
-
-| File | Issue | Resolution |
-|------|-------|------------|
-| `app/api/health/route.ts` | Triple merge conflict in JWT_SECRET validation | Kept "ourstreet-secret-key-change-in-production" branding |
-| `app/report/page.tsx` | Grid layout conflict (3 vs 4 columns) + missing animations | Kept 3-column layout with hover animations |
-| `app/transparency/page.tsx` | Button text conflict (CityPulse vs OurStreet) | Updated to "Join OurStreet Today" |
-| `lib/analytics.ts` | Import statement formatting conflict | Kept multi-line import format |
-| `lib/notifications.ts` | Email sender field formatting | Kept proper OurStreet email format |
-
-**Result**: Build now completes successfully in ~10 seconds
-
----
-
-#### 2. **Animation System - Conflicts Resolved**
-
-**Issue**: Conflicting className props were overriding built-in NeonGradientCard animations
-
-**Fixed in**: `app/page.tsx`
-- Removed `className="transition-shadow hover:shadow-lg"` from 4 feature cards
-- Component now handles all animations internally
-
-**Built-in NeonGradientCard Animations**:
-- ✨ Mouse-tracking gradient effect (preserved)
-- 📈 Scale: `hover:scale-[1.02]` (2% growth)
-- ⬆️ Lift: `hover:-translate-y-1` (-4px)
-- 🌟 Shadow: `hover:shadow-2xl` (enhanced depth)
-- ⏱️ Transition: `duration-300 ease-out` (smooth)
-- 👆 Cursor: `cursor-pointer`
-
----
-
-#### 3. **Consistent Animation Patterns Applied**
-
-All card components now use consistent hover animations:
-
-##### **Small Interactive Cards** (Stat boxes, KPIs)
-```css
-transition-all duration-300 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:shadow-xl cursor-pointer
-```
-**Applied in**: Admin analytics (4 cards), Map stats (4 cards), Report info cards (3 cards)
-
-##### **Medium Cards** (List items)
-```css
-transition-all duration-300 ease-out hover:scale-[1.02] hover:-translate-y-1 hover:shadow-lg cursor-pointer
-```
-**Applied in**: Map issue list items, selected states
-
-##### **Large Content Cards** (Containers)
-```css
-transition-all duration-300 ease-out hover:shadow-lg
-```
-**Applied in**: Issue detail cards, form containers, chart cards
-
----
-
-### 📊 Build Verification
-
-#### Build Results:
-```
-✓ Compiled successfully in 10.4s
-✓ TypeScript validation passed
-✓ All 29 pages generated
-✓ No errors (0)
-✓ Warnings: 23 (non-breaking Tailwind v4 syntax suggestions)
-```
-
-#### Routes Verified:
-- ✅ `/` (Home - NeonGradientCard animations)
-- ✅ `/map` (Map - stat cards with BorderBeam)
-- ✅ `/report` (Report - form + info cards)
-- ✅ `/dashboard` (Dashboard - KPI cards)
-- ✅ `/admin/analytics` (Analytics - chart cards)
-- ✅ `/issues/[id]` (Issue details)
-- ✅ `/transparency` (Transparency page)
-
----
-
-### 🧪 Animation QA Checklist
-
-#### Quick 5-Minute Test:
-
-1. **Home Page** (`/`): Hover over 4 feature cards - should see mouse-tracking gradient, scale, lift, shadow
-2. **Map Page** (`/map`): Hover over 4 stat cards - scale 3%, lift, shadow XL, BorderBeam animation
-3. **Report Page** (`/report`): Hover over 3 info cards - scale 3%, lift, shadow XL
-4. **Dashboard** (`/dashboard`): Hover over KPI cards - neon gradient + scale/lift effects
-5. **Admin Analytics** (`/admin/analytics`): Hover over stat cards - scale 3%, lift, shadow XL
-
-#### Expected Behavior:
-- ✅ All animations: 300ms duration, ease-out easing
-- ✅ No jitter, layout shifts, or conflicts
-- ✅ Smooth GPU-accelerated transforms
-- ✅ Consistent across all browsers/devices
-- ✅ Dark mode compatible
-
-#### Performance Check:
-- ✅ No frame drops below 60fps
-- ✅ No layout thrashing
-- ✅ Animations clean up properly
-
----
-
-### 🎨 Animation Design Principles
-
-#### Scale Hierarchy:
-- **1.02** = Subtle (list items, medium cards)
-- **1.03** = Noticeable (stat cards, KPIs)
-
-#### Shadow Hierarchy:
-- **shadow-lg** = Standard depth
-- **shadow-xl** = Enhanced depth
-- **shadow-2xl** = Maximum depth (NeonGradientCard)
-
-#### Special Effects:
-- **NeonGradientCard**: Mouse-tracking gradient border
-- **BorderBeam**: Animated border effects
-- **Selected states**: Enhanced shadows without hover
-
----
-
-### 💡 Key Takeaways
-
-1. **Component-level animations** should be self-contained to avoid CSS conflicts
-2. **Merge conflicts** can silently break builds - always check for `<<<<<<<`, `=======`, `>>>>>>>` markers
-3. **Consistent animation patterns** improve UX and maintainability
-4. **Build verification** is essential after resolving conflicts
-5. **GPU acceleration** (transform, box-shadow) ensures smooth animations
-
----
-
-### 📞 Support
-
-If you encounter animation issues:
-1. Check browser console for CSS warnings
-2. Verify `npm run build` completes successfully
-3. Test in multiple browsers (Chrome, Firefox, Safari)
-4. Clear `.next` cache if styles don't update
-5. Ensure no CSS specificity conflicts
-
----
-
-## 🚀 Quick Start
+## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js 18+ and npm
-- Supabase account (free tier) - **Recommended for production**
-- Cloudinary account (optional, for photo uploads)
+- Node.js 18+ and npm/yarn/pnpm
+- Git
+- (Optional) Supabase account for production database
 
 ### Installation
 
+1. **Clone the repository**
 ```bash
-# 1. Clone the repository
 git clone <repository-url>
 cd NIT_GOA_HACKATHON
-
-# 2. Install dependencies
-npm install
-
-# 3. Set up environment variables
-cp .env.local.example .env.local
 ```
 
-### Environment Setup
-
-Create `.env.local` with the following:
-
+2. **Install dependencies**
 ```bash
-# Supabase Configuration (Required for Production)
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key_here
-
-# JWT Secret (Required)
-JWT_SECRET=your-super-secret-key-change-this-in-production
-
-# Cloudinary Configuration (Optional - for photo uploads)
-NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloud_name
-NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=your_upload_preset
+npm install
 ```
 
-### Supabase Setup (5 Minutes)
+3. **Set up environment variables**
+Create a `.env.local` file in the root directory:
+```bash
+cp .env.example .env.local
+```
 
-1. **Create a Supabase project:**
-   - Go to [supabase.com](https://supabase.com) and sign up
-   - Create a new project
-   - Wait 2-3 minutes for setup
+4. **Configure environment variables** (see below)
 
-2. **Get your credentials:**
-   - Go to Settings → API
-   - Copy **Project URL** and **anon public** key
-   - Add to `.env.local`
-
-3. **Set up database schema:**
-   - Go to SQL Editor in Supabase dashboard
-   - Copy contents of `supabase/schema.sql`
-   - Paste and run in SQL Editor
-   - Wait for success message
-
-### Run Development Server
-
+5. **Run the development server**
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000)
+6. **Open your browser**
+Navigate to `http://localhost:3000`
 
-**Check Connection:**
-- ✅ Terminal shows: `✅ Using Supabase database` - You're connected!
-- ⚠️ Terminal shows: `⚠️ Using in-memory database` - Check your `.env.local`
+### First-Time Setup
+
+When you first run the app:
+- The in-memory database will initialize automatically
+- No Supabase required for development
+- Default demo accounts will be available (see Authentication section)
+
+---
+
+## 🔐 Environment Variables
+
+### Required Variables
+
+```bash
+# JWT Secret (Generate with: openssl rand -base64 32)
+JWT_SECRET=your-super-secret-jwt-key-here
+
+# Application URL
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
+
+### Data Persistence (Optional - for Production)
+
+```bash
+# Supabase Configuration
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+```
+
+### Enhanced Features (Optional)
+
+```bash
+# Google Gemini AI for automatic categorization
+GEMINI_API_KEY=your-gemini-api-key
+
+# MapTiler for interactive maps
+NEXT_PUBLIC_MAPTILER_API_KEY=your-maptiler-api-key
+```
+
+### Environment Setup Commands
+
+```bash
+# Verify environment variables
+npm run prebuild
+
+# Generate JWT secret
+openssl rand -base64 32
+
+# Test setup
+node scripts/verify-setup.js
+```
 
 ---
 
@@ -370,683 +199,485 @@ Open [http://localhost:3000](http://localhost:3000)
 
 ```
 NIT_GOA_HACKATHON/
-├── app/                          # Next.js 15 App Router
-│   ├── api/                      # API Routes (Serverless)
-│   │   ├── auth/                 # Authentication endpoints
-│   │   │   ├── login/route.ts
-│   │   │   └── signup/route.ts
-│   │   ├── issues/               # Issue CRUD operations
-│   │   │   ├── [id]/route.ts
-│   │   │   └── route.ts
-│   │   ├── admin/                # Admin-only endpoints
-│   │   │   ├── issues/route.ts   # Admin issue management
-│   │   │   ├── users/route.ts    # User management
-│   │   │   └── stats/route.ts    # Ward analytics
-│   │   ├── upload/route.ts       # Photo upload
-│   │   ├── dashboard/route.ts    # Statistics
-│   │   └── user/route.ts         # User profile
-│   ├── admin/page.tsx            # Admin dashboard
-│   ├── map/page.tsx              # Interactive map
-│   ├── report/page.tsx           # Issue reporting form
-│   ├── dashboard/page.tsx        # User dashboard
-│   ├── settings/page.tsx         # User settings
-│   ├── login/page.tsx            # Login page
-│   ├── signup/page.tsx           # Signup page
-│   └── page.tsx                  # Landing page
-├── components/                   # React components
-│   ├── ui/                       # Shadcn/ui components
-│   ├── before-after-photos.tsx   # Photo gallery
-│   ├── navbar.tsx                # Navigation
-│   └── map-component.tsx         # Map integration
-├── contexts/
-│   └── auth-context.tsx          # Authentication state
-├── lib/                          # Utilities
-│   ├── types.ts                  # TypeScript types
-│   ├── db.ts                     # Database wrapper
-│   ├── db-supabase.ts            # Supabase operations
-│   ├── db-memory.ts              # In-memory fallback
-│   ├── auth.ts                   # JWT utilities
-│   └── utils.ts                  # Helper functions
-├── supabase/
-│   ├── schema.sql                # Database schema
-│   └── fix-passwords.sql         # Password fix script
-└── public/                       # Static assets
+├── app/                      # Next.js 14 App Router
+│   ├── api/                  # API Routes
+│   │   ├── auth/            # Authentication endpoints
+│   │   ├── issues/          # Issue CRUD operations
+│   │   ├── analytics/       # Dashboard analytics
+│   │   ├── admin/           # Admin operations
+│   │   └── ai/              # AI categorization
+│   ├── dashboard/           # Admin dashboard page
+│   ├── map/                 # Interactive map page
+│   ├── report/              # Issue reporting page
+│   ├── login/               # Login page
+│   ├── signup/              # Registration page
+│   └── page.tsx             # Landing page
+├── components/              # React components
+│   ├── ui/                  # Shadcn UI components
+│   ├── magicui/            # Magic UI components
+│   ├── navigation.tsx       # Main navigation
+│   ├── interactive-map.tsx  # Map component
+│   └── ...
+├── contexts/                # React Context providers
+│   ├── auth-context.tsx     # Authentication state
+│   ├── dashboard-context.tsx # Dashboard data
+│   └── issue-context.tsx    # Issue management
+├── lib/                     # Utilities and configuration
+│   ├── api-client.ts        # API client with retry logic
+│   ├── auth.ts              # JWT authentication
+│   ├── db.ts                # Database abstraction layer
+│   ├── types.ts             # TypeScript types
+│   └── utils.ts             # Helper functions
+├── supabase/                # Database schema and migrations
+│   ├── schema.sql           # PostgreSQL schema
+│   └── seed.sql             # Seed data
+├── scripts/                 # Utility scripts
+│   └── verify-env.js        # Environment validation
+└── public/                  # Static assets
 ```
 
 ---
 
-## 🔌 API Documentation
-
-### Base URL
-- Development: `http://localhost:3000/api`
-- Production: `https://your-domain.com/api`
+## 🔌 API Endpoints
 
 ### Authentication
-All authenticated endpoints require a Bearer token:
-```
-Authorization: Bearer <jwt_token>
-```
+- `POST /api/auth/signup` - Register new user
+- `POST /api/auth/login` - User login
+- `POST /api/auth/refresh` - Refresh JWT token
+- `POST /api/auth/forgot-password` - Request password reset
+- `POST /api/auth/reset-password` - Reset password
+- `POST /api/auth/verify-email` - Verify email address
+
+### Issues
+- `GET /api/issues` - Get all issues (public)
+- `POST /api/issues` - Create new issue (authenticated)
+- `GET /api/issues/[id]` - Get issue details
+- `PATCH /api/issues/[id]` - Update issue (admin only)
+- `DELETE /api/issues/[id]` - Delete issue (admin only)
+- `POST /api/issues/[id]/vote` - Vote on issue
+- `GET /api/issues/[id]/comments` - Get issue comments
+- `POST /api/issues/[id]/comments` - Add comment
+
+### Dashboard & Analytics
+- `GET /api/dashboard` - Basic dashboard stats (authenticated)
+- `GET /api/analytics/stats` - Comprehensive analytics
+- `GET /api/analytics/trends` - Trend analysis and predictions
+- `GET /api/analytics/sla-alerts` - SLA compliance alerts
+- `GET /api/analytics/impact-report` - Community impact metrics
+
+### Admin
+- `GET /api/admin/stats` - Admin-only statistics
+- `GET /api/admin/users` - User management
+- `GET /api/admin/issues` - All issues with admin filters
+- `GET /api/admin/audit-logs` - System audit trail
+
+### AI
+- `POST /api/ai/categorize` - AI-powered issue categorization
+
+### Public
+- `GET /api/public/stats` - Public statistics (no auth required)
+- `GET /api/health` - API health check
+
+### File Upload
+- `POST /api/upload` - Upload issue images
 
 ---
 
-### 🔐 Authentication Endpoints
+## 🔒 Authentication
 
-#### POST `/api/auth/signup`
-Register a new user account.
+### User Roles
+- **Citizen** - Report issues, vote, comment
+- **Admin** - Manage issues, users, and system settings
 
-**Request:**
-```json
-{
-  "name": "John Doe",
-  "email": "john@example.com",
-  "password": "SecurePass123",
-  "confirmPassword": "SecurePass123"
-}
+### Demo Accounts (Development)
+
+After running seed data:
+```
+Citizen Account:
+Email: john@example.com
+Password: Demo1234
+
+Admin Account:
+Email: admin@ourstreet.com
+Password: Admin1234
 ```
 
-**Response (201):**
-```json
-{
-  "success": true,
-  "message": "User created successfully",
-  "user": {
-    "id": "uuid",
-    "name": "John Doe",
-    "email": "john@example.com",
-    "role": "citizen"
-  },
-  "token": "jwt_token_here"
-}
-```
+### Authentication Flow
+1. User signs up or logs in
+2. Server validates credentials
+3. JWT token issued (24h expiry)
+4. Refresh token issued (7d expiry)
+5. Token stored in localStorage
+6. Automatic refresh on expiry
 
-#### POST `/api/auth/login`
-Login with email and password.
+### Protected Routes
+- `/dashboard` - View-only for guests, full access for authenticated users
+- `/report` - Requires authentication
+- `/settings` - Requires authentication
+- Admin routes require admin role
 
-**Request:**
-```json
-{
-  "email": "john@example.com",
-  "password": "SecurePass123"
-}
-```
-
-**Response (200):**
-```json
-{
-  "success": true,
-  "message": "Login successful",
-  "user": {
-    "id": "uuid",
-    "name": "John Doe",
-    "email": "john@example.com",
-    "role": "citizen"
-  },
-  "token": "jwt_token_here"
-}
-```
+### Public Routes (No Auth Required)
+- `/` - Landing page
+- `/map` - View issues on map
+- `/issues` - Browse all issues
+- `/team` - Team information
+- `/transparency` - Public metrics
+- `/login` & `/signup` - Authentication pages
 
 ---
 
-### 📝 Issue Endpoints
+## 🗄️ Database Schema
 
-#### GET `/api/issues`
-List all issues with optional filters.
+### Tables
 
-**Query Parameters:**
-- `status` - Filter by status (open, in-progress, resolved)
-- `category` - Filter by category
-- `priority` - Filter by priority (low, medium, high, critical)
-- `ward` - Filter by ward/district
-- `userId` - Filter by user ID
-- `search` - Search in title/description
-- `limit` - Results per page (default: 100)
-- `offset` - Pagination offset (default: 0)
-
-**Response (200):**
-```json
-{
-  "success": true,
-  "data": {
-    "issues": [
-      {
-        "id": "uuid",
-        "title": "Pothole on Main Street",
-        "description": "Large pothole causing issues",
-        "status": "open",
-        "category": "Road & Infrastructure",
-        "priority": "high",
-        "ward": "Panjim - Fontainhas",
-        "coordinates": {
-          "lat": 15.4909,
-          "lng": 73.8278
-        },
-        "votes": 15,
-        "beforePhotoUrls": ["url1", "url2"],
-        "afterPhotoUrls": [],
-        "userId": "uuid",
-        "userName": "John Doe",
-        "createdAt": "2025-01-15T10:30:00Z",
-        "updatedAt": "2025-01-15T10:30:00Z"
-      }
-    ],
-    "total": 50,
-    "limit": 100,
-    "offset": 0
-  }
-}
+#### users
+```sql
+- id: uuid (PK)
+- name: varchar
+- email: varchar (unique)
+- password_hash: varchar
+- role: enum (citizen, admin)
+- created_at: timestamp
+- updated_at: timestamp
+- email_verified: boolean
+- phone: varchar
 ```
 
-#### POST `/api/issues`
-Create a new issue (authenticated or guest).
-
-**Request:**
-```json
-{
-  "title": "Broken Street Light",
-  "description": "Street light not working for 3 days",
-  "category": "Street Lights",
-  "priority": "medium",
-  "ward": "Panjim - Miramar",
-  "coordinates": {
-    "lat": 15.4909,
-    "lng": 73.8278
-  },
-  "photoUrls": ["url1", "url2"]
-}
+#### issues
+```sql
+- id: uuid (PK)
+- title: varchar
+- description: text
+- category: enum (pothole, streetlight, garbage, water_supply, etc.)
+- status: enum (open, in-progress, resolved, closed)
+- priority: enum (low, medium, high, critical)
+- location: point (lat, lng)
+- address: varchar
+- ward: varchar
+- photo_url: varchar
+- user_id: uuid (FK)
+- upvotes: integer
+- created_at: timestamp
+- updated_at: timestamp
+- resolved_at: timestamp
 ```
 
-**Response (201):**
-```json
-{
-  "success": true,
-  "message": "Issue reported successfully",
-  "data": {
-    "id": "uuid",
-    "title": "Broken Street Light",
-    "status": "open",
-    // ... other fields
-  }
-}
+#### comments
+```sql
+- id: uuid (PK)
+- issue_id: uuid (FK)
+- user_id: uuid (FK)
+- comment: text
+- created_at: timestamp
 ```
 
-#### GET `/api/issues/[id]`
-Get a single issue by ID.
+#### votes
+```sql
+- id: uuid (PK)
+- issue_id: uuid (FK)
+- user_id: uuid (FK)
+- created_at: timestamp
+```
 
-#### PUT `/api/issues/[id]`
-Update an issue (authenticated, own issues only or admin).
+### Database Setup
 
-#### DELETE `/api/issues/[id]`
-Delete an issue (authenticated, own issues only or admin).
+#### For Development (In-Memory)
+No setup required - automatically initializes on first run.
+
+#### For Production (Supabase)
+1. Create a Supabase project
+2. Run the schema:
+```bash
+psql -U postgres -d your_db < supabase/schema.sql
+```
+3. (Optional) Seed demo data:
+```bash
+psql -U postgres -d your_db < supabase/seed.sql
+```
+4. Set environment variables
 
 ---
 
-### 📊 Dashboard Endpoint
+## 🤖 AI Features
 
-#### GET `/api/dashboard`
-Get dashboard statistics (authenticated).
+### Automatic Issue Categorization
 
-**Response (200):**
-```json
-{
-  "success": true,
-  "data": {
-    "totalIssues": 150,
-    "openIssues": 45,
-    "inProgressIssues": 30,
-    "resolvedIssues": 75,
-    "userIssues": 5,
-    "categoryBreakdown": {
-      "Road & Infrastructure": 40,
-      "Street Lights": 25,
-      "Waste Management": 35,
-      // ...
-    }
-  }
-}
-```
+When reporting an issue, users can optionally enable AI-powered categorization:
 
----
+**How it works:**
+1. User provides title and description
+2. AI analyzes the content
+3. Suggests category, priority, and tags
+4. Provides reasoning for the suggestion
+5. User can accept or modify
 
-### 🛡️ Admin Endpoints (Requires Admin/Authority Role)
+**Categories supported:**
+- Potholes & Road Damage
+- Streetlight Issues
+- Garbage & Sanitation
+- Water Supply Problems
+- Drainage & Sewage
+- Public Infrastructure
+- Traffic & Parking
+- Parks & Recreation
+- Noise Pollution
+- Other
 
-#### GET `/api/admin/issues`
-List all issues with admin view.
+**AI Model:** Google Gemini Pro (gemini-pro)
 
-#### PATCH `/api/admin/issues`
-Bulk update issues.
+**Configuration:**
+Set `GEMINI_API_KEY` in your environment variables.
 
-**Request:**
-```json
-{
-  "issueIds": ["uuid1", "uuid2"],
-  "updates": {
-    "status": "in-progress",
-    "priority": "high"
-  }
-}
-```
-
-#### GET `/api/admin/users`
-List all users.
-
-#### PATCH `/api/admin/users`
-Update user roles.
-
-#### DELETE `/api/admin/users`
-Delete users.
-
-#### GET `/api/admin/stats`
-Get ward-wise analytics.
-
-**Response (200):**
-```json
-{
-  "success": true,
-  "data": {
-    "wardStats": [
-      {
-        "ward": "Panjim - Fontainhas",
-        "totalIssues": 25,
-        "openIssues": 8,
-        "resolvedIssues": 15,
-        "resolutionRate": 60,
-        "avgResolutionTime": 5.2
-      }
-    ],
-    "overall": {
-      "totalIssues": 150,
-      "avgResolutionTime": 6.5
-    }
-  }
-}
-```
-
----
-
-### 📤 Upload Endpoint
-
-#### POST `/api/upload`
-Upload photos to cloud storage (Cloudinary or Supabase).
-
-**Request (multipart/form-data):**
-```
-files: [File, File, ...]
-```
-
-**Response (200):**
-```json
-{
-  "success": true,
-  "urls": [
-    "https://cloudinary.com/image1.jpg",
-    "https://cloudinary.com/image2.jpg"
-  ],
-  "message": "Successfully uploaded 2 file(s)"
-}
-```
+**Benefits:**
+- Faster issue reporting
+- Consistent categorization
+- Better priority assessment
+- Reduced manual effort
 
 ---
 
 ## 🚢 Deployment
 
-### Deploy to Vercel (Recommended)
+### Vercel (Recommended)
 
-1. **Push code to GitHub:**
-   ```bash
-   git add .
-   git commit -m "Ready for deployment"
-   git push origin main
-   ```
-
-2. **Connect to Vercel:**
-   - Go to [vercel.com](https://vercel.com)
-   - Click "Import Project"
-   - Select your GitHub repository
-   - Click "Import"
-
-3. **Add Environment Variables:**
-   In Vercel project settings, add:
-   - `NEXT_PUBLIC_SUPABASE_URL`
-   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-   - `JWT_SECRET`
-   - `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` (optional)
-   - `NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET` (optional)
-
-4. **Deploy:**
-   - Click "Deploy"
-   - Wait 2-3 minutes
-   - Your app is live! 🎉
-
-### Deploy to Other Platforms
-
-The app is a standard Next.js application and can be deployed to:
-- Netlify
-- Railway
-- Render
-- AWS Amplify
-- Digital Ocean App Platform
-
----
-
-## 🧪 Testing Guide
-
-### Quick Test (No Setup Required)
-
-The app works out-of-the-box with an in-memory database for testing!
-
+1. **Push to GitHub**
 ```bash
-npm install
-npm run dev
+git add .
+git commit -m "Ready for deployment"
+git push origin main
 ```
 
-### Test Scenarios
+2. **Deploy to Vercel**
+- Go to [vercel.com](https://vercel.com)
+- Import your GitHub repository
+- Configure environment variables
+- Deploy!
 
-#### 1. Submit Issue WITHOUT Photo
-1. Navigate to `/report`
-2. Fill in the form (title, category, description 20+ chars)
-3. Click "Capture Current Location"
-4. Submit
-5. **Expected:** Redirects to map with your issue
+3. **Set Environment Variables in Vercel**
+- Go to Project Settings → Environment Variables
+- Add all required variables
+- Redeploy
 
-#### 2. Submit Issue WITH Photo
-1. Navigate to `/report`
-2. Fill in form
-3. Upload photos (1-5 images)
-4. Capture location
-5. Submit
-6. **Expected:** Photos upload, issue appears on map
+### Environment-Specific Settings
 
-#### 3. View Issues on Map
-1. Navigate to `/map`
-2. **Expected:** Map loads with markers
-3. Click a marker
-4. **Expected:** Issue details popup
+**Development:**
+- Uses in-memory database
+- Hot reload enabled
+- Detailed error messages
 
-#### 4. Admin Dashboard
-1. Login as admin (see demo credentials below)
-2. Navigate to `/admin`
-3. **Expected:** See 3 tabs: Issues, Users, Ward Stats
+**Production:**
+- Requires Supabase database
+- Optimized builds
+- Error tracking enabled
+- Rate limiting active
 
-### Demo Credentials
-
-After running the database schema, use these accounts:
-
-| Email | Password | Role |
-|-------|----------|------|
-| admin@ourstreet.com | Admin1234 | admin |
-| john@example.com | Demo1234 | citizen |
-| jane@example.com | Demo1234 | citizen |
+### Post-Deployment Checklist
+- ✅ All environment variables set
+- ✅ Database schema migrated
+- ✅ Domain configured
+- ✅ SSL certificate active
+- ✅ Test authentication flow
+- ✅ Test issue creation
+- ✅ Verify map functionality
+- ✅ Check analytics dashboard
 
 ---
 
-## 🐛 Troubleshooting
+## 🧪 Testing
 
-### "Using in-memory database" Warning
-
-**Problem:** App not connecting to Supabase
-
-**Solutions:**
-1. Check `.env.local` exists (not `.env.example`)
-2. Verify both `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` are set
-3. Restart dev server: `npm run dev`
-4. Check for typos in environment variables
-
-### Login Fails with Demo Accounts
-
-**Problem:** "Invalid email or password" error
-
-**Solution:** Run the password fix script:
-1. Open Supabase SQL Editor
-2. Copy contents of `supabase/fix-passwords.sql`
-3. Run in SQL Editor
-4. Try logging in again
-
-### "Supabase credentials not found" Error
-
-**Problem:** Missing or invalid API keys
-
-**Solutions:**
-1. Go to Supabase Dashboard → Settings → API
-2. Copy **Project URL** and **anon public** key
-3. Add to `.env.local`
-4. Restart server
-
-### Photo Upload Fails
-
-**Problem:** Photos not uploading
-
-**Solutions:**
-1. Check Cloudinary credentials in `.env.local`
-2. Verify upload preset is set to "Unsigned" mode
-3. Check browser console for errors
-4. Ensure files are under 5MB
-
-### Map Not Loading
-
-**Solutions:**
-1. Check browser console for errors
-2. Verify MapTiler SDK is loading
-3. Try hard refresh (Ctrl+Shift+R)
-4. Check network connection
-
----
-
-## 🔒 Security Features
-
-1. **JWT Authentication** - Secure token-based auth
-2. **Password Hashing** - bcrypt with 10 rounds
-3. **Row Level Security** - Supabase RLS policies
-4. **Role-Based Access** - Citizen, Authority, Admin roles
-5. **Input Validation** - Server-side validation
-6. **File Upload Security** - Type and size validation
-
----
-
-## 🛠️ Tech Stack
-
-### Frontend
-- **Framework:** Next.js 15 (App Router)
-- **Language:** TypeScript
-- **Styling:** Tailwind CSS
-- **Components:** Shadcn/ui
-- **Maps:** Leaflet + React-Leaflet
-- **Icons:** Lucide React
-- **State Management:** React Context API
-
-### Backend
-- **API:** Next.js API Routes (Serverless)
-- **Authentication:** JWT + bcrypt
-- **Database:** Supabase (PostgreSQL)
-- **File Storage:** Cloudinary or Supabase Storage
-- **Validation:** Zod
-
-### DevOps
-- **Hosting:** Vercel
-- **Version Control:** Git + GitHub
-- **Environment:** Node.js 18+
-- **Package Manager:** npm
-
----
-
-## 📊 Database Schema
-
-### Tables
-
-**users**
-- id (UUID, primary key)
-- name (text)
-- email (text, unique)
-- password (text, bcrypt hashed)
-- role (enum: citizen, authority, admin)
-- avatar (text, optional)
-- created_at, updated_at (timestamps)
-
-**issues**
-- id (UUID, primary key)
-- title (text)
-- description (text)
-- status (enum: open, in-progress, resolved)
-- category (text)
-- priority (enum: low, medium, high, critical)
-- ward (text)
-- coordinates (lat/lng)
-- votes (integer)
-- beforePhotoUrls (text array)
-- afterPhotoUrls (text array)
-- userId (UUID, foreign key)
-- created_at, updated_at (timestamps)
-
-**comments**
-- id (UUID, primary key)
-- issueId (UUID, foreign key)
-- userId (UUID, foreign key)
-- text (text)
-- created_at (timestamp)
-
-**votes**
-- id (UUID, primary key)
-- issueId (UUID, foreign key)
-- userId (UUID, foreign key)
-- created_at (timestamp)
-- UNIQUE(issueId, userId)
-
----
-
-## 📈 Features Overview
-
-### Core Features (Phase 1)
-- ✅ JWT-based authentication
-- ✅ Issue reporting with GPS
-- ✅ Interactive map view
-- ✅ Issue CRUD operations
-- ✅ Comments & voting
-- ✅ User dashboard
-- ✅ Settings page
-- ✅ Responsive UI
-- ✅ Dark mode
-
-### Advanced Features (Phase 2)
-- ✅ Admin dashboard (3 tabs)
-- ✅ Role-based access control
-- ✅ Multi-file upload (up to 5 photos)
-- ✅ Before/after photo gallery
-- ✅ Ward/district system (10 wards)
-- ✅ Ward-wise analytics
-- ✅ Bulk operations
-- ✅ User management
-
----
-
-## 🏘️ Available Wards (Goa)
-
-1. Panjim - Fontainhas
-2. Panjim - St. Inez
-3. Panjim - Miramar
-4. Margao - Market Area
-5. Margao - Fatorda
-6. Vasco - Town Center
-7. Mapusa - Municipal Market
-8. Ponda - City Center
-9. Bicholim - Town
-10. Canacona - Chaudi
-
----
-
-## 📝 Development Commands
-
+### Run Tests
 ```bash
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-
-# Build for production
-npm run build
-
-# Start production server
-npm start
-
-# Run linter
-npm run lint
-
-# Type check
+# Type checking
 npm run type-check
 
-# Format code
-npm run format
+# Build verification
+npm run build
+
+# Environment verification
+node scripts/verify-env.js
 ```
 
----
-
-## 🎯 Success Checklist
-
-Before going live:
-
-- [ ] Supabase project created and schema deployed
-- [ ] Environment variables set (`.env.local` for dev, Vercel for prod)
-- [ ] Test authentication (signup, login)
-- [ ] Test issue creation and viewing
-- [ ] Test photo uploads (if Cloudinary configured)
-- [ ] Test admin dashboard (role protection)
-- [ ] Test on mobile devices
-- [ ] Demo accounts removed or passwords changed
-- [ ] SSL/HTTPS enabled (automatic on Vercel)
-- [ ] Error tracking set up (optional)
-
----
-
-## 📚 Additional Resources
-
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Supabase Documentation](https://supabase.com/docs)
-- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
-- [Shadcn/ui Documentation](https://ui.shadcn.com)
-- [Cloudinary Documentation](https://cloudinary.com/documentation)
+### Manual Testing Checklist
+- [ ] User signup and login
+- [ ] Report new issue with photo
+- [ ] View issues on map
+- [ ] Upvote/comment on issues
+- [ ] Admin: Update issue status
+- [ ] Dashboard analytics load
+- [ ] AI categorization works
+- [ ] Mobile responsive design
+- [ ] Dark mode toggle
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please follow these steps:
+We welcome contributions! Here's how:
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+1. **Fork the repository**
+2. **Create a feature branch**
+```bash
+git checkout -b feature/amazing-feature
+```
+3. **Make your changes**
+4. **Commit with clear messages**
+```bash
+git commit -m "Add: Amazing new feature"
+```
+5. **Push to your fork**
+```bash
+git push origin feature/amazing-feature
+```
+6. **Open a Pull Request**
+
+### Code Style
+- Use TypeScript for type safety
+- Follow ESLint rules
+- Use Prettier for formatting
+- Write meaningful commit messages
+- Add comments for complex logic
 
 ---
 
-## 📄 License
+## 🐛 Troubleshooting
 
-This project is licensed under the MIT License.
+### Common Issues
+
+#### 1. "JWT_SECRET not set"
+**Solution:** Add JWT_SECRET to `.env.local`
+```bash
+JWT_SECRET=$(openssl rand -base64 32)
+```
+
+#### 2. "Cannot connect to database"
+**Solution:** 
+- For development: No action needed (uses in-memory DB)
+- For production: Check Supabase credentials
+
+#### 3. "Map not loading"
+**Solution:** Add MapTiler API key or use default map (no key required)
+
+#### 4. "AI categorization not working"
+**Solution:** Add GEMINI_API_KEY or disable AI feature
+
+#### 5. "Session expired" on every page
+**Solution:** Check JWT_SECRET is consistent between deployments
+
+#### 6. Login fails with valid credentials
+**Solution:** 
+- Check password hash format in database
+- Run password fix script: `psql < supabase/fix-passwords.sql`
+
+#### 7. Dashboard shows zero values
+**Solution:**
+- Report some test issues first
+- Check analytics API endpoint: `GET /api/analytics/stats`
+
+### Debug Mode
+
+Enable detailed logging:
+```bash
+# Add to .env.local
+DEBUG=true
+NODE_ENV=development
+```
+
+### Getting Help
+- Check existing issues on GitHub
+- Review error logs in browser console
+- Check API response in Network tab
+- Contact: [your-email@example.com]
 
 ---
 
-## 👥 Authors
+## 📊 Performance
 
-- OurStreet Team - NIT Goa Hackathon Project
+### Optimization Features
+- **Image Optimization** - Next.js Image component
+- **Code Splitting** - Automatic route-based splitting
+- **Lazy Loading** - Dynamic imports for heavy components
+- **Caching** - API response caching
+- **CDN** - Static assets via Vercel Edge Network
+- **Database Indexing** - Optimized queries
+
+### Monitoring
+- Real-time analytics dashboard
+- API health checks
+- Error tracking
+- Performance metrics
+
+---
+
+## 📜 License
+
+MIT License - see LICENSE file for details
 
 ---
 
 ## 🙏 Acknowledgments
 
-- Next.js team for the amazing framework
-- Supabase for the backend infrastructure
-- Shadcn for the beautiful UI components
-- All contributors and testers
+- **Next.js Team** - Amazing React framework
+- **Vercel** - Seamless deployment
+- **Supabase** - Excellent PostgreSQL hosting
+- **Shadcn** - Beautiful UI components
+- **MapTiler** - Interactive mapping
+- **Google** - Gemini AI API
+- **NIT Goa Hackathon** - Inspiration and support
 
 ---
 
-## 📞 Support
+## 📞 Contact & Support
 
-For support, email your-email@example.com or open an issue on GitHub.
+- **Website:** [yourwebsite.com]
+- **Email:** [support@ourstreet.com]
+- **GitHub Issues:** [Report a bug or request a feature]
+- **Documentation:** [Full docs at /docs]
 
 ---
 
-<div align="center">
-  <strong>Built with ❤️ for smarter cities</strong>
-  <br />
-  <sub>OurStreet - Making cities better, one report at a time</sub>
-</div>
+## 🗺️ Roadmap
+
+### Phase 1 (Current)
+- ✅ Core issue reporting
+- ✅ Interactive map
+- ✅ User authentication
+- ✅ Admin dashboard
+- ✅ AI categorization
+
+### Phase 2 (In Progress)
+- 🔄 Real-time notifications (WebSocket)
+- 🔄 Mobile app (React Native)
+- 🔄 Email notifications
+- 🔄 SMS alerts for critical issues
+
+### Phase 3 (Planned)
+- 📅 Multi-language support
+- 📅 Advanced analytics & ML predictions
+- 📅 Integration with municipal systems
+- 📅 Public API for third-party apps
+- 📅 Citizen leaderboard & gamification
+
+---
+
+## 📈 Statistics
+
+**Current Implementation:**
+- 24+ API endpoints
+- 20+ React components
+- 8 main pages
+- 3 context providers
+- Full TypeScript coverage
+- Responsive design for all screen sizes
+- Dark mode support
+- AI-powered features
+- Real-time analytics
+
+---
+
+**Built with ❤️ for better civic engagement**
+
+**OurStreet** - Empowering communities through technology.
+
+---
+
+*Last Updated: 2025*
