@@ -241,6 +241,12 @@ export default function ReportIssuePage() {
 
     setIsAICategorizing(true);
     try {
+      console.log("🔍 Calling AI categorization API with:", {
+        title: formData.title,
+        description: formData.description,
+        location: formData.ward,
+      });
+
       const response = await fetch("/api/ai/categorize", {
         method: "POST",
         headers: {
@@ -253,12 +259,16 @@ export default function ReportIssuePage() {
         }),
       });
 
+      console.log("📡 API Response status:", response.status);
+
       if (!response.ok) {
         const errorData = await response.json();
+        console.error("❌ API Error Response:", errorData);
         throw new Error(errorData.error || "AI categorization failed");
       }
 
       const result = await response.json();
+      console.log("✅ API Success Response:", result);
 
       if (result.success && result.data) {
         setAiSuggestion(result.data);
@@ -275,6 +285,7 @@ export default function ReportIssuePage() {
         );
       }
     } catch (error) {
+      console.error("❌ AI Categorization Error:", error);
       toast.error(
         error instanceof Error
           ? error.message

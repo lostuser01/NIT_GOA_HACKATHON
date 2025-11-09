@@ -7,7 +7,7 @@ import React, {
   useEffect,
   useCallback,
 } from "react";
-import { dashboardAPI, isAuthenticated } from "@/lib/api-client";
+import { isAuthenticated } from "@/lib/api-client";
 
 export interface DashboardStats {
   totalActiveIssues: number;
@@ -141,9 +141,9 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
   const [resourceDemand] = useState<ResourceDemand[]>([]);
   const [slaAlerts] = useState<SLAAlert[]>([]);
   const [departmentPerformance] = useState<DepartmentPerformance[]>([]);
-  const [recentActivity] = useState<ActivityItem[]>([]);
-  const [predictiveInsights] = useState<PredictiveInsight | null>(null);
-  const [geospatialData] = useState<GeospatialData[]>([]);
+  const [recentActivity, setRecentActivity] = useState<ActivityItem[]>([]);
+  const [predictiveInsights, setPredictiveInsights] = useState<PredictiveInsight | null>(null);
+  const [geospatialData, setGeospatialData] = useState<GeospatialData[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -180,6 +180,105 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
             resolutionTime: apiData.resolutionTimeTrend || 0,
             satisfaction: apiData.satisfactionTrend || 0,
           },
+        });
+
+        // Set recent activity from API
+        if (apiData.recentActivity && Array.isArray(apiData.recentActivity)) {
+          const mappedActivity: ActivityItem[] = apiData.recentActivity.map((item: any, index: number) => ({
+            id: parseInt(item.id) || Date.now() + index,
+            type: item.type || 'info',
+            message: item.message || '',
+            timestamp: item.timestamp || new Date().toISOString(),
+            severity: item.type === 'resolved' ? 'success' :
+                     item.type === 'critical' ? 'error' :
+                     item.type === 'in-progress' ? 'warning' : 'info',
+          }));
+          setRecentActivity(mappedActivity);
+        }
+      }
+
+      // Fetch issues for geospatial data
+      const issuesResponse = await fetch("/api/issues?limit=100&sortBy=createdAt&sortOrder=desc");
+      const issuesResult = await issuesResponse.json();
+
+      if (issuesResult.success && issuesResult.data?.issues) {
+        const issues = issuesResult.data.issues;
+
+        // Group issues by area/location for geospatial data
+        const locationMap = new Map<string, { issues: any[], coords: { lat: number, lng: number } }>();
+
+        issues.forEach((issue: any) => {
+          const area = issue.location || 'Unknown';
+          if (!locationMap.has(area)) {
+            locationMap.set(area, {
+              issues: [],
+              coords: issue.coordinates || { lat: 15.2993, lng: 74.124 }
+            });
+          }
+          locationMap.get(area)!.issues.push(issue);
+        });
+
+        // Convert to geospatial data format
+        const geoData: GeospatialData[] = Array.from(locationMap.entries()).map(([area, data]) => {
+          const criticalCount = data.issues.filter((i: any) =>
+            i.priority === 'critical' || i.priority === 'high'
+          ).length;
+          const openCount = data.issues.filter((i: any) => i.status === 'open').length;
+
+          // Calculate risk score based on issue count and priority
+          const riskScore = Math.min(10,
+            (data.issues.length * 0.5) +
+            (criticalCount * 1.5) +
+            (openCount * 0.8)
+          );
+
+          return {
+            area,
+            lat: data.coords.lat,
+            lng: data.coords.lng,
+            issueCount: data.issues.length,
+            riskScore: parseFloat(riskScore.toFixed(1)),
+            category: data.issues[0]?.category || 'other',
+          };
+        });
+
+        setGeospatialData(geoData);
+
+        // Generate predictive insights
+        const openIssues = issues.filter((i: any) => i.status === 'open').length;
+        const totalIssues = issues.length;
+        const avgIssuesPerWeek = totalIssues > 0 ? Math.ceil(totalIssues / 4) : 5;
+
+        // Find high-risk areas
+        const highRiskAreas = geoData
+          .filter(area => area.riskScore > 7)
+          .map(area => area.area)
+          .slice(0, 3);
+
+        // Calculate resource needs
+        const additionalStaff = Math.ceil(openIssues / 10);
+
+        setPredictiveInsights({
+          expectedIssues: {
+            nextWeek: Math.ceil(avgIssuesPerWeek * 1.2),
+            nextMonth: Math.ceil(avgIssuesPerWeek * 4.5),
+            peakDays: ['Monday', 'Wednesday'],
+            highRiskAreas: highRiskAreas.length > 0 ? highRiskAreas : ['City Center'],
+          },
+          resourceNeeds: {
+            additionalStaff,
+            equipmentUpgrade: openIssues > 20 ? ['GPS tracking', 'Mobile units'] : ['Mobile units'],
+            budgetIncrease: Math.ceil((openIssues / totalIssues) * 100),
+          },
+          recommendations: [
+            highRiskAreas.length > 0
+              ? `Focus resources on high-risk areas: ${highRiskAreas.join(', ')}`
+              : 'Continue monitoring current issue distribution',
+            openIssues > 15
+              ? `Allocate ${additionalStaff} additional response teams to handle open issues`
+              : 'Current staffing levels are adequate',
+            'Implement preventive maintenance in areas with recurring issues',
+          ],
         });
       } else if (result.error) {
         // API returned an error
@@ -242,6 +341,20 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
             satisfaction: apiData.satisfactionTrend || 0,
           },
         });
+
+        // Update recent activity from API
+        if (apiData.recentActivity && Array.isArray(apiData.recentActivity)) {
+          const mappedActivity: ActivityItem[] = apiData.recentActivity.map((item: any, index: number) => ({
+            id: parseInt(item.id) || Date.now() + index,
+            type: item.type || 'info',
+            message: item.message || '',
+            timestamp: item.timestamp || new Date().toISOString(),
+            severity: item.type === 'resolved' ? 'success' :
+                     item.type === 'critical' ? 'error' :
+                     item.type === 'in-progress' ? 'warning' : 'info',
+          }));
+          setRecentActivity(mappedActivity);
+        }
       }
     } catch (err) {
       // Silently fail - dashboard will show cached data
